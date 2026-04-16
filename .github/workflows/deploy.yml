@@ -1,17 +1,8 @@
-name: Deploy to GitHub Pages
+name: Build & Verify
 
 on:
   push:
-    branches: [claude/redesign-website-ai-agents-Jkjj0, main]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
+    branches: [main, claude/redesign-website-ai-agents-Jkjj0]
 
 jobs:
   build:
@@ -27,17 +18,5 @@ jobs:
       - run: npm install --legacy-peer-deps
 
       - run: npx next build
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+        env:
+          API_KEY_21ST: ${{ secrets.API_KEY_21ST }}
