@@ -1,19 +1,4 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { PetitionForm } from "@/components/sections/petition-form"
-import { DonationWidget } from "@/components/sections/donation-widget"
-import { CTABanner } from "@/components/sections/cta-banner"
-import {
-  Shield,
-  Users,
-  Landmark,
-  ArrowRight,
-  Calendar,
-  Newspaper,
-  Star,
-} from "lucide-react"
+"use client"
 
 import Link from "next/link"
 import {
