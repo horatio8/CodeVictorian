@@ -1,266 +1,118 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { CTABanner } from "@/components/sections/cta-banner"
-import {
-  Shield,
-  Heart,
-  Users,
-  Landmark,
-  Target,
-  Globe,
-  ArrowRight,
-  BookOpen,
-  Scale,
-} from "lucide-react"
+import { Target, Eye, Heart, Users, Globe, Award } from "lucide-react"
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Learn about Code Victorian — a pan-European third-party campaigner dedicated to preserving European culture, heritage, and identity.",
-}
+export const metadata: Metadata = { title: "About Us" }
 
 const values = [
-  {
-    icon: Shield,
-    title: "Sovereignty",
-    description:
-      "We believe every European nation has the right to determine its own future, control its own borders, and protect its own citizens.",
-  },
-  {
-    icon: Heart,
-    title: "Heritage",
-    description:
-      "Europe\u2019s cultural, artistic, and intellectual heritage is one of humanity\u2019s greatest treasures. It must be actively preserved.",
-  },
-  {
-    icon: Scale,
-    title: "Accountability",
-    description:
-      "Governments must be held accountable to their people. Policy should serve the interests of citizens, not ideological agendas.",
-  },
-  {
-    icon: Users,
-    title: "Community",
-    description:
-      "Strong, cohesive communities are the foundation of a thriving society. We champion solidarity among Europeans.",
-  },
+  { icon: Target, title: "Clarity of Purpose", text: "We are direct and unapologetic about our mission to preserve European civilisation and its peoples." },
+  { icon: Eye, title: "Transparency", text: "We operate openly, with full financial disclosure and democratic governance at every level." },
+  { icon: Heart, title: "Cultural Pride", text: "We celebrate the extraordinary achievements and heritage of European peoples without reservation." },
+  { icon: Users, title: "Solidarity", text: "We unite Europeans of all nations under a common cause — transcending borders while respecting sovereignty." },
+  { icon: Globe, title: "Pan-European Vision", text: "Our movement spans the continent, building alliances from Lisbon to Helsinki, from Dublin to Athens." },
+  { icon: Award, title: "Excellence", text: "We pursue the highest standards in our research, campaigns, and community engagement." },
 ]
 
 const timeline = [
-  {
-    year: "2023",
-    title: "Foundation",
-    description:
-      "Code Victorian was founded by a group of concerned citizens from across the continent, united by a shared belief in Europe\u2019s future.",
-  },
-  {
-    year: "2024",
-    title: "First Campaign",
-    description:
-      "Our inaugural petition gathered 10,000 signatures in its first month, demonstrating widespread public concern.",
-  },
-  {
-    year: "2025",
-    title: "Pan-European Expansion",
-    description:
-      "Operations expanded to 20 countries with local coordinators and volunteer networks established across the continent.",
-  },
-  {
-    year: "2026",
-    title: "Growing Momentum",
-    description:
-      "With nearly 50,000 petition signatures and over 12,000 members, our movement continues to grow every day.",
-  },
-]
-
-const team = [
-  {
-    name: "Dr. Heinrich Waldstein",
-    role: "Chairman",
-    description:
-      "Former professor of European history with over 25 years of academic research into cultural preservation.",
-  },
-  {
-    name: "Maria Szab\u00f3",
-    role: "Director of Operations",
-    description:
-      "A veteran campaign organiser with experience across multiple European political movements.",
-  },
-  {
-    name: "Lars Eriksson",
-    role: "Head of Communications",
-    description:
-      "Award-winning journalist and communications strategist dedicated to amplifying the European voice.",
-  },
-  {
-    name: "Dr. Chiara Fontana",
-    role: "Policy Director",
-    description:
-      "Legal scholar specialising in immigration law, border policy, and EU regulatory frameworks.",
-  },
+  { year: "2021", title: "Founded", desc: "Code Victorian established by a group of concerned European citizens in Brussels." },
+  { year: "2022", title: "First Campaign", desc: "Launched the 'Protect Our Heritage' petition, gathering 25,000 signatures in three months." },
+  { year: "2023", title: "Continental Expansion", desc: "Opened regional chapters in 12 European countries with dedicated volunteers." },
+  { year: "2024", title: "Policy Impact", desc: "Published landmark policy papers cited by MEPs in parliamentary debates." },
+  { year: "2025", title: "Membership Milestone", desc: "Reached 10,000 active members and launched the European Heritage Fund." },
+  { year: "2026", title: "Growing Stronger", desc: "Petition surpasses 125,000 signatures; largest-ever European Heritage Summit held in Vienna." },
 ]
 
 export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-primary relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary to-primary-800" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl -translate-y-1/4 translate-x-1/4" />
-        </div>
-        <div className="container mx-auto max-w-4xl relative z-10 py-20 md:py-28 text-center">
-          <Badge variant="accent" className="mb-5">
-            About Us
-          </Badge>
-          <h1 className="text-white mb-6 text-balance">
-            About <span className="text-accent">Code Victorian</span>
+      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Our Story</span>
+          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+            About Code Victorian
           </h1>
-          <p className="text-primary-200 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
-            We are a pan-European third-party campaigner standing for the
-            preservation of our continent&rsquo;s culture, heritage, and
-            identity. Founded by citizens, driven by conviction.
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+            We are a supranational third-party campaigning organisation dedicated to the preservation
+            of European culture, identity, and heritage through democratic action and civic engagement.
           </p>
-          <Button asChild size="xl">
-            <Link href="/petition">
-              Sign the Petition <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
         </div>
       </section>
 
       {/* Mission */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <section className="section-padding bg-white">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
             <div>
-              <Badge variant="muted" className="mb-4">
-                Our Mission
-              </Badge>
-              <h2 className="text-primary mb-4">
-                A Voice for <span className="text-accent">Europe</span>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Our Mission</span>
+              <h2 className="gold-accent relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
+                Defending Europe&rsquo;s Future
               </h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                Code Victorian exists because ordinary Europeans deserve a
-                platform. For too long, the concerns of everyday citizens about
-                immigration, cultural change, and national sovereignty have been
-                dismissed or ignored.
+              <p className="mt-8 text-base leading-relaxed text-gray-600">
+                Code Victorian was born from a simple conviction: Europe&rsquo;s native peoples have the
+                right to preserve their cultures, communities, and way of life. In an era of unprecedented
+                demographic change, we provide a voice for the millions who feel unrepresented by
+                mainstream politics.
               </p>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                We are not a political party. We are a supranational campaign
-                organisation, registered as a third-party campaigner with the
-                National Electoral Authority. Our role is to amplify the voice
-                of the people and hold governments accountable.
+              <p className="mt-4 text-base leading-relaxed text-gray-600">
+                We operate at the supranational level, building coalitions across EU member states
+                to advocate for sensible immigration policies, cultural preservation, and the democratic
+                right of European peoples to determine the future of their own nations.
               </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Our mission is straightforward: to advocate for policies that
-                protect European culture, enforce sensible immigration controls,
-                and ensure that the continent our ancestors built remains a
-                homeland for those who cherish it.
-              </p>
-            </div>
-            <div className="bg-gradient-to-br from-primary-50 to-muted rounded-2xl p-10 flex flex-col items-center justify-center text-center min-h-[350px]">
-              <Globe className="h-16 w-16 text-accent mb-6" />
-              <p className="text-3xl font-serif font-bold text-primary mb-2">
-                28 Countries
-              </p>
-              <p className="text-muted-foreground">
-                One movement, united across Europe
-              </p>
-              <Separator className="my-6 max-w-[200px]" />
-              <div className="grid grid-cols-3 gap-6">
-                <div>
-                  <p className="text-2xl font-serif font-bold text-primary">
-                    47K+
-                  </p>
-                  <p className="text-xs text-muted-foreground">Signatures</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-serif font-bold text-primary">
-                    12K+
-                  </p>
-                  <p className="text-xs text-muted-foreground">Members</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-serif font-bold text-primary">
-                    200+
-                  </p>
-                  <p className="text-xs text-muted-foreground">Events</p>
-                </div>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Link href="/petition" className="btn-primary">Sign Our Petition</Link>
+                <Link href="/join" className="btn-navy">Join the Movement</Link>
               </div>
             </div>
+            <div className="aspect-[4/3] rounded-xl bg-gradient-to-br from-navy-200 via-navy-300 to-navy-400 shadow-lg" />
           </div>
         </div>
       </section>
 
       {/* Values */}
-      <section className="bg-muted/50 section-padding">
-        <div className="container mx-auto max-w-7xl">
-          <div className="section-heading">
-            <Badge variant="muted" className="mb-4">
+      <section className="section-padding bg-cream">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">What Drives Us</span>
+            <h2 className="gold-accent-center relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
               Our Values
-            </Badge>
-            <h2 className="text-primary">
-              What We <span className="text-accent">Stand For</span>
             </h2>
           </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {values.map((value) => (
-              <Card key={value.title} className="card-hover text-center">
-                <CardContent className="p-8">
-                  <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-5">
-                    <value.icon className="h-7 w-7 text-accent" />
-                  </div>
-                  <h3 className="font-serif font-bold text-primary text-lg mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {value.description}
-                  </p>
-                </CardContent>
-              </Card>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {values.map((v) => (
+              <div key={v.title} className="card p-7">
+                <v.icon className="h-8 w-8 text-gold-500" />
+                <h3 className="mt-4 font-serif text-lg font-bold">{v.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">{v.text}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-3xl">
-          <div className="section-heading">
-            <Badge variant="muted" className="mb-4">
-              Our Journey
-            </Badge>
-            <h2 className="text-primary">
-              The <span className="text-accent">Story</span> So Far
+      <section className="section-padding bg-white">
+        <div className="mx-auto max-w-3xl">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Our Journey</span>
+            <h2 className="gold-accent-center relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
+              Milestones
             </h2>
           </div>
-
-          <div className="space-y-0">
-            {timeline.map((item, idx) => (
-              <div key={item.year} className="flex gap-6">
+          <div className="mt-14 space-y-0">
+            {timeline.map((item, i) => (
+              <div key={item.year} className="relative flex gap-6 pb-10 last:pb-0">
+                {/* Line */}
                 <div className="flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center shrink-0">
-                    <span className="text-primary-900 font-bold text-xs">
-                      {item.year}
-                    </span>
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gold-400 text-xs font-bold text-navy-900">
+                    {item.year.slice(2)}
                   </div>
-                  {idx < timeline.length - 1 && (
-                    <div className="w-0.5 flex-1 bg-border my-2" />
-                  )}
+                  {i < timeline.length - 1 && <div className="w-px flex-1 bg-navy-100" />}
                 </div>
-                <div className="pb-10">
-                  <h3 className="font-serif font-bold text-primary text-lg mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {item.description}
-                  </p>
+                <div className="pb-2 pt-1.5">
+                  <h3 className="font-serif text-lg font-bold">{item.title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-600">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -268,84 +120,21 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Leadership */}
-      <section className="bg-muted/50 section-padding">
-        <div className="container mx-auto max-w-7xl">
-          <div className="section-heading">
-            <Badge variant="muted" className="mb-4">
-              Leadership
-            </Badge>
-            <h2 className="text-primary">
-              Our <span className="text-accent">Team</span>
-            </h2>
-            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              Experienced, dedicated, and driven by a shared vision for Europe.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {team.map((member) => (
-              <Card key={member.name} className="card-hover">
-                <CardContent className="p-6 text-center">
-                  <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center mx-auto mb-4">
-                    <Users className="h-8 w-8 text-primary-300" />
-                  </div>
-                  <h3 className="font-serif font-bold text-primary mb-0.5">
-                    {member.name}
-                  </h3>
-                  <p className="text-accent text-sm font-medium mb-3">
-                    {member.role}
-                  </p>
-                  <p className="text-muted-foreground text-xs leading-relaxed">
-                    {member.description}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* What Sets Us Apart */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-4xl text-center">
-          <Badge variant="muted" className="mb-4">
-            Why Code Victorian
-          </Badge>
-          <h2 className="text-primary mb-6">
-            What Sets Us <span className="text-accent">Apart</span>
+      {/* CTA */}
+      <section className="gradient-navy py-20 text-center">
+        <div className="mx-auto max-w-3xl px-6">
+          <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
+            Ready to Join the Cause?
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Target,
-                title: "Issue-Focused",
-                text: "We are not a political party. We campaign on specific issues that matter to Europeans.",
-              },
-              {
-                icon: Globe,
-                title: "Pan-European",
-                text: "Active across 28 countries, we unite Europeans regardless of national boundaries.",
-              },
-              {
-                icon: BookOpen,
-                title: "Transparent",
-                text: "Every donation, every action, every campaign \u2014 we operate with full accountability.",
-              },
-            ].map((item) => (
-              <div key={item.title}>
-                <item.icon className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h3 className="font-serif font-bold text-primary mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-muted-foreground text-sm">{item.text}</p>
-              </div>
-            ))}
+          <p className="mx-auto mt-4 max-w-xl text-base text-white/70">
+            Become part of Europe&rsquo;s fastest-growing civic movement.
+          </p>
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link href="/join" className="btn-primary">Become a Member</Link>
+            <Link href="/volunteer" className="btn-secondary">Volunteer With Us</Link>
           </div>
         </div>
       </section>
-
-      <CTABanner />
     </>
   )
 }

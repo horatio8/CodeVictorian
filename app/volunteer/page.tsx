@@ -1,272 +1,145 @@
 "use client"
 
-import { useState } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { CTABanner } from "@/components/sections/cta-banner"
 import {
-  HandHeart,
   Megaphone,
-  MapPin,
-  Laptop,
-  Pen,
-  Camera,
-  CheckCircle2,
-  ArrowRight,
-  Users,
+  PenTool,
   Globe,
+  MapPin,
   Calendar,
+  Users,
+  ArrowRight,
 } from "lucide-react"
 
+
 const roles = [
-  {
-    icon: Megaphone,
-    title: "Campaign Ambassador",
-    description: "Represent Code Victorian in your local area, distribute materials, and recruit supporters.",
-  },
-  {
-    icon: MapPin,
-    title: "Event Organiser",
-    description: "Help plan and run local meetups, rallies, and community events in your region.",
-  },
-  {
-    icon: Laptop,
-    title: "Digital Campaigner",
-    description: "Create and share content on social media, manage online communities, and spread our message.",
-  },
-  {
-    icon: Pen,
-    title: "Writer & Researcher",
-    description: "Contribute articles, policy papers, and research to support our advocacy work.",
-  },
-  {
-    icon: Camera,
-    title: "Creative & Media",
-    description: "Photography, videography, graphic design \u2014 help us tell our story visually.",
-  },
-  {
-    icon: HandHeart,
-    title: "Community Support",
-    description: "Help with administrative tasks, member support, translation, and general operations.",
-  },
+  { icon: Megaphone, title: "Campaign Outreach", desc: "Distribute materials, attend rallies, and engage with the public at local events across your city.", commitment: "4\u20138 hours/week" },
+  { icon: PenTool, title: "Content & Communications", desc: "Write articles, create social media content, produce videos, or help translate materials into European languages.", commitment: "3\u20136 hours/week" },
+  { icon: Globe, title: "Digital Campaigning", desc: "Manage social media accounts, run online campaigns, moderate forums, and grow our digital presence.", commitment: "5\u201310 hours/week" },
+  { icon: MapPin, title: "Local Chapter Leader", desc: "Organise and lead a local chapter, coordinate events, recruit new volunteers, and represent the movement in your area.", commitment: "6\u201312 hours/week" },
+  { icon: Calendar, title: "Event Organisation", desc: "Plan and execute events from small meetups to large rallies. Handle logistics, venues, and promotion.", commitment: "Variable" },
+  { icon: Users, title: "Community Building", desc: "Welcome new members, facilitate discussions, and build relationships within the movement.", commitment: "2\u20134 hours/week" },
 ]
 
 export default function VolunteerPage() {
-  const [submitted, setSubmitted] = useState(false)
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    location: "",
-    availability: "",
-    interests: "",
-  })
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitted(true)
-  }
-
   return (
     <>
       {/* Hero */}
-      <section className="bg-primary relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary to-primary-800" />
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-3xl -translate-y-1/4 translate-x-1/4" />
-        </div>
-        <div className="container mx-auto max-w-4xl relative z-10 py-20 md:py-28 text-center">
-          <Badge variant="accent" className="mb-5">Volunteer</Badge>
-          <h1 className="text-white mb-6 text-balance">
-            Volunteer for <span className="text-accent">Europe</span>
+      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 50% 50%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Take Action</span>
+          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
+            Volunteer With Us
           </h1>
-          <p className="text-primary-200 text-lg md:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
-            Your time and skills can make a real difference. Join our volunteer
-            network and help build the movement across the continent.
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+            Your time and talent can change the course of history. Join thousands of
+            dedicated volunteers working to preserve Europe&rsquo;s future.
           </p>
-          <div className="flex items-center justify-center gap-6">
-            <div>
-              <span className="text-2xl font-serif font-bold text-accent">3,200+</span>
-              <p className="text-xs text-primary-300">Active volunteers</p>
-            </div>
-            <div className="w-px h-10 bg-primary-400/30" />
-            <div>
-              <span className="text-2xl font-serif font-bold text-accent">22</span>
-              <p className="text-xs text-primary-300">Countries</p>
-            </div>
-            <div className="w-px h-10 bg-primary-400/30" />
-            <div>
-              <span className="text-2xl font-serif font-bold text-accent">50K+</span>
-              <p className="text-xs text-primary-300">Hours contributed</p>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Roles */}
-      <section className="section-padding">
-        <div className="container mx-auto max-w-7xl">
-          <div className="section-heading">
-            <Badge variant="muted" className="mb-4">Opportunities</Badge>
-            <h2 className="text-primary">
-              Ways to <span className="text-accent">Help</span>
+      <section className="section-padding bg-cream">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Opportunities</span>
+            <h2 className="gold-accent-center relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
+              Volunteer Roles
             </h2>
-            <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              Whether you have an hour a week or can dedicate more time, there is
-              a role for you.
+            <p className="mx-auto mt-8 max-w-2xl text-base text-gray-600">
+              We have roles for every skill set and schedule. Whether you can give two hours
+              a week or twenty, there&rsquo;s a place for you.
             </p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {roles.map((r) => (
-              <Card key={r.title} className="card-hover">
-                <CardContent className="p-6">
-                  <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-4">
-                    <r.icon className="h-6 w-6 text-accent" />
-                  </div>
-                  <h3 className="font-serif font-bold text-primary mb-2">
-                    {r.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {r.description}
-                  </p>
-                </CardContent>
-              </Card>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {roles.map((role) => (
+              <div key={role.title} className="card group p-7">
+                <role.icon className="h-8 w-8 text-gold-500" />
+                <h3 className="mt-4 font-serif text-lg font-bold">{role.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">{role.desc}</p>
+                <div className="mt-4 inline-block rounded bg-navy-50 px-2.5 py-1 text-[0.625rem] font-semibold uppercase tracking-wider text-navy-600">
+                  {role.commitment}
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Volunteer Form */}
-      <section className="bg-muted/50 section-padding">
-        <div className="container mx-auto max-w-2xl">
-          <div className="section-heading">
-            <Badge variant="muted" className="mb-4">Sign Up</Badge>
-            <h2 className="text-primary">
-              Become a <span className="text-accent">Volunteer</span>
+      {/* Sign-up form */}
+      <section className="section-padding bg-white">
+        <div className="mx-auto max-w-2xl">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Get Started</span>
+            <h2 className="gold-accent-center relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
+              Register as a Volunteer
             </h2>
           </div>
-
-          {submitted ? (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <CheckCircle2 className="h-12 w-12 text-green-600 mx-auto mb-4" />
-                <h3 className="font-serif font-bold text-primary text-2xl mb-2">
-                  Thank You!
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  We have received your volunteer application. A local coordinator
-                  will be in touch within 48 hours.
-                </p>
-                <Button asChild>
-                  <Link href="/petition">
-                    Sign the Petition Too <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card>
-              <CardContent className="p-6 md:p-8">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-primary mb-1.5 block">
-                        First name *
-                      </label>
-                      <Input
-                        required
-                        value={form.firstName}
-                        onChange={(e) => setForm({ ...form, firstName: e.target.value })}
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-primary mb-1.5 block">
-                        Last name *
-                      </label>
-                      <Input
-                        required
-                        value={form.lastName}
-                        onChange={(e) => setForm({ ...form, lastName: e.target.value })}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-primary mb-1.5 block">
-                      Email address *
-                    </label>
-                    <Input
-                      type="email"
-                      required
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="text-sm font-medium text-primary mb-1.5 block">
-                        Location (city, country) *
-                      </label>
-                      <Input
-                        required
-                        value={form.location}
-                        onChange={(e) => setForm({ ...form, location: e.target.value })}
-                        placeholder="e.g. Vienna, Austria"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-primary mb-1.5 block">
-                        Availability *
-                      </label>
-                      <Input
-                        required
-                        value={form.availability}
-                        onChange={(e) => setForm({ ...form, availability: e.target.value })}
-                        placeholder="e.g. Weekends, 5hrs/week"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-primary mb-1.5 block">
-                      Skills &amp; interests (optional)
-                    </label>
-                    <Textarea
-                      value={form.interests}
-                      onChange={(e) => setForm({ ...form, interests: e.target.value })}
-                      placeholder="Tell us about your skills and which volunteer roles interest you"
-                      className="min-h-[100px]"
-                    />
-                  </div>
-                  <div className="flex items-start gap-2 pt-1">
-                    <input
-                      type="checkbox"
-                      id="consent-volunteer"
-                      required
-                      className="mt-1 rounded border-border accent-accent"
-                    />
-                    <label htmlFor="consent-volunteer" className="text-xs text-muted-foreground leading-relaxed">
-                      I consent to Code Victorian processing my personal data for
-                      volunteer coordination and campaign communications. I can
-                      withdraw consent at any time.{" "}
-                      <a href="/privacy" className="text-accent hover:underline">
-                        Privacy Policy
-                      </a>
-                    </label>
-                  </div>
-                  <Button type="submit" className="w-full cta-glow" size="lg">
-                    Submit Volunteer Application
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          )}
+          <form className="mt-12 space-y-4" onSubmit={(e) => e.preventDefault()}>
+            <div className="grid grid-cols-2 gap-4">
+              <input type="text" placeholder="First name" className="form-input" required />
+              <input type="text" placeholder="Last name" className="form-input" required />
+            </div>
+            <input type="email" placeholder="Email address" className="form-input" required />
+            <input type="tel" placeholder="Phone number (optional)" className="form-input" />
+            <div className="grid grid-cols-2 gap-4">
+              <select className="form-input text-gray-500" required>
+                <option value="">Country</option>
+                <option>Austria</option><option>Belgium</option><option>France</option>
+                <option>Germany</option><option>Italy</option><option>Netherlands</option>
+                <option>Poland</option><option>Spain</option><option>Sweden</option>
+                <option>Other EU Country</option>
+              </select>
+              <input type="text" placeholder="City" className="form-input" />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-navy-700 mb-2">
+                Which roles interest you? (select all that apply)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {roles.map((r) => (
+                  <label key={r.title} className="flex items-center gap-2 text-sm text-gray-600">
+                    <input type="checkbox" className="h-3.5 w-3.5 rounded accent-gold-400" />
+                    {r.title}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <textarea
+              placeholder="Tell us about yourself and why you want to volunteer (optional)"
+              rows={4}
+              className="form-input resize-none"
+            />
+            <label className="flex items-start gap-2 text-xs text-gray-500">
+              <input type="checkbox" required className="mt-0.5 h-3.5 w-3.5 rounded accent-gold-400" />
+              <span>
+                I agree to the <Link href="/privacy" className="text-gold-500 underline">privacy policy</Link> and
+                consent to being contacted about volunteer opportunities.
+              </span>
+            </label>
+            <button type="submit" className="btn-primary w-full">
+              Submit Application
+            </button>
+          </form>
         </div>
       </section>
 
-      <CTABanner />
+      {/* CTA */}
+      <section className="gradient-navy py-20 text-center">
+        <div className="mx-auto max-w-3xl px-6">
+          <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
+            Prefer Another Way to Help?
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-white/70">
+            Every contribution matters, whether it&rsquo;s your signature, your donation, or your time.
+          </p>
+          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+            <Link href="/petition" className="btn-primary">Sign the Petition</Link>
+            <Link href="/donate" className="btn-secondary">Donate</Link>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

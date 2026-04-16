@@ -1,38 +1,21 @@
 import type { Metadata } from "next"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
-import { CookieConsent } from "@/components/layout/cookie-consent"
 import "./globals.css"
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+import CookieConsent from "@/components/CookieConsent"
 
 export const metadata: Metadata = {
   title: {
-    default: "Code Victorian | Europe for Native Europeans",
+    default: "Code Victorian — Europe for Europeans",
     template: "%s | Code Victorian",
   },
   description:
-    "Join the movement to preserve European culture, heritage, and identity. Sign our petition and stand with thousands of Europeans committed to their homeland.",
-  keywords: [
-    "Code Victorian",
-    "European identity",
-    "preserve European culture",
-    "petition",
-    "campaign",
-  ],
+    "A movement dedicated to preserving European heritage, culture, and identity. Sign our petition and join the cause.",
   metadataBase: new URL("https://codevictorian.com"),
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: "https://codevictorian.com",
     siteName: "Code Victorian",
-    title: "Code Victorian | Europe for Native Europeans",
-    description:
-      "Join the movement to preserve European culture, heritage, and identity.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Code Victorian | Europe for Native Europeans",
-    description:
-      "Join the movement to preserve European culture, heritage, and identity.",
   },
 }
 
@@ -42,10 +25,22 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en-GB">
-      <body className="min-h-screen flex flex-col">
+    <html lang="en-GB" className="antialiased">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-screen bg-cream text-gray-800">
         <Header />
-        <main className="flex-1">{children}</main>
+        <main>{children}</main>
         <Footer />
         <CookieConsent />
       </body>
