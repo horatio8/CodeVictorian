@@ -27,7 +27,8 @@ export async function middleware(request: NextRequest) {
   // Protect admin API routes (except auth)
   if (
     pathname.startsWith("/api/admin") &&
-    !pathname.startsWith("/api/admin/auth")
+    !pathname.startsWith("/api/admin/auth") &&
+    !pathname.startsWith("/api/admin/init")
   ) {
     const token = request.cookies.get("cv_admin_token")?.value
 
