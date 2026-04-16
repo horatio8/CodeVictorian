@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   output: "export",
+  basePath: "/CodeVictorian",
   images: {
     unoptimized: true,
   },
