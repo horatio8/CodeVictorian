@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@21st-sdk/agent": "^0.0.16",
+    "zod": "^4.3.6"
+  }
+}
