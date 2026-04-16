@@ -1,18 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { MessageSquare, X } from "lucide-react"
-import { AgentChat, createAgentChat } from "@21st-sdk/nextjs"
-import { useChat } from "@ai-sdk/react"
-
-const chat = createAgentChat({
-  agent: "my-agent",
-  tokenUrl: "/api/an-token",
-})
+import { MessageSquare, X, Sparkles } from "lucide-react"
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false)
-  const chatHelpers = useChat({ chat })
 
   return (
     <>
@@ -25,7 +17,7 @@ export default function ChatWidget() {
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-[90] w-[380px] max-h-[600px] overflow-hidden rounded-2xl bg-white shadow-2xl shadow-navy-950/20 ring-1 ring-navy-100 animate-fade-in-up sm:w-[420px]">
+        <div className="fixed bottom-24 right-6 z-[90] w-[380px] overflow-hidden rounded-2xl bg-white shadow-2xl shadow-navy-950/20 ring-1 ring-navy-100 animate-fade-in-up sm:w-[420px]">
           <div className="flex items-center justify-between bg-navy-700 px-5 py-3.5">
             <div className="flex items-center gap-2.5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold-400">
@@ -43,14 +35,23 @@ export default function ChatWidget() {
               <X className="h-4 w-4" />
             </button>
           </div>
-          <div className="h-[500px]">
-            <AgentChat
-              messages={chatHelpers.messages}
-              onSend={(msg) => chatHelpers.sendMessage({ text: msg.content })}
-              status={chatHelpers.status}
-              onStop={chatHelpers.stop}
-              error={chatHelpers.error ?? undefined}
-            />
+          <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold-400/10 mb-4">
+              <Sparkles className="h-8 w-8 text-gold-500" />
+            </div>
+            <h4 className="font-serif text-lg font-bold text-navy-700">AI Design Assistant</h4>
+            <p className="mt-2 text-sm leading-relaxed text-gray-500">
+              This assistant helps refine the site&rsquo;s UI design using 21st.dev AI agents.
+              To activate, deploy to Vercel and add your <code className="rounded bg-navy-50 px-1.5 py-0.5 text-xs font-mono text-navy-600">API_KEY_21ST</code> environment variable.
+            </p>
+            <a
+              href="https://21st.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary mt-6 !text-xs !py-2.5 !px-5"
+            >
+              Get an API Key
+            </a>
           </div>
         </div>
       )}
