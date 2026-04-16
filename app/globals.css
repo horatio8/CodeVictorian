@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-bold tracking-tight;
+    line-height: 1.2;
+  }
+
+  h1 { @apply text-4xl md:text-5xl lg:text-6xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
+
+  ::selection {
+    @apply bg-accent/30 text-primary;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .section-heading {
+    @apply text-center mb-12 md:mb-16;
+  }
+
+  .gold-underline {
+    @apply relative inline-block;
+  }
+
+  .gold-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-full h-1 bg-accent rounded-full;
+    transform: translateY(4px);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .cta-glow {
+    @apply relative overflow-hidden;
+  }
+
+  .cta-glow::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0;
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .cta-glow:hover::before {
+    transform: translateX(100%);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
