@@ -677,7 +677,7 @@
   .tweaks-toggle.visible { display: flex; }
 </style>
 </head>
-<body data-theme="navy" data-display="cormorant" data-density="normal">
+<body data-theme="navy" data-display="playfair" data-density="normal">
 
 <!-- ========== NAV ========== -->
 <nav class="nav">
@@ -709,7 +709,7 @@
 <div class="page active" id="page-home">
 
   <!-- HERO -->
-  <section class="hero" id="heroSection" data-layout="full">
+  <section class="hero" id="heroSection" data-layout="framed">
     <video class="bg-video" src="assets/hero-video-360p.mp4" autoplay muted loop playsinline preload="auto" onerror="this.style.display='none'"></video>
     <div class="hero-fallback" aria-hidden="true"></div>
     <div class="vignette"></div>
@@ -717,9 +717,9 @@
       <div class="hero-text-wrap" style="flex:1; display:flex; flex-direction:column; justify-content:center; padding: 120px var(--sec-px) 120px;">
         <div class="eyebrow" style="margin-bottom: 28px;">A Cultural Society · Since MMXXVI</div>
         <h1 class="display" id="heroHeadline">
-          Heritage,<br/>
-          <span class="display italic" style="color: var(--accent);">beautifully</span><br/>
-          preserved.
+          Europe, for<br/>
+          <span class="display italic" style="color: var(--accent);">native</span><br/>
+          europeans.
         </h1>
         <p class="lede" style="max-width: 560px; margin-top: 36px;">
           Code Victorian is a cultural movement devoted to the stewardship of European craft, classical learning, and the elegance of inherited civilisation — uniting those who believe beauty is not optional.
@@ -1309,16 +1309,16 @@
 
   <label>Display font</label>
   <div class="chip-row" data-tweak="display">
-    <div class="chip active" data-value="cormorant">Cormorant</div>
-    <div class="chip" data-value="playfair">Playfair</div>
+    <div class="chip" data-value="cormorant">Cormorant</div>
+    <div class="chip active" data-value="playfair">Playfair</div>
     <div class="chip" data-value="eb-garamond">EB Garamond</div>
   </div>
 
   <label>Hero layout</label>
   <div class="chip-row" data-tweak="hero-layout">
-    <div class="chip active" data-value="full">Full-bleed video</div>
+    <div class="chip" data-value="full">Full-bleed video</div>
     <div class="chip" data-value="split">Split</div>
-    <div class="chip" data-value="framed">Framed plate</div>
+    <div class="chip active" data-value="framed">Framed plate</div>
   </div>
 
   <label>Section density</label>
@@ -1328,7 +1328,7 @@
   </div>
 
   <label>Hero headline</label>
-  <input type="text" id="tweakHeadline" value="Heritage, beautifully preserved." />
+  <input type="text" id="tweakHeadline" value="Europe, for native europeans." />
 </div>
 
 <!-- ========== DEFAULTS (editmode) ========== -->
