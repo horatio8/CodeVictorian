@@ -1,38 +1,28 @@
 "use client"
 
 import Link from "next/link"
-import {
-  Megaphone,
-  PenTool,
-  Globe,
-  MapPin,
-  Calendar,
-  Users,
-  ArrowRight,
-} from "lucide-react"
-
 
 const roles = [
-  { icon: Megaphone, title: "Campaign Outreach", desc: "Distribute materials, attend rallies, and engage with the public at local events across your city.", commitment: "4\u20138 hours/week" },
-  { icon: PenTool, title: "Content & Communications", desc: "Write articles, create social media content, produce videos, or help translate materials into European languages.", commitment: "3\u20136 hours/week" },
-  { icon: Globe, title: "Digital Campaigning", desc: "Manage social media accounts, run online campaigns, moderate forums, and grow our digital presence.", commitment: "5\u201310 hours/week" },
-  { icon: MapPin, title: "Local Chapter Leader", desc: "Organise and lead a local chapter, coordinate events, recruit new volunteers, and represent the movement in your area.", commitment: "6\u201312 hours/week" },
-  { icon: Calendar, title: "Event Organisation", desc: "Plan and execute events from small meetups to large rallies. Handle logistics, venues, and promotion.", commitment: "Variable" },
-  { icon: Users, title: "Community Building", desc: "Welcome new members, facilitate discussions, and build relationships within the movement.", commitment: "2\u20134 hours/week" },
+  { roman: "I.",   title: "Campaign Outreach",         desc: "Distribute materials, attend rallies, and engage with the public at local events across your city.",       commitment: "4–8 hours/week" },
+  { roman: "II.",  title: "Content & Communications",  desc: "Write articles, create social media content, produce videos, or help translate materials into European languages.", commitment: "3–6 hours/week" },
+  { roman: "III.", title: "Digital Campaigning",       desc: "Manage social media accounts, run online campaigns, moderate forums, and grow our digital presence.",        commitment: "5–10 hours/week" },
+  { roman: "IV.",  title: "Local Chapter Leader",      desc: "Organise and lead a local chapter, coordinate events, recruit new volunteers, and represent the movement in your area.", commitment: "6–12 hours/week" },
+  { roman: "V.",   title: "Event Organisation",        desc: "Plan and execute events from small meetups to large rallies. Handle logistics, venues, and promotion.",     commitment: "Variable" },
+  { roman: "VI.",  title: "Community Building",        desc: "Welcome new members, facilitate discussions, and build relationships within the movement.",                   commitment: "2–4 hours/week" },
 ]
 
 export default function VolunteerPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 50% 50%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+      <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Take Action</span>
-          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            Volunteer With Us
+          <span className="eyebrow eyebrow-both">Take Action</span>
+          <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
+            Volunteer{" "}
+            <span className="italic font-normal text-gold-400">With Us</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+          <p className="lede mx-auto mt-8 max-w-2xl">
             Your time and talent can change the course of history. Join thousands of
             dedicated volunteers working to preserve Europe&rsquo;s future.
           </p>
@@ -42,49 +32,79 @@ export default function VolunteerPage() {
       {/* Roles */}
       <section className="section-padding bg-cream">
         <div className="mx-auto max-w-7xl">
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. I</span>
+            <span className="line" />
+            <span className="label">Opportunities</span>
+          </div>
+
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Opportunities</span>
-            <h2 className="gold-accent-center relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
-              Volunteer Roles
+            <span className="eyebrow eyebrow-both">Opportunities</span>
+            <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl">
+              Volunteer{" "}
+              <span className="italic font-normal text-gold-400">roles</span>.
             </h2>
-            <p className="mx-auto mt-8 max-w-2xl text-base text-gray-600">
+            <p className="lede mx-auto mt-6 max-w-2xl">
               We have roles for every skill set and schedule. Whether you can give two hours
               a week or twenty, there&rsquo;s a place for you.
             </p>
           </div>
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {roles.map((role) => (
-              <div key={role.title} className="card group p-7">
-                <role.icon className="h-8 w-8 text-gold-500" />
-                <h3 className="mt-4 font-serif text-lg font-bold">{role.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{role.desc}</p>
-                <div className="mt-4 inline-block rounded bg-navy-50 px-2.5 py-1 text-[0.625rem] font-semibold uppercase tracking-wider text-navy-600">
-                  {role.commitment}
-                </div>
-              </div>
-            ))}
+
+          <div className="mt-16 grid gap-0 border border-gold-400/25 sm:grid-cols-2 lg:grid-cols-3">
+            {roles.map((role, i, arr) => {
+              const col = i % 3
+              const row = Math.floor(i / 3)
+              const totalRows = Math.ceil(arr.length / 3)
+              return (
+                <article
+                  key={role.title}
+                  className={`group p-8 transition-colors hover:bg-ivory ${
+                    col < 2 ? "lg:border-r lg:border-gold-400/20" : ""
+                  } ${i % 2 === 0 ? "sm:border-r sm:border-gold-400/20 lg:border-r" : ""} ${
+                    row < totalRows - 1 ? "border-b border-gold-400/20" : ""
+                  }`}
+                >
+                  <div className="font-serif text-3xl italic text-gold-400 leading-none">
+                    {role.roman}
+                  </div>
+                  <h3 className="mt-5 font-serif text-xl font-medium">{role.title}</h3>
+                  <p className="mt-3 font-lede text-base leading-relaxed text-navy-800/70">{role.desc}</p>
+                  <div className="mt-5 inline-block border border-gold-400/40 px-3 py-1 font-mono text-[0.625rem] font-medium uppercase tracking-[0.22em] text-gold-600">
+                    {role.commitment}
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </div>
       </section>
 
       {/* Sign-up form */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-ivory border-y border-gold-400/20">
         <div className="mx-auto max-w-2xl">
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. II</span>
+            <span className="line" />
+            <span className="label">Register</span>
+          </div>
+
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Get Started</span>
-            <h2 className="gold-accent-center relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
-              Register as a Volunteer
+            <span className="eyebrow eyebrow-both">Get Started</span>
+            <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl">
+              Register as a{" "}
+              <span className="italic font-normal text-gold-400">volunteer</span>.
             </h2>
           </div>
-          <form className="mt-12 space-y-4" onSubmit={(e) => e.preventDefault()}>
+
+          <form className="mt-14 space-y-4" onSubmit={(e) => e.preventDefault()}>
             <div className="grid grid-cols-2 gap-4">
               <input type="text" placeholder="First name" className="form-input" required />
               <input type="text" placeholder="Last name" className="form-input" required />
             </div>
-            <input type="email" placeholder="Email address" className="form-input" required />
+            <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
             <input type="tel" placeholder="Phone number (optional)" className="form-input" />
             <div className="grid grid-cols-2 gap-4">
-              <select className="form-input text-gray-500" required>
+              <select className="form-input" required>
                 <option value="">Country</option>
                 <option>Austria</option><option>Belgium</option><option>France</option>
                 <option>Germany</option><option>Italy</option><option>Netherlands</option>
@@ -94,13 +114,21 @@ export default function VolunteerPage() {
               <input type="text" placeholder="City" className="form-input" />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-navy-700 mb-2">
+              <label className="block mb-3 font-mono text-[0.625rem] font-medium uppercase tracking-[0.28em] text-gold-600">
                 Which roles interest you? (select all that apply)
               </label>
-              <div className="grid grid-cols-2 gap-2">
-                {roles.map((r) => (
-                  <label key={r.title} className="flex items-center gap-2 text-sm text-gray-600">
-                    <input type="checkbox" className="h-3.5 w-3.5 rounded accent-gold-400" />
+              <div className="grid gap-0 border border-gold-400/25 sm:grid-cols-2">
+                {roles.map((r, i, arr) => (
+                  <label
+                    key={r.title}
+                    className={`flex items-center gap-3 p-4 font-lede text-base text-navy-800 cursor-pointer transition-colors hover:bg-gold-400/5 ${
+                      i % 2 === 0 ? "sm:border-r sm:border-gold-400/20" : ""
+                    } ${i < arr.length - 2 ? "border-b border-gold-400/15" : "sm:border-b-0"} ${
+                      i === arr.length - 2 ? "border-b border-gold-400/15 sm:border-b-0" : ""
+                    }`}
+                  >
+                    <input type="checkbox" className="h-3.5 w-3.5 accent-gold-400" />
+                    <span className="font-serif italic text-sm text-gold-400">{r.roman}</span>
                     {r.title}
                   </label>
                 ))}
@@ -111,30 +139,33 @@ export default function VolunteerPage() {
               rows={4}
               className="form-input resize-none"
             />
-            <label className="flex items-start gap-2 text-xs text-gray-500">
-              <input type="checkbox" required className="mt-0.5 h-3.5 w-3.5 rounded accent-gold-400" />
+            <label className="flex items-start gap-2 font-lede text-xs text-navy-800/65">
+              <input type="checkbox" required className="mt-1 h-3.5 w-3.5 accent-gold-400" />
               <span>
-                I agree to the <Link href="/privacy" className="text-gold-500 underline">privacy policy</Link> and
-                consent to being contacted about volunteer opportunities.
+                I agree to the{" "}
+                <Link href="/privacy" className="text-gold-600 underline underline-offset-2">privacy policy</Link>
+                {" "}and consent to being contacted about volunteer opportunities.
               </span>
             </label>
             <button type="submit" className="btn-primary w-full">
-              Submit Application
+              Submit Application <span className="font-serif">→</span>
             </button>
           </form>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="gradient-navy py-20 text-center">
+      <section className="gradient-navy py-24 text-center on-dark">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
-            Prefer Another Way to Help?
+          <div className="fleur">✦ ❦ ✦</div>
+          <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl">
+            Prefer another way to{" "}
+            <span className="italic font-normal text-gold-400">help</span>?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/70">
+          <p className="lede mx-auto mt-5 max-w-xl">
             Every contribution matters, whether it&rsquo;s your signature, your donation, or your time.
           </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link href="/petition" className="btn-primary">Sign the Petition</Link>
             <Link href="/donate" className="btn-secondary">Donate</Link>
           </div>

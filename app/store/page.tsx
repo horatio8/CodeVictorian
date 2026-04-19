@@ -1,32 +1,31 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ShoppingBag } from "lucide-react"
 
 export const metadata: Metadata = { title: "Store" }
 
 const products = [
-  { name: "Heritage Shield T-Shirt", price: 29.99, category: "Apparel", colours: "Navy, White, Black" },
-  { name: "Code Victorian Cap", price: 19.99, category: "Apparel", colours: "Navy with Gold Embroidery" },
-  { name: "Europa Hoodie", price: 54.99, category: "Apparel", colours: "Navy, Charcoal" },
-  { name: "Campaign Enamel Pin", price: 8.99, category: "Accessories", colours: "Gold & Navy" },
-  { name: "Heritage Tote Bag", price: 14.99, category: "Accessories", colours: "Natural Canvas" },
-  { name: "Campaign Sticker Pack (10)", price: 5.99, category: "Accessories", colours: "Assorted" },
-  { name: "European Heritage Poster", price: 12.99, category: "Print", colours: "A2 Size" },
-  { name: "Policy Papers Collection (Print)", price: 24.99, category: "Print", colours: "Hardcover" },
+  { name: "Heritage Shield T-Shirt",          price: 29.99, category: "Apparel",     colours: "Navy, White, Black",                label: "apparel · shirt" },
+  { name: "Code Victorian Cap",               price: 19.99, category: "Apparel",     colours: "Navy with Gold Embroidery",         label: "apparel · cap" },
+  { name: "Europa Hoodie",                    price: 54.99, category: "Apparel",     colours: "Navy, Charcoal",                    label: "apparel · hoodie" },
+  { name: "Campaign Enamel Pin",              price:  8.99, category: "Accessories", colours: "Gold & Navy",                       label: "accessories · pin" },
+  { name: "Heritage Tote Bag",                price: 14.99, category: "Accessories", colours: "Natural Canvas",                    label: "accessories · tote" },
+  { name: "Campaign Sticker Pack (10)",       price:  5.99, category: "Accessories", colours: "Assorted",                          label: "accessories · stickers" },
+  { name: "European Heritage Poster",         price: 12.99, category: "Print",       colours: "A2 Size",                           label: "print · poster" },
+  { name: "Policy Papers Collection (Print)", price: 24.99, category: "Print",       colours: "Hardcover",                         label: "print · volume" },
 ]
 
 export default function StorePage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 60% 50%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+      <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Shop</span>
-          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            Campaign Store
+          <span className="eyebrow eyebrow-both">The Shop</span>
+          <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
+            Campaign{" "}
+            <span className="italic font-normal text-gold-400">Store</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+          <p className="lede mx-auto mt-8 max-w-2xl">
             Wear your convictions. All proceeds directly fund our campaigns across Europe.
           </p>
         </div>
@@ -35,40 +34,61 @@ export default function StorePage() {
       {/* Products */}
       <section className="section-padding bg-cream">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-              <div key={product.name} className="card group">
-                <div className="aspect-square bg-gradient-to-br from-navy-100 to-navy-200 flex items-center justify-center">
-                  <ShoppingBag className="h-12 w-12 text-navy-300 transition-colors group-hover:text-gold-400" />
-                </div>
-                <div className="p-5">
-                  <span className="text-[0.625rem] font-bold uppercase tracking-wider text-gold-600">
-                    {product.category}
-                  </span>
-                  <h3 className="mt-1 font-serif text-base font-bold leading-snug group-hover:text-gold-600 transition-colors">
-                    {product.name}
-                  </h3>
-                  <p className="mt-1 text-xs text-gray-400">{product.colours}</p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="text-lg font-bold text-navy-700">
-                      &euro;{product.price.toFixed(2)}
-                    </span>
-                    <button className="rounded-lg bg-navy-700 px-3 py-2 text-xs font-bold text-white transition-colors hover:bg-gold-500 hover:text-navy-900">
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="sec-num">
+            <span className="num">From the Workshops</span>
+            <span className="line" />
+            <span className="label">The Collection</span>
           </div>
 
-          <div className="mt-16 rounded-xl bg-white p-8 text-center shadow-sm">
-            <h3 className="font-serif text-xl font-bold">Bulk Orders &amp; Custom Items</h3>
-            <p className="mx-auto mt-2 max-w-lg text-sm text-gray-600">
+          <div className="grid gap-0 border border-gold-400/25 sm:grid-cols-2 lg:grid-cols-4">
+            {products.map((product, i, arr) => {
+              const col = i % 4
+              const row = Math.floor(i / 4)
+              const totalRows = Math.ceil(arr.length / 4)
+              return (
+                <article
+                  key={product.name}
+                  className={`group ${col < 3 ? "lg:border-r lg:border-gold-400/20" : ""} ${
+                    i % 2 === 0 ? "sm:border-r sm:border-gold-400/20" : ""
+                  } ${row < totalRows - 1 ? "border-b border-gold-400/20" : ""}`}
+                >
+                  <div className="plate aspect-square" data-label={product.label} />
+                  <div className="p-6">
+                    <span className="font-serif italic text-gold-400 text-base">
+                      {product.category}
+                    </span>
+                    <h3 className="mt-2 font-serif text-lg font-medium leading-snug transition-colors group-hover:text-gold-600">
+                      {product.name}
+                    </h3>
+                    <p className="mt-1 font-mono text-[0.625rem] uppercase tracking-[0.18em] text-navy-800/50">
+                      {product.colours}
+                    </p>
+                    <div className="mt-5 flex items-center justify-between">
+                      <span className="font-serif text-2xl italic text-gold-600">
+                        €{product.price.toFixed(2)}
+                      </span>
+                      <button className="border border-gold-400 bg-transparent px-3 py-2 font-mono text-[0.625rem] font-medium uppercase tracking-[0.22em] text-gold-600 transition-colors hover:bg-gold-400 hover:text-navy-900">
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              )
+            })}
+          </div>
+
+          <div className="mt-16 border border-gold-400/40 bg-ivory p-10 text-center ornament">
+            <div className="fleur">✦ ❦ ✦</div>
+            <h3 className="mt-6 font-serif text-3xl font-medium">
+              Bulk orders &amp; custom items.
+            </h3>
+            <p className="mx-auto mt-3 max-w-lg font-lede text-base text-navy-800/70">
               Planning an event or need branded materials for your local chapter?
               Contact us for bulk pricing and custom merchandise.
             </p>
-            <Link href="/contact" className="btn-navy mt-5 inline-flex">Contact Us</Link>
+            <Link href="/contact" className="btn-primary mt-6 inline-flex">
+              Contact Us <span className="font-serif">→</span>
+            </Link>
           </div>
         </div>
       </section>

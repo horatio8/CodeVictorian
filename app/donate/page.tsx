@@ -2,16 +2,16 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Heart, Shield, Lock, CreditCard, CheckCircle } from "lucide-react"
+import { CheckCircle } from "lucide-react"
 
 const presets = [65, 135, 265, 600, 1500]
 
 const impact = [
-  { amount: "€65", desc: "Prints and distributes 500 campaign leaflets across a city" },
-  { amount: "€135", desc: "Sponsors one local community awareness event" },
-  { amount: "€265", desc: "Funds legal research for a policy briefing paper" },
-  { amount: "€600", desc: "Supports a regional campaign office for one month" },
-  { amount: "€1,500", desc: "Sponsors a full delegation to the European Heritage Summit" },
+  { amount: "€65",     desc: "Prints and distributes 500 campaign leaflets across a city" },
+  { amount: "€135",    desc: "Sponsors one local community awareness event" },
+  { amount: "€265",    desc: "Funds legal research for a policy briefing paper" },
+  { amount: "€600",    desc: "Supports a regional campaign office for one month" },
+  { amount: "€1,500",  desc: "Sponsors a full delegation to the European Heritage Summit" },
 ]
 
 export default function DonatePage() {
@@ -21,15 +21,16 @@ export default function DonatePage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 40% 60%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+      <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Support the Cause</span>
-          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            Fund the Fight<br />
-            <span className="text-gold-400">for Europe</span>
+          <span className="eyebrow eyebrow-both">Patronage · Tax-Deductible</span>
+          <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
+            Fund the{" "}
+            <span className="italic font-normal text-gold-400">Fight</span>
+            <br />
+            for Europe
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+          <p className="lede mx-auto mt-8 max-w-2xl">
             Every euro directly supports our campaigns, policy research, legal challenges,
             and grassroots organising across the continent. Your generosity makes change possible.
           </p>
@@ -39,86 +40,112 @@ export default function DonatePage() {
       {/* Donation form */}
       <section className="section-padding bg-cream">
         <div className="mx-auto max-w-7xl">
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. I</span>
+            <span className="line" />
+            <span className="label">Your Contribution</span>
+          </div>
+
           <div className="grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
             {/* Form */}
             <div className="lg:col-span-3">
-              <div className="card p-6 sm:p-10">
-                <h2 className="font-serif text-2xl font-bold">Make a Donation</h2>
-                <p className="mt-1 text-sm text-gray-500">All donations are processed securely in EUR.</p>
+              <div className="ornament border border-gold-400/40 bg-ivory p-8 sm:p-12">
+                <span className="eyebrow">Make a Donation</span>
+                <h2 className="mt-4 font-serif text-3xl font-medium sm:text-4xl">
+                  Select your{" "}
+                  <span className="italic font-normal text-gold-400">gift</span>.
+                </h2>
+                <p className="mt-2 font-lede text-sm text-navy-800/60">
+                  All donations are processed securely in EUR.
+                </p>
 
-                {/* Frequency toggle */}
-                <div className="mt-6 inline-flex rounded-lg bg-navy-50 p-1">
+                {/* Frequency tabs — flat row */}
+                <label className="mt-8 block font-mono text-[0.625rem] font-medium uppercase tracking-[0.28em] text-navy-800/60 mb-3">
+                  Frequency
+                </label>
+                <div className="grid grid-cols-2 gap-0 border border-gold-400/30">
                   <button
                     onClick={() => setFrequency("once")}
-                    className={`rounded-md px-5 py-2.5 text-sm font-semibold transition-all ${
-                      frequency === "once" ? "bg-white text-navy-700 shadow-sm" : "text-gray-500"
+                    className={`py-4 text-center font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] transition-colors border-r border-gold-400/30 ${
+                      frequency === "once"
+                        ? "bg-gold-400 text-navy-900"
+                        : "bg-transparent text-navy-800/65 hover:bg-gold-400/10"
                     }`}
                   >
                     One-time
                   </button>
                   <button
                     onClick={() => setFrequency("monthly")}
-                    className={`rounded-md px-5 py-2.5 text-sm font-semibold transition-all ${
-                      frequency === "monthly" ? "bg-white text-navy-700 shadow-sm" : "text-gray-500"
+                    className={`py-4 text-center font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] transition-colors ${
+                      frequency === "monthly"
+                        ? "bg-gold-400 text-navy-900"
+                        : "bg-transparent text-navy-800/65 hover:bg-gold-400/10"
                     }`}
                   >
                     Monthly
                   </button>
                 </div>
 
-                {/* Amount selection */}
-                <div className="mt-6">
-                  <label className="text-sm font-semibold text-navy-700">Select amount</label>
-                  <div className="mt-3 grid grid-cols-3 gap-3 sm:grid-cols-5">
-                    {presets.map((a) => (
-                      <button
-                        key={a}
-                        onClick={() => setSelected(a)}
-                        className={`rounded-lg border-2 py-4 text-center text-base font-bold transition-all ${
-                          selected === a
-                            ? "border-gold-400 bg-gold-400/5 text-gold-600 ring-2 ring-gold-400/20"
-                            : "border-gray-200 text-navy-700 hover:border-gold-400/50"
-                        }`}
-                      >
-                        &euro;{a.toLocaleString("en-GB")}
-                      </button>
-                    ))}
+                {/* Amount selection — 6-tile square grid */}
+                <label className="mt-8 block font-mono text-[0.625rem] font-medium uppercase tracking-[0.28em] text-navy-800/60 mb-3">
+                  Amount
+                </label>
+                <div className="grid grid-cols-3 gap-0 border border-gold-400/30 sm:grid-cols-6">
+                  {presets.map((a, i) => (
                     <button
-                      onClick={() => setSelected(null)}
-                      className={`rounded-lg border-2 py-4 text-center text-sm font-bold transition-all ${
-                        selected === null
-                          ? "border-gold-400 bg-gold-400/5 text-gold-600 ring-2 ring-gold-400/20"
-                          : "border-gray-200 text-navy-700 hover:border-gold-400/50"
+                      key={a}
+                      onClick={() => setSelected(a)}
+                      className={`aspect-square flex flex-col items-center justify-center gap-1 transition-colors border-r border-b border-gold-400/20 sm:border-b-0 ${
+                        i === presets.length - 1 ? "sm:border-r" : ""
+                      } ${
+                        selected === a
+                          ? "bg-gold-400 text-navy-900 border-gold-400"
+                          : "bg-transparent text-navy-800 hover:bg-gold-400/10"
                       }`}
                     >
-                      Other
+                      <span className="font-serif text-2xl font-medium">€{a.toLocaleString("en-GB")}</span>
+                      <span className="font-mono text-[0.5625rem] uppercase tracking-[0.2em] opacity-70">
+                        {frequency === "monthly" ? "/mo" : "once"}
+                      </span>
                     </button>
-                  </div>
-                  {selected === null && (
-                    <div className="mt-3">
-                      <div className="relative">
-                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold">&euro;</span>
-                        <input
-                          type="number"
-                          placeholder="Enter amount"
-                          className="form-input !pl-9"
-                          min="1"
-                        />
-                      </div>
-                    </div>
-                  )}
+                  ))}
+                  <button
+                    onClick={() => setSelected(null)}
+                    className={`aspect-square flex flex-col items-center justify-center gap-1 transition-colors ${
+                      selected === null
+                        ? "bg-gold-400 text-navy-900"
+                        : "bg-transparent text-navy-800 hover:bg-gold-400/10"
+                    }`}
+                  >
+                    <span className="font-serif text-xl italic">Other</span>
+                    <span className="font-mono text-[0.5625rem] uppercase tracking-[0.2em] opacity-70">custom</span>
+                  </button>
                 </div>
 
+                {selected === null && (
+                  <div className="mt-4">
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 font-serif text-lg text-navy-800/55">€</span>
+                      <input
+                        type="number"
+                        placeholder="Enter amount"
+                        className="form-input !pl-9"
+                        min="1"
+                      />
+                    </div>
+                  </div>
+                )}
+
                 {/* Personal info */}
-                <div className="mt-8 border-t border-gray-100 pt-8">
-                  <h3 className="text-sm font-semibold text-navy-700">Your Details</h3>
-                  <div className="mt-4 space-y-3">
+                <div className="mt-10 border-t border-gold-400/20 pt-8">
+                  <span className="eyebrow">Your Details</span>
+                  <div className="mt-5 space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       <input type="text" placeholder="First name" className="form-input" required />
                       <input type="text" placeholder="Last name" className="form-input" required />
                     </div>
-                    <input type="email" placeholder="Email address" className="form-input" required />
-                    <select className="form-input text-gray-500">
+                    <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
+                    <select className="form-input">
                       <option value="">Country of residence</option>
                       <option>Austria</option><option>Belgium</option><option>France</option>
                       <option>Germany</option><option>Italy</option><option>Netherlands</option>
@@ -128,81 +155,84 @@ export default function DonatePage() {
                 </div>
 
                 {/* Payment */}
-                <div className="mt-8 border-t border-gray-100 pt-8">
-                  <h3 className="text-sm font-semibold text-navy-700">Payment Method</h3>
-                  <div className="mt-4 space-y-3">
-                    <div className="rounded-lg border-2 border-gold-400 bg-gold-400/5 p-4">
-                      <label className="flex items-center gap-3 text-sm font-semibold text-navy-700">
-                        <input type="radio" name="payment" defaultChecked className="accent-gold-400" />
-                        <CreditCard className="h-4 w-4" />
+                <div className="mt-10 border-t border-gold-400/20 pt-8">
+                  <span className="eyebrow">Payment Method</span>
+                  <div className="mt-5 space-y-0 border border-gold-400/25">
+                    <label className="flex items-center gap-3 border-b border-gold-400/20 bg-gold-400/5 p-5 font-lede text-base text-navy-800 cursor-pointer">
+                      <input type="radio" name="payment" defaultChecked className="accent-gold-400" />
+                      <span className="font-sans text-[0.6875rem] font-medium uppercase tracking-[0.24em]">
                         Credit / Debit Card
-                      </label>
-                    </div>
-                    <div className="rounded-lg border-2 border-gray-200 p-4 transition-colors hover:border-gold-400/50">
-                      <label className="flex items-center gap-3 text-sm font-semibold text-navy-700">
-                        <input type="radio" name="payment" className="accent-gold-400" />
+                      </span>
+                    </label>
+                    <label className="flex items-center gap-3 p-5 font-lede text-base text-navy-800 transition-colors hover:bg-gold-400/5 cursor-pointer">
+                      <input type="radio" name="payment" className="accent-gold-400" />
+                      <span className="font-sans text-[0.6875rem] font-medium uppercase tracking-[0.24em]">
                         Bank Transfer (SEPA)
-                      </label>
-                    </div>
+                      </span>
+                    </label>
                   </div>
                 </div>
 
                 {/* Consent */}
-                <div className="mt-6 space-y-2">
-                  <label className="flex items-start gap-2 text-xs text-gray-500">
-                    <input type="checkbox" required className="mt-0.5 h-3.5 w-3.5 rounded accent-gold-400" />
+                <div className="mt-8 space-y-3">
+                  <label className="flex items-start gap-2 font-lede text-xs text-navy-800/65">
+                    <input type="checkbox" required className="mt-1 h-3.5 w-3.5 accent-gold-400" />
                     <span>
                       I confirm this donation is made from my own funds and I agree to the{" "}
-                      <Link href="/privacy" className="text-gold-500 underline">privacy policy</Link>.
+                      <Link href="/privacy" className="text-gold-600 underline underline-offset-2">privacy policy</Link>.
                     </span>
                   </label>
-                  <label className="flex items-start gap-2 text-xs text-gray-500">
-                    <input type="checkbox" className="mt-0.5 h-3.5 w-3.5 rounded accent-gold-400" />
+                  <label className="flex items-start gap-2 font-lede text-xs text-navy-800/65">
+                    <input type="checkbox" className="mt-1 h-3.5 w-3.5 accent-gold-400" />
                     <span>I would like to receive updates about how my donation is used.</span>
                   </label>
                 </div>
 
-                <button className="btn-primary mt-6 w-full text-base">
-                  <Heart className="mr-2 h-4 w-4" />
-                  Donate {selected ? `€${selected.toLocaleString("en-GB")}` : ""} {frequency === "monthly" ? "Monthly" : ""}
+                <button className="btn-primary mt-8 w-full">
+                  Donate {selected ? `€${selected.toLocaleString("en-GB")}` : ""}
+                  {frequency === "monthly" ? " Monthly" : ""} <span className="font-serif">→</span>
                 </button>
 
-                <div className="mt-4 flex items-center justify-center gap-4 text-xs text-gray-400">
-                  <span className="flex items-center gap-1"><Lock className="h-3 w-3" /> SSL Secured</span>
-                  <span className="flex items-center gap-1"><Shield className="h-3 w-3" /> GDPR Compliant</span>
-                </div>
+                <p className="mt-5 text-center font-mono text-[0.625rem] uppercase tracking-[0.18em] text-navy-800/50">
+                  SSL Secured · GDPR Compliant · Stripe
+                </p>
               </div>
             </div>
 
             {/* Impact sidebar */}
             <div className="lg:col-span-2">
-              <div className="sticky top-28 space-y-6">
-                <div className="card p-6">
-                  <h3 className="font-serif text-lg font-bold">Your Impact</h3>
-                  <p className="mt-1 text-sm text-gray-500">See what your donation achieves.</p>
-                  <ul className="mt-5 space-y-4">
+              <div className="sticky top-28 space-y-8">
+                <div className="border border-gold-400/30 bg-ivory p-8">
+                  <span className="eyebrow">Your Impact</span>
+                  <h3 className="mt-4 font-serif text-2xl font-medium">
+                    Where it goes.
+                  </h3>
+                  <p className="mt-2 font-lede text-sm text-navy-800/65">
+                    See what your donation achieves.
+                  </p>
+                  <ul className="mt-6 space-y-0 border-t border-gold-400/20">
                     {impact.map((item) => (
-                      <li key={item.amount} className="flex items-start gap-3">
-                        <span className="shrink-0 rounded bg-gold-400/10 px-2 py-1 text-xs font-bold text-gold-600">
+                      <li key={item.amount} className="flex items-start gap-4 border-b border-gold-400/15 py-4 last:border-b-0">
+                        <span className="shrink-0 font-serif text-xl italic text-gold-400">
                           {item.amount}
                         </span>
-                        <span className="text-sm text-gray-600">{item.desc}</span>
+                        <span className="font-lede text-sm leading-relaxed text-navy-800/75">{item.desc}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="card p-6">
-                  <h3 className="font-serif text-lg font-bold">Transparency Promise</h3>
-                  <ul className="mt-4 space-y-3">
+                <div className="border border-gold-400/30 bg-ivory p-8">
+                  <span className="eyebrow">Transparency Promise</span>
+                  <ul className="mt-6 space-y-4">
                     {[
                       "Annual audited financial reports published online",
                       "Donor funds ring-fenced for campaign activities",
                       "Full compliance with EU electoral finance regulations",
                       "Tax-deductible where applicable under national law",
                     ].map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm text-gray-600">
-                        <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
+                      <li key={item} className="flex items-start gap-3 font-lede text-sm text-navy-800/75">
+                        <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
                         {item}
                       </li>
                     ))}

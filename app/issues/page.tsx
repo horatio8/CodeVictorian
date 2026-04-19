@@ -1,17 +1,18 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Shield, Users, Landmark, Scale, Building2, BookOpen, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = { title: "Our Issues" }
+
+const romans = ["I", "II", "III", "IV", "V", "VI"]
 
 const issues = [
   {
     id: "remigration",
-    icon: Shield,
     title: "Start Remigration",
     subtitle: "Restoring demographic balance through lawful, humane policy",
     paragraphs: [
-      "Europe\u2019s demographic transformation is not a natural phenomenon \u2014 it is the result of decades of policy failure. Remigration is the lawful, organised return of those who have no legal right to reside in Europe, or whose presence poses a demonstrable threat to public safety.",
+      "Europe\u2019s demographic transformation is not a natural phenomenon — it is the result of decades of policy failure. Remigration is the lawful, organised return of those who have no legal right to reside in Europe, or whose presence poses a demonstrable threat to public safety.",
       "We advocate for clear, transparent legal frameworks that prioritise the rights and safety of European citizens while respecting international law. Our policy papers propose a phased approach that begins with enforcing existing deportation orders and ending asylum fraud.",
     ],
     stats: [
@@ -22,7 +23,6 @@ const issues = [
   },
   {
     id: "immigration",
-    icon: Users,
     title: "Stop Harmful Immigration",
     subtitle: "Ending the unchecked flow that threatens our communities",
     paragraphs: [
@@ -37,11 +37,10 @@ const issues = [
   },
   {
     id: "culture",
-    icon: Landmark,
     title: "Preserve European Culture",
     subtitle: "Safeguarding our heritage for future generations",
     paragraphs: [
-      "European civilisation has given the world democracy, the scientific method, the rule of law, classical music, Renaissance art, and the very concept of human rights. This heritage is not a museum piece \u2014 it is a living tradition that must be actively defended and transmitted.",
+      "European civilisation has given the world democracy, the scientific method, the rule of law, classical music, Renaissance art, and the very concept of human rights. This heritage is not a museum piece — it is a living tradition that must be actively defended and transmitted.",
       "We campaign for strengthened heritage protection laws, mandatory civic and cultural education in schools, the protection of European languages and traditions, and public investment in the arts and cultural institutions that define who we are.",
     ],
     stats: [
@@ -53,23 +52,23 @@ const issues = [
 ]
 
 const additionalIssues = [
-  { icon: Scale, title: "Democratic Sovereignty", desc: "Restoring decision-making power to national parliaments and the citizens they represent." },
-  { icon: Building2, title: "Economic Justice", desc: "Ensuring that globalisation benefits European workers and small businesses, not just multinational corporations." },
-  { icon: BookOpen, title: "Education Reform", desc: "Reforming curricula to teach European history, culture, and civic values with pride and accuracy." },
+  { roman: "IV.", title: "Democratic Sovereignty", desc: "Restoring decision-making power to national parliaments and the citizens they represent." },
+  { roman: "V.", title: "Economic Justice", desc: "Ensuring that globalisation benefits European workers and small businesses, not just multinational corporations." },
+  { roman: "VI.", title: "Education Reform", desc: "Reforming curricula to teach European history, culture, and civic values with pride and accuracy." },
 ]
 
 export default function IssuesPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 70% 30%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+      <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Our Platform</span>
-          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            The Issues
+          <span className="eyebrow eyebrow-both">Our Platform</span>
+          <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
+            The{" "}
+            <span className="italic font-normal text-gold-400">Issues</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+          <p className="lede mx-auto mt-8 max-w-2xl">
             We confront the existential challenges facing Europe with clear, evidence-based
             policies and the courage to speak truths that mainstream politics avoids.
           </p>
@@ -81,42 +80,57 @@ export default function IssuesPage() {
         <section
           key={issue.id}
           id={issue.id}
-          className={`section-padding ${i % 2 === 0 ? "bg-white" : "bg-cream"}`}
+          className={`section-padding ${i % 2 === 0 ? "bg-ivory" : "bg-cream"} ${
+            i < issues.length - 1 ? "border-b border-gold-400/20" : ""
+          }`}
         >
           <div className="mx-auto max-w-7xl">
-            <div className={`grid items-start gap-12 lg:grid-cols-5 lg:gap-16 ${i % 2 === 1 ? "lg:grid-flow-dense" : ""}`}>
+            <div className="sec-num">
+              <span className="num">N<sup>o</sup>. {romans[i]}</span>
+              <span className="line" />
+              <span className="label">Priority {romans[i]}</span>
+            </div>
+
+            <div className={`grid items-start gap-12 lg:grid-cols-5 lg:gap-16 ${
+              i % 2 === 1 ? "lg:grid-flow-dense" : ""
+            }`}>
               <div className={`lg:col-span-3 ${i % 2 === 1 ? "lg:col-start-3" : ""}`}>
-                <div className="flex items-center gap-3">
-                  <issue.icon className="h-8 w-8 text-gold-500" />
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">
-                    Priority {i + 1}
-                  </span>
+                <div className="font-serif text-5xl italic text-gold-400 leading-none">
+                  {romans[i]}.
                 </div>
-                <h2 className="gold-accent relative mt-4 font-serif text-3xl font-bold sm:text-4xl">
+                <span className="eyebrow mt-6">Priority {romans[i]}</span>
+                <h2 className="mt-4 font-serif text-4xl font-medium sm:text-5xl">
                   {issue.title}
                 </h2>
-                <p className="mt-2 text-base font-medium text-gray-500">{issue.subtitle}</p>
+                <p className="mt-3 font-lede text-xl italic text-navy-800/70">{issue.subtitle}</p>
                 {issue.paragraphs.map((p, j) => (
-                  <p key={j} className="mt-4 text-base leading-relaxed text-gray-600">{p}</p>
+                  <p key={j} className="mt-5 font-lede text-base leading-relaxed text-navy-800/75">{p}</p>
                 ))}
                 <Link
                   href="/petition"
-                  className="mt-8 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-gold-500 transition-colors hover:text-gold-600"
+                  className="mt-9 inline-flex items-center gap-2 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-gold-600 transition-colors hover:text-gold-500"
                 >
-                  Take action <ArrowRight className="h-4 w-4" />
+                  Take action <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
 
               {/* Stats */}
-              <div className={`space-y-4 lg:col-span-2 ${i % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""}`}>
-                {issue.stats.map((s) => (
-                  <div key={s.label} className="card p-6 text-center">
-                    <div className="font-serif text-3xl font-bold text-navy-700">{s.value}</div>
-                    <div className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-500">
-                      {s.label}
+              <div className={`lg:col-span-2 ${i % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""}`}>
+                <div className="border border-gold-400/25">
+                  {issue.stats.map((s, k, arr) => (
+                    <div
+                      key={s.label}
+                      className={`p-8 text-center ${
+                        k < arr.length - 1 ? "border-b border-gold-400/20" : ""
+                      }`}
+                    >
+                      <div className="font-serif text-4xl font-medium text-navy-800">{s.value}</div>
+                      <div className="mt-2 font-mono text-[0.625rem] font-medium uppercase tracking-[0.24em] text-navy-800/55">
+                        {s.label}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -124,20 +138,28 @@ export default function IssuesPage() {
       ))}
 
       {/* Additional issues */}
-      <section className="section-padding bg-navy-700">
+      <section className="section-padding bg-navy-900 on-dark">
         <div className="mx-auto max-w-7xl">
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Also Important</span>
-            <h2 className="mt-3 font-serif text-3xl font-bold text-white sm:text-4xl">
-              Additional Priorities
+            <span className="eyebrow eyebrow-both">Also Important</span>
+            <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl">
+              Additional{" "}
+              <span className="italic font-normal text-gold-400">Priorities</span>
             </h2>
           </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-3">
-            {additionalIssues.map((item) => (
-              <div key={item.title} className="rounded-xl bg-white/5 p-7 ring-1 ring-white/10 transition-colors hover:bg-white/10">
-                <item.icon className="h-8 w-8 text-gold-400" />
-                <h3 className="mt-4 font-serif text-lg font-bold text-white">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">{item.desc}</p>
+          <div className="mt-14 grid gap-0 border border-gold-400/25 sm:grid-cols-3">
+            {additionalIssues.map((item, i, arr) => (
+              <div
+                key={item.title}
+                className={`p-8 transition-colors hover:bg-white/5 ${
+                  i < arr.length - 1 ? "sm:border-r sm:border-gold-400/25" : ""
+                }`}
+              >
+                <div className="font-serif text-4xl italic text-gold-400 leading-none">
+                  {item.roman}
+                </div>
+                <h3 className="mt-5 font-serif text-xl font-medium text-white">{item.title}</h3>
+                <p className="mt-3 font-lede text-sm leading-relaxed text-white/65">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -147,15 +169,17 @@ export default function IssuesPage() {
       {/* CTA */}
       <section className="section-padding bg-cream text-center">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="font-serif text-3xl font-bold sm:text-4xl">
-            Stand Up for These Issues
+          <div className="fleur">✦ ❦ ✦</div>
+          <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl">
+            Stand up for these{" "}
+            <span className="italic font-normal text-gold-400">issues</span>.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-gray-600">
+          <p className="lede mx-auto mt-5 max-w-xl">
             Your signature and support make a real difference. Join over 127,000 Europeans demanding change.
           </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link href="/petition" className="btn-primary">Sign the Petition</Link>
-            <Link href="/donate" className="btn-navy">Donate to the Cause</Link>
+            <Link href="/donate" className="btn-secondary">Donate to the Cause</Link>
           </div>
         </div>
       </section>
