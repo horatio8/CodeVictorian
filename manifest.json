@@ -1,0 +1,62 @@
+{
+  "$schema": "https://codevictorian.example/design-handover.schema.json",
+  "name": "code-victorian-design-handover",
+  "version": "1.0.0",
+  "date": "2026-04-19",
+  "description": "Approved visual design for Code Victorian — drop-in handover for Claude Code or any engineer.",
+  "purpose": "design-handover",
+  "status": "approved",
+  "author": "Design, via Claude",
+  "target_project": "CodeVictorian (claude code repo)",
+  "entry_points": {
+    "orientation_for_agents": "CLAUDE.md",
+    "human_readme": "HANDOVER.md",
+    "specification": "DESIGN_SYSTEM.md",
+    "visual_reference": "reference.html",
+    "porting_prompt": "PROMPT.md"
+  },
+  "artifacts": {
+    "tokens_css": "tokens.css",
+    "components_css": "components.css",
+    "fonts_snippet": "fonts.html",
+    "assets_dir": "assets/"
+  },
+  "design_system": {
+    "palette": {
+      "default_theme": "navy",
+      "themes": ["navy", "ivory", "oxblood", "light"],
+      "primary_bg": "#0E1A2E",
+      "primary_accent": "#C9A24B",
+      "foreground": "#F4EDE0"
+    },
+    "typography": {
+      "display": "Playfair Display",
+      "serif":   "EB Garamond",
+      "body":    "Inter",
+      "mono":    "JetBrains Mono"
+    },
+    "hero_layout_default": "framed",
+    "density_default": "normal"
+  },
+  "applies_to": [
+    "home",
+    "mission",
+    "newsletter",
+    "donate",
+    "europefirst",
+    "terms"
+  ],
+  "preserve": [
+    "routing",
+    "data-fetching",
+    "stripe-integration",
+    "form-submission",
+    "cms-content",
+    "copy (unless explicitly asked)"
+  ],
+  "recognisable_by": {
+    "folder_name": "design-handover",
+    "marker_files": ["CLAUDE.md", "DESIGN_SYSTEM.md", "manifest.json"],
+    "conventions": ["CLAUDE.md (Claude Code)", "tokens.css / components.css (design-system)", "manifest.json (structured index)"]
+  }
+}

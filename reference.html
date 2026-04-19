@@ -1,0 +1,1504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Code Victorian — An Editorial Revival</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* themes */
+    --navy:        #0E1A2E;
+    --navy-deep:   #070E1A;
+    --ink:         #0B1320;
+    --parchment:   #F4EDE0;
+    --parchment-2: #EBE2D0;
+    --gold:        #C9A24B;
+    --gold-soft:   #E8C778;
+    --gold-deep:   #9C7A2E;
+    --rule:        rgba(201,162,75,0.35);
+    --muted:       rgba(244,237,224,0.64);
+
+    /* semantic — default: dark navy theme */
+    --bg:          var(--navy);
+    --bg-2:        var(--navy-deep);
+    --fg:          var(--parchment);
+    --fg-muted:    rgba(244,237,224,0.72);
+    --accent:      var(--gold);
+    --accent-soft: var(--gold-soft);
+    --hairline:    rgba(201,162,75,0.28);
+
+    /* fonts */
+    --display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    --serif:   'EB Garamond', Georgia, serif;
+    --body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+    --mono:    'JetBrains Mono', ui-monospace, monospace;
+
+    /* density */
+    --sec-py: 140px;
+    --sec-px: clamp(24px, 6vw, 96px);
+    --stack:  28px;
+  }
+
+  /* ---- theme variants via [data-theme] ---- */
+  [data-theme="ivory"] {
+    --bg: #F4EDE0;
+    --bg-2: #EBE2D0;
+    --fg: #1B1409;
+    --fg-muted: rgba(27,20,9,0.7);
+    --accent: #9C7A2E;
+    --accent-soft: #C9A24B;
+    --hairline: rgba(156,122,46,0.35);
+    --muted: rgba(27,20,9,0.6);
+  }
+  [data-theme="oxblood"] {
+    --bg: #3A1418;
+    --bg-2: #25090C;
+    --fg: #F4EDE0;
+    --fg-muted: rgba(244,237,224,0.75);
+    --accent: #D4A64A;
+    --accent-soft: #E8C778;
+    --hairline: rgba(212,166,74,0.3);
+  }
+  [data-theme="light"] {
+    --bg: #FBF7EE;
+    --bg-2: #F4EDE0;
+    --fg: #0E1A2E;
+    --fg-muted: rgba(14,26,46,0.72);
+    --accent: #9C7A2E;
+    --accent-soft: #C9A24B;
+    --hairline: rgba(14,26,46,0.2);
+  }
+
+  [data-density="tight"] {
+    --sec-py: 88px;
+    --stack: 18px;
+  }
+
+  [data-display="playfair"]   { --display: 'Playfair Display', Georgia, serif; }
+  [data-display="eb-garamond"]{ --display: 'EB Garamond', Georgia, serif; }
+  [data-display="cormorant"]  { --display: 'Cormorant Garamond', Georgia, serif; }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; background: var(--bg); color: var(--fg); font-family: var(--body); }
+  body {
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ---------- typography ---------- */
+  .display {
+    font-family: var(--display);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.012em;
+  }
+  .display.italic { font-style: italic; font-weight: 400; }
+
+  h1.display { font-size: clamp(56px, 9vw, 148px); }
+  h2.display { font-size: clamp(44px, 6.5vw, 96px); }
+  h3.display { font-size: clamp(28px, 3.2vw, 44px); }
+
+  .eyebrow {
+    font-family: var(--body);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    display: inline-flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .eyebrow::before, .eyebrow.bothrules::after {
+    content: "";
+    width: 36px; height: 1px;
+    background: var(--accent);
+    display: inline-block;
+    opacity: 0.7;
+  }
+  .roman {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 14px;
+    letter-spacing: 0.08em;
+  }
+  .lede {
+    font-family: var(--serif);
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.55;
+    color: var(--fg-muted);
+    font-weight: 400;
+  }
+
+  /* ---------- layout primitives ---------- */
+  .section { padding: var(--sec-py) var(--sec-px); position: relative; }
+  .wide    { max-width: 1440px; margin: 0 auto; }
+  .medium  { max-width: 1080px; margin: 0 auto; }
+  .narrow  { max-width: 760px;  margin: 0 auto; }
+  .rule    { height: 1px; background: var(--hairline); width: 100%; }
+  .dbl-rule{
+    height: 4px;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  /* ---------- nav ---------- */
+  .nav {
+    position: fixed; top:0; left:0; right:0; z-index: 100;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 18px clamp(20px, 4vw, 56px);
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    border-bottom: 1px solid var(--hairline);
+    transition: background .3s ease;
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links.right { justify-content: flex-end; }
+  .nav-links a {
+    font-family: var(--body);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    position: relative;
+    padding: 4px 0;
+    cursor: pointer;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
+  .nav-links a.active::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -4px;
+    height: 1px; background: var(--accent);
+  }
+
+  .brand-mark {
+    display: inline-flex; align-items: center; gap: 12px;
+    cursor: pointer;
+  }
+  .brand-mark img { height: 44px; width: auto; filter: none; }
+  .brand-mark img[data-broken], .footer-graphic[data-broken] { display: none; }
+  .brand-fallback {
+    width: 44px; height: 44px;
+    border: 1px solid var(--accent);
+    display: none;
+    align-items: center; justify-content: center;
+    font-family: var(--display); font-style: italic; font-size: 22px; color: var(--accent);
+  }
+  .brand-mark img[data-broken] + .brand-fallback { display: inline-flex; }
+  .brand-mark .brand-type {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    color: var(--fg);
+    line-height: 1;
+  }
+  .brand-mark .brand-sub {
+    font-family: var(--body);
+    font-size: 9px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 3px;
+  }
+
+  /* ---------- buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 16px 28px;
+    font-family: var(--body);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    transition: all .25s ease;
+    position: relative;
+  }
+  .btn:hover {
+    background: var(--accent);
+    color: var(--bg);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px -10px var(--accent);
+  }
+  .btn.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+  .btn.primary:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent-soft);
+  }
+  .btn .arr { font-family: var(--display); font-size: 14px; }
+
+  /* ---------- placeholder plate ---------- */
+  .plate {
+    position: relative;
+    background:
+      repeating-linear-gradient(135deg,
+        color-mix(in srgb, var(--accent) 8%, transparent) 0 1px,
+        transparent 1px 14px),
+      color-mix(in srgb, var(--bg-2) 90%, black);
+    border: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .plate::after {
+    content: attr(data-label);
+    position: absolute; left: 14px; bottom: 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    opacity: 0.8;
+  }
+  .plate::before {
+    content: "";
+    position: absolute; inset: 8px;
+    border: 1px solid var(--hairline);
+    pointer-events: none;
+  }
+
+  /* corner ornament for gold cards */
+  .ornament { position: relative; }
+  .ornament::before, .ornament::after {
+    content: "";
+    position: absolute; width: 18px; height: 18px;
+    border: 1px solid var(--accent);
+  }
+  .ornament::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+  .ornament::after  { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+  /* ---------- reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .bg-video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.55) saturate(1.1) contrast(1.05);
+  }
+  .hero-fallback {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+      radial-gradient(ellipse at 20% 80%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 50%),
+      linear-gradient(180deg, var(--bg-2), var(--bg) 60%, var(--bg-2));
+    z-index: 0;
+  }
+  .hero-fallback::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 6%, transparent) 0 1px, transparent 1px 80px),
+      repeating-linear-gradient(0deg, color-mix(in srgb, var(--accent) 6%, transparent) 0 1px, transparent 1px 80px);
+    opacity: 0.6;
+  }
+  .hero .vignette {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(7,14,26,0.55) 70%, rgba(7,14,26,0.85) 100%),
+      linear-gradient(180deg, rgba(7,14,26,0.4) 0%, rgba(7,14,26,0) 30%, rgba(7,14,26,0.7) 100%);
+  }
+  .hero .content { position: relative; z-index: 2; min-height: 100vh; display: flex; flex-direction: column; }
+  .hero .marquee {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 20px clamp(20px, 4vw, 56px);
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--hairline);
+    font-family: var(--body); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--fg-muted);
+    background: linear-gradient(180deg, transparent, rgba(7,14,26,0.7));
+  }
+  .hero .marquee .dot { display:inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin: 0 12px; vertical-align: middle; }
+
+  /* ---------- footer ---------- */
+  .footer-grand {
+    position: relative;
+    padding: 100px var(--sec-px) 40px;
+    background: var(--bg-2);
+    border-top: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+
+  /* ---------- tweaks panel ---------- */
+  .tweaks {
+    position: fixed; right: 20px; bottom: 20px; z-index: 200;
+    width: 300px;
+    background: color-mix(in srgb, var(--bg-2) 94%, transparent);
+    border: 1px solid var(--hairline);
+    backdrop-filter: blur(14px);
+    padding: 20px 22px;
+    font-family: var(--body);
+    font-size: 12px;
+    display: none;
+    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .tweaks.open { display: block; }
+  .tweaks h4 {
+    margin: 0 0 16px; font-family: var(--display); font-weight: 500; font-size: 18px;
+    letter-spacing: 0.02em;
+    padding-bottom: 12px; border-bottom: 1px solid var(--hairline);
+    color: var(--accent);
+  }
+  .tweaks label { display:block; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fg-muted); margin: 14px 0 6px; }
+  .tweaks .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tweaks .chip {
+    padding: 6px 10px; border: 1px solid var(--hairline); cursor: pointer;
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--fg-muted);
+    transition: all .15s;
+  }
+  .tweaks .chip:hover { color: var(--fg); }
+  .tweaks .chip.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .tweaks input[type="text"] {
+    width: 100%; background: transparent; border: 1px solid var(--hairline);
+    color: var(--fg); font-family: var(--serif); font-size: 13px;
+    padding: 8px 10px; margin-top: 6px;
+  }
+
+  /* page container */
+  .page { display: none; }
+  .page.active { display: block; animation: fade .45s ease; }
+  @keyframes fade { from { opacity: 0; transform: translateY(10px); } to { opacity:1; transform: none; } }
+
+  /* section number */
+  .sec-num {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 60px;
+    gap: 40px;
+  }
+  .sec-num .num {
+    font-family: var(--display); font-style: italic; font-weight: 400;
+    color: var(--accent); font-size: 18px; letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .sec-num .line { flex: 1; height: 1px; background: var(--hairline); }
+  .sec-num .label {
+    font-family: var(--body); font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--fg-muted);
+    white-space: nowrap;
+  }
+
+  /* pillars */
+  .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
+  .pillar { padding: 44px 32px; border-right: 1px solid var(--hairline); position: relative; }
+  .pillar:last-child { border-right: none; }
+  .pillar .glyph {
+    font-family: var(--display); font-style: italic; color: var(--accent);
+    font-size: 44px; line-height: 1; margin-bottom: 22px;
+  }
+  .pillar h4 { font-family: var(--display); font-weight: 500; font-size: 26px; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .pillar p { margin: 0; font-size: 14px; color: var(--fg-muted); line-height: 1.65; }
+  @media (max-width: 900px) {
+    .pillars { grid-template-columns: 1fr 1fr; }
+    .pillar:nth-child(2) { border-right: none; }
+    .pillar:nth-child(1), .pillar:nth-child(2) { border-bottom: 1px solid var(--hairline); }
+  }
+
+  /* quote block */
+  .quote-block {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .quote-block .marks {
+    font-family: var(--display); font-style: italic; color: var(--accent);
+    font-size: 80px; line-height: 0.2; letter-spacing: -0.05em;
+    margin-bottom: 30px;
+  }
+  .quote-block blockquote {
+    font-family: var(--display); font-style: italic; font-weight: 400;
+    font-size: clamp(28px, 3.6vw, 56px);
+    line-height: 1.25;
+    margin: 0 0 40px;
+    letter-spacing: -0.012em;
+  }
+  .quote-block .attr {
+    font-family: var(--body); font-size: 11px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--accent);
+  }
+
+  /* grid cards */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  @media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  @media (max-width: 900px) { .three-col { grid-template-columns: 1fr; } }
+
+  /* countdown */
+  .countdown {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border: 1px solid var(--hairline);
+    background: linear-gradient(180deg, rgba(7,14,28,0.5), rgba(6,12,24,0.3));
+  }
+  .cd-cell {
+    padding: 32px 20px; text-align: center;
+    border-right: 1px solid var(--hairline);
+  }
+  .cd-cell:last-child { border-right: none; }
+  .cd-num {
+    font-family: var(--display); color: var(--accent);
+    font-size: 54px; font-weight: 400; line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .cd-label {
+    margin-top: 10px;
+    font-family: var(--body); font-size: 10px;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--fg-muted);
+  }
+
+  /* newsletter form */
+  .news-form {
+    display: grid; grid-template-columns: 1fr auto; gap: 0;
+    border: 1px solid var(--hairline);
+    background: color-mix(in srgb, var(--bg-2) 70%, transparent);
+  }
+  .news-form input {
+    background: transparent; border: none; padding: 20px 24px;
+    font-family: var(--serif); font-size: 17px; color: var(--fg);
+    outline: none;
+  }
+  .news-form input::placeholder { color: var(--fg-muted); font-style: italic; }
+  .news-form button {
+    background: var(--accent); color: var(--bg);
+    border: none;
+    padding: 0 32px;
+    font-family: var(--body); font-size: 11px; letter-spacing: 0.28em;
+    text-transform: uppercase; font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .news-form button:hover { background: var(--accent-soft); }
+
+  /* donation tiers */
+  .don-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 12px; margin-bottom: 24px;
+  }
+  .don-tier {
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--hairline);
+    display: flex; flex-direction: column; align-items:center; justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    transition: all .2s ease;
+    background: color-mix(in srgb, var(--bg-2) 40%, transparent);
+  }
+  .don-tier:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .don-tier.active {
+    background: var(--accent); color: var(--bg); border-color: var(--accent);
+  }
+  .don-tier .amount { font-family: var(--display); font-size: 34px; font-weight: 500; }
+  .don-tier .freq { font-family: var(--body); font-size: 9px; letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.8; }
+  @media (max-width: 700px) { .don-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .freq-tabs { display: flex; gap: 0; border: 1px solid var(--hairline); margin-bottom: 20px; }
+  .freq-tabs .tab {
+    flex: 1; padding: 14px; text-align: center; cursor: pointer;
+    font-family: var(--body); font-size: 10px; letter-spacing: 0.24em;
+    text-transform: uppercase; color: var(--fg-muted);
+    border-right: 1px solid var(--hairline);
+    transition: all .2s;
+  }
+  .freq-tabs .tab:last-child { border-right: none; }
+  .freq-tabs .tab.active { background: var(--accent); color: var(--bg); }
+
+  /* membership */
+  .mem-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 900px) { .mem-cards { grid-template-columns: 1fr; } }
+  .mem-card {
+    border: 1px solid var(--hairline);
+    padding: 44px 38px;
+    background: color-mix(in srgb, var(--bg-2) 50%, transparent);
+    position: relative;
+  }
+  .mem-card.featured {
+    background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+    border-color: var(--accent);
+  }
+  .mem-card .tier-label {
+    font-family: var(--body); font-size: 10px; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 18px;
+  }
+  .mem-card .tier-name { font-family: var(--display); font-size: 38px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .mem-card .tier-price { font-family: var(--display); font-size: 26px; color: var(--accent); font-style: italic; font-weight: 400; margin-bottom: 22px; }
+  .mem-card ul { list-style: none; padding: 0; margin: 22px 0 28px; }
+  .mem-card li {
+    padding: 10px 0 10px 24px;
+    border-bottom: 1px solid var(--hairline);
+    position: relative;
+    font-size: 14px; color: var(--fg-muted);
+  }
+  .mem-card li::before {
+    content: "✦"; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 12px;
+  }
+  .mem-card li:last-child { border-bottom: none; }
+
+  /* insta strip */
+  .insta-strip {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+  }
+  .insta-tile {
+    aspect-ratio: 1;
+  }
+  @media (max-width: 900px) {
+    .insta-strip { grid-template-columns: repeat(3, 1fr); }
+    .insta-tile:nth-child(n+4) { display: none; }
+  }
+
+  /* mission */
+  .mission-hero {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column; justify-content: center;
+    padding: 120px var(--sec-px) 80px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 60%),
+      var(--bg);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  /* terms */
+  .terms-body { max-width: 720px; margin: 0 auto; }
+  .terms-body h3 { font-family: var(--display); font-weight: 500; font-size: 26px; margin: 40px 0 12px; }
+  .terms-body p  { font-size: 15px; line-height: 1.8; color: var(--fg-muted); margin: 0 0 16px; }
+
+  /* hero layout variants */
+  .hero[data-layout="split"] .bg-video { width: 50%; left: 50%; }
+  .hero[data-layout="split"] .vignette { background: linear-gradient(90deg, var(--bg) 48%, color-mix(in srgb, var(--bg) 20%, transparent) 52%, rgba(7,14,26,0.3) 100%); }
+  .hero[data-layout="split"] .content { flex-direction: row; }
+  .hero[data-layout="split"] .hero-text-wrap {
+    width: 50%; padding: 120px var(--sec-px) 80px; display: flex; flex-direction: column; justify-content: center;
+  }
+  .hero[data-layout="framed"] .bg-video { width: 30%; left: 35%; top: 15%; height: 70%; object-fit: cover; border: 1px solid var(--accent); box-shadow: 0 40px 120px -20px rgba(0,0,0,0.8), 0 0 0 8px color-mix(in srgb, var(--accent) 25%, transparent); }
+  .hero[data-layout="framed"] .vignette { background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+  .hero[data-layout="framed"] .content { position: relative; padding: 120px var(--sec-px) 80px; text-align: center; justify-content: flex-end; }
+  .hero[data-layout="framed"] .hero-text-wrap { padding: 0; }
+
+  @media (max-width: 900px) {
+    .hero[data-layout="split"] .bg-video { width: 100%; left: 0; opacity: 0.3; }
+    .hero[data-layout="split"] .content { flex-direction: column; }
+    .hero[data-layout="split"] .hero-text-wrap { width: 100%; }
+    .nav-links.right a:not(:last-child) { display: none; }
+    .nav-links:not(.right) a { display: none; }
+    h1.display { font-size: 48px !important; }
+  }
+
+  /* subtle animated hairline */
+  @keyframes trace {
+    from { transform: scaleX(0); transform-origin: left; }
+    to   { transform: scaleX(1); }
+  }
+  .trace-in { animation: trace 1.4s cubic-bezier(.2,.7,.2,1) both; }
+
+  /* footer grand graphic */
+  .footer-graphic {
+    width: 100%; max-width: 700px; margin: 60px auto 0;
+    opacity: 0.55;
+    filter: sepia(0.3) saturate(0.8);
+    border: 1px solid var(--hairline);
+  }
+
+  /* small helpers */
+  .kicker {
+    font-family: var(--display); font-style: italic; color: var(--accent);
+    font-size: 22px;
+    display: block; margin-bottom: 8px;
+  }
+  .divider-ornament {
+    text-align: center;
+    font-family: var(--display); font-style: italic; color: var(--accent);
+    font-size: 28px;
+    letter-spacing: 0.6em;
+    padding: 20px 0;
+  }
+  .divider-ornament::before, .divider-ornament::after {
+    content: ""; display: inline-block; vertical-align: middle;
+    width: 80px; height: 1px; background: var(--hairline); margin: 0 24px;
+  }
+
+  /* scroll indicator */
+  .scroll-indicator {
+    position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%);
+    font-family: var(--body); font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--fg-muted);
+    writing-mode: vertical-rl;
+    padding: 20px 0 40px;
+  }
+  .scroll-indicator::after {
+    content: ""; position: absolute; left: 50%; bottom: 0;
+    width: 1px; height: 30px; background: var(--accent);
+    animation: scrollLine 1.6s ease-in-out infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* tweaks toggle button */
+  .tweaks-toggle {
+    position: fixed; right: 20px; bottom: 20px; z-index: 199;
+    width: 44px; height: 44px;
+    background: var(--accent); color: var(--bg);
+    border: none; cursor: pointer;
+    font-family: var(--display); font-size: 22px;
+    display: none; /* hidden unless user turns on tweaks mode */
+    align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px -8px rgba(0,0,0,0.5);
+  }
+  .tweaks-toggle.visible { display: flex; }
+</style>
+</head>
+<body data-theme="navy" data-display="cormorant" data-density="normal">
+
+<!-- ========== NAV ========== -->
+<nav class="nav">
+  <div class="nav-links">
+    <a data-page="mission">Mission</a>
+    <a data-page="europefirst">Europe First</a>
+    <a data-page="newsletter">Dispatches</a>
+  </div>
+
+  <div class="brand-mark" data-page="home">
+    <img src="assets/logo.png" alt="Code Victorian" onerror="this.setAttribute('data-broken','')" />
+    <span class="brand-fallback">CV</span>
+    <div>
+      <div class="brand-type">Code Victorian</div>
+      <div class="brand-sub">Est. MMXXVI</div>
+    </div>
+  </div>
+
+  <div class="nav-links right">
+    <a data-page="donate">Donate</a>
+    <a data-page="terms">Terms</a>
+    <a data-page="europefirst" class="btn" style="padding: 10px 18px; font-size: 10px;">Join <span class="arr">→</span></a>
+  </div>
+</nav>
+
+<!-- ============================================================ -->
+<!-- HOME PAGE                                                    -->
+<!-- ============================================================ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero" id="heroSection" data-layout="full">
+    <video class="bg-video" src="assets/hero-video-360p.mp4" autoplay muted loop playsinline preload="auto" onerror="this.style.display='none'"></video>
+    <div class="hero-fallback" aria-hidden="true"></div>
+    <div class="vignette"></div>
+    <div class="content">
+      <div class="hero-text-wrap" style="flex:1; display:flex; flex-direction:column; justify-content:center; padding: 120px var(--sec-px) 120px;">
+        <div class="eyebrow" style="margin-bottom: 28px;">A Cultural Society · Since MMXXVI</div>
+        <h1 class="display" id="heroHeadline">
+          Heritage,<br/>
+          <span class="display italic" style="color: var(--accent);">beautifully</span><br/>
+          preserved.
+        </h1>
+        <p class="lede" style="max-width: 560px; margin-top: 36px;">
+          Code Victorian is a cultural movement devoted to the stewardship of European craft, classical learning, and the elegance of inherited civilisation — uniting those who believe beauty is not optional.
+        </p>
+        <div style="display:flex; gap: 14px; margin-top: 44px; flex-wrap: wrap;">
+          <a class="btn primary" data-page="europefirst">Become a Member <span class="arr">→</span></a>
+          <a class="btn" data-page="mission">Read the Manifesto</a>
+        </div>
+      </div>
+
+      <div class="marquee">
+        <span>INSTAGRAM · 316K <span class="dot"></span> YouTube · Published Weekly <span class="dot"></span> Members in XXIV Countries</span>
+        <span class="roman">N<sup>o</sup>. I — MMXXVI</span>
+      </div>
+      <div class="scroll-indicator">Scroll</div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO QUOTE -->
+  <section class="section" style="padding-top: 120px; padding-bottom: 120px;">
+    <div class="medium reveal">
+      <div class="sec-num">
+        <span class="num">N<sup>o</sup>. I</span>
+        <span class="line"></span>
+        <span class="label">The Statement</span>
+      </div>
+      <div class="quote-block">
+        <div class="marks">&ldquo;</div>
+        <blockquote>
+          The first international movement uniting those of European heritage to preserve the greatest <span class="display italic" style="color: var(--accent);">civilisation</span> the world has ever known.
+        </blockquote>
+        <div class="attr">— The Founding Statement</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
+
+  <!-- PILLARS -->
+  <section class="section" style="padding-top: 60px;">
+    <div class="wide reveal">
+      <div class="sec-num">
+        <span class="num">N<sup>o</sup>. II</span>
+        <span class="line"></span>
+        <span class="label">The Pillars</span>
+      </div>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="glyph">I.</div>
+          <h4>Heritage</h4>
+          <p>Cathedrals, cantatas, correspondence. We archive the inheritance worth passing down.</p>
+        </div>
+        <div class="pillar">
+          <div class="glyph">II.</div>
+          <h4>Craft</h4>
+          <p>From bespoke tailoring to stone masonry — the discipline of making things well, slowly.</p>
+        </div>
+        <div class="pillar">
+          <div class="glyph">III.</div>
+          <h4>Letters</h4>
+          <p>Classical languages, literature, and rhetoric — the humanities as daily practice.</p>
+        </div>
+        <div class="pillar">
+          <div class="glyph">IV.</div>
+          <h4>Community</h4>
+          <p>Dinners, correspondence circles, and annual gatherings across the continent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED ESSAY / WRITING STRIP -->
+  <section class="section" style="padding-top: 80px; padding-bottom: 80px;">
+    <div class="wide reveal">
+      <div class="sec-num">
+        <span class="num">N<sup>o</sup>. III</span>
+        <span class="line"></span>
+        <span class="label">From the Dispatches</span>
+      </div>
+      <div class="three-col">
+        <article>
+          <div class="plate" style="aspect-ratio: 4/3; margin-bottom: 20px;" data-label="essay · architecture"></div>
+          <span class="kicker">Essay · Architecture</span>
+          <h3 class="display" style="margin: 4px 0 12px;">The Afterlife of the Colonnade</h3>
+          <p style="color: var(--fg-muted); font-size: 14px; line-height:1.7;">On the slow return of proportion, repetition, and the civic grammar of the classical façade.</p>
+          <a class="roman" style="margin-top:14px; display:inline-block;">Read essay →</a>
+        </article>
+        <article>
+          <div class="plate" style="aspect-ratio: 4/3; margin-bottom: 20px;" data-label="dispatch · craft"></div>
+          <span class="kicker">Dispatch · Craft</span>
+          <h3 class="display" style="margin: 4px 0 12px;">Notes from a Neapolitan Tailor</h3>
+          <p style="color: var(--fg-muted); font-size: 14px; line-height:1.7;">Three generations of shoulder construction, and what a machine will never know about a buttonhole.</p>
+          <a class="roman" style="margin-top:14px; display:inline-block;">Read essay →</a>
+        </article>
+        <article>
+          <div class="plate" style="aspect-ratio: 4/3; margin-bottom: 20px;" data-label="letter · music"></div>
+          <span class="kicker">Letter · Music</span>
+          <h3 class="display" style="margin: 4px 0 12px;">Of Bach, Palestrina, and Counting</h3>
+          <p style="color: var(--fg-muted); font-size: 14px; line-height:1.7;">Why the counterpoint that trained Europe's ear remains, to this day, the finest discipline of the mind.</p>
+          <a class="roman" style="margin-top:14px; display:inline-block;">Read essay →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBERSHIP TEASER -->
+  <section class="section" style="background: var(--bg-2); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);">
+    <div class="wide reveal">
+      <div class="sec-num">
+        <span class="num">N<sup>o</sup>. IV</span>
+        <span class="line"></span>
+        <span class="label">The Society</span>
+      </div>
+      <div class="two-col" style="gap: 80px;">
+        <div>
+          <span class="eyebrow">Europe First · The Membership</span>
+          <h2 class="display" style="margin: 22px 0;">A society of <span class="display italic" style="color: var(--accent);">readers,</span> makers, and correspondents.</h2>
+          <p class="lede">Membership opens the full archive of long-form dispatches, private correspondence circles, and invitations to the annual gatherings — small, refined, and held in places that remember why they were built.</p>
+          <div style="margin-top: 32px; display:flex; gap:14px; flex-wrap: wrap;">
+            <a class="btn primary" data-page="europefirst">View Tiers <span class="arr">→</span></a>
+            <a class="btn" data-page="mission">Our Mission</a>
+          </div>
+        </div>
+        <div>
+          <div class="countdown" id="countdown">
+            <div class="cd-cell"><div class="cd-num" id="cd-d">00</div><div class="cd-label">Days</div></div>
+            <div class="cd-cell"><div class="cd-num" id="cd-h">00</div><div class="cd-label">Hours</div></div>
+            <div class="cd-cell"><div class="cd-num" id="cd-m">00</div><div class="cd-label">Min</div></div>
+            <div class="cd-cell"><div class="cd-num" id="cd-s">00</div><div class="cd-label">Sec</div></div>
+          </div>
+          <p style="margin-top: 18px; font-family: var(--display); font-style: italic; color: var(--fg-muted); text-align: center;">Until the Summer Gathering — Vienna, MMXXVI</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONATE TEASER -->
+  <section class="section">
+    <div class="medium reveal" style="text-align: center;">
+      <span class="eyebrow bothrules">Patronage</span>
+      <h2 class="display" style="margin: 22px auto; max-width: 14ch;">Support the <span class="display italic" style="color: var(--accent);">quiet work</span> of preservation.</h2>
+      <p class="lede" style="max-width: 56ch; margin: 0 auto 36px;">Every dispatch, archive restoration, and scholarship is made possible by patrons who believe beauty is worth funding — not only admiring.</p>
+      <a class="btn primary" data-page="donate">Make a Contribution <span class="arr">→</span></a>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM STRIP -->
+  <section class="section" style="background: var(--bg-2); padding: 80px var(--sec-px);">
+    <div class="wide reveal">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <span class="eyebrow">@codevictorian · 316,000 Subscribers</span>
+          <h2 class="display" style="margin: 16px 0 0;">Daily, from the <span class="display italic" style="color: var(--accent);">ateliers</span>.</h2>
+        </div>
+        <a class="btn">Follow on Instagram <span class="arr">↗</span></a>
+      </div>
+      <div class="insta-strip">
+        <div class="plate insta-tile" data-label="01 · café"></div>
+        <div class="plate insta-tile" data-label="02 · portrait"></div>
+        <div class="plate insta-tile" data-label="03 · archive"></div>
+        <div class="plate insta-tile" data-label="04 · atelier"></div>
+        <div class="plate insta-tile" data-label="05 · travel"></div>
+        <div class="plate insta-tile" data-label="06 · dinner"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER CTA -->
+  <section class="section" style="padding: 140px var(--sec-px);">
+    <div class="medium reveal" style="text-align: center;">
+      <span class="eyebrow bothrules">The Dispatches</span>
+      <h2 class="display" style="margin: 22px auto; max-width: 18ch;">Letters, carefully written. Delivered on Sundays.</h2>
+      <p class="lede" style="max-width: 52ch; margin: 0 auto 36px;">A single long-form dispatch per week — essays, correspondence, and quiet notices of upcoming gatherings. No noise.</p>
+      <form class="news-form" onsubmit="event.preventDefault(); alert('Thank you. A welcome letter is on its way.')" style="max-width: 560px; margin: 0 auto;">
+        <input type="email" required placeholder="your name@correspondence.eu" />
+        <button type="submit">Subscribe</button>
+      </form>
+      <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: var(--fg-muted); margin-top: 24px;">NO ADVERTISING · UNSUBSCRIBE AT ANY TIME</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ -->
+<!-- MISSION PAGE                                                 -->
+<!-- ============================================================ -->
+<div class="page" id="page-mission">
+  <section class="mission-hero">
+    <div class="narrow">
+      <div class="eyebrow bothrules" style="justify-content: center;">The Manifesto</div>
+      <h1 class="display" style="margin: 28px 0;">Our <span class="display italic" style="color: var(--accent);">Mission</span>.</h1>
+      <p class="lede">What follows is the statement that binds every letter, dispatch, and gathering held under the Code Victorian standard.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="narrow">
+      <p class="display italic" style="font-size: clamp(28px, 3vw, 44px); line-height: 1.3; margin: 0 0 40px; color: var(--fg);">
+        Code Victorian exists to unite as many people as possible in the conviction that Europeans, and those of European heritage the world over, have the inheritance — and the responsibility — to preserve the civilisation that enriched the world more than any other in the history of mankind.
+      </p>
+
+      <div class="dbl-rule" style="margin: 60px 0;"></div>
+
+      <h3 class="display" style="font-size: 32px; margin: 0 0 16px;">A cultural inheritance.</h3>
+      <p style="font-size: 17px; line-height: 1.8; color: var(--fg-muted); margin: 0 0 28px;">
+        Europe gave the world the cathedral and the concert hall, the essay and the novel, the republic and the rule of law. These are not museum pieces. They are living practices — taught, rehearsed, kept in use by each generation that chooses to keep them.
+      </p>
+
+      <h3 class="display" style="font-size: 32px; margin: 40px 0 16px;">A society, not a spectacle.</h3>
+      <p style="font-size: 17px; line-height: 1.8; color: var(--fg-muted); margin: 0 0 28px;">
+        Code Victorian is not a brand. It is a correspondence, a reading list, a quiet dinner in a small town, a weekly dispatch arriving by email, a scholarship paid for by members in twenty-four countries. It is the opposite of loud.
+      </p>
+
+      <h3 class="display" style="font-size: 32px; margin: 40px 0 16px;">An invitation.</h3>
+      <p style="font-size: 17px; line-height: 1.8; color: var(--fg-muted); margin: 0 0 28px;">
+        If you find yourself reaching for Bach when the day ends, rereading letters from another century, or teaching a child to set a table properly — you are already, in some sense, one of us. The formal invitation is below.
+      </p>
+
+      <div style="margin-top: 48px; display: flex; gap: 14px; flex-wrap: wrap;">
+        <a class="btn primary" data-page="europefirst">Join Europe First <span class="arr">→</span></a>
+        <a class="btn" data-page="newsletter">Subscribe to Dispatches</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--bg-2); border-top: 1px solid var(--hairline);">
+    <div class="medium" style="text-align:center;">
+      <div class="divider-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
+      <p class="display italic" style="font-size: clamp(22px, 2.2vw, 30px); color: var(--fg-muted); max-width: 52ch; margin: 0 auto;">
+        “Tradition is not the worship of ashes, but the preservation of fire.”
+      </p>
+      <p class="roman" style="margin-top: 24px;">— attributed to Gustav Mahler</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ -->
+<!-- NEWSLETTER PAGE                                              -->
+<!-- ============================================================ -->
+<div class="page" id="page-newsletter">
+  <section class="section" style="padding-top: 180px;">
+    <div class="medium">
+      <div class="two-col" style="gap: 100px; align-items: start;">
+        <div>
+          <div class="eyebrow">The Dispatches · Weekly</div>
+          <h1 class="display" style="margin: 28px 0 30px; font-size: clamp(56px, 7vw, 104px);">
+            Letters from <span class="display italic" style="color: var(--accent);">somewhere</span> slower.
+          </h1>
+          <p class="lede">One long-form dispatch per week — arriving Sunday at dawn. Essays on architecture, craft, and classical learning; notes from private correspondents in Rome, Vienna, and Edinburgh; and quiet notices of upcoming gatherings.</p>
+          <p class="lede" style="margin-top: 18px;">Three decades of archived letters are unlocked with your subscription.</p>
+
+          <form class="news-form" onsubmit="event.preventDefault(); alert('Thank you. A welcome letter is on its way.')" style="margin-top: 40px;">
+            <input type="email" required placeholder="your name@correspondence.eu" />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; color: var(--fg-muted); margin-top: 20px;">FREE · NO ADVERTISING · UNSUBSCRIBE AT ANY TIME</p>
+        </div>
+
+        <aside class="ornament" style="border: 1px solid var(--hairline); padding: 48px 40px; background: color-mix(in srgb, var(--bg-2) 60%, transparent);">
+          <div class="eyebrow">This Week's Issue</div>
+          <div class="roman" style="margin-top: 14px;">N<sup>o</sup>. LXII — 19 April MMXXVI</div>
+          <h3 class="display" style="margin: 20px 0 10px; font-size: 32px;">On Slowness, and the Civility of Letters</h3>
+          <p style="color: var(--fg-muted); font-size: 15px; line-height: 1.75;">
+            This week: a portrait of the last working letterpress in Antwerp; a reader's correspondence on bookbinding; and a short essay on why, exactly, a dinner should last three hours.
+          </p>
+          <div class="dbl-rule" style="margin: 28px 0;"></div>
+          <div style="display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.12em;">
+            <span>~2,400 words</span>
+            <span>Reading time · 18 min</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 40px;">
+    <div class="wide reveal">
+      <div class="sec-num">
+        <span class="num">From the Archive</span>
+        <span class="line"></span>
+        <span class="label">Recent Issues</span>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--hairline);">
+        <!-- rows -->
+        <a class="arch-row" style="display: grid; grid-template-columns: 100px 1fr 200px auto; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--hairline); cursor: pointer;">
+          <span class="roman">LXI</span>
+          <div>
+            <h4 class="display" style="margin: 0 0 4px; font-size: 24px; font-weight: 500;">The Afterlife of the Colonnade</h4>
+            <span style="color: var(--fg-muted); font-size: 13px;">Essay · Architecture · 22 min</span>
+          </div>
+          <span style="font-family: var(--mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.12em;">12 APR MMXXVI</span>
+          <span class="roman">→</span>
+        </a>
+        <a class="arch-row" style="display: grid; grid-template-columns: 100px 1fr 200px auto; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--hairline); cursor: pointer;">
+          <span class="roman">LX</span>
+          <div>
+            <h4 class="display" style="margin: 0 0 4px; font-size: 24px; font-weight: 500;">Notes from a Neapolitan Tailor</h4>
+            <span style="color: var(--fg-muted); font-size: 13px;">Dispatch · Craft · 14 min</span>
+          </div>
+          <span style="font-family: var(--mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.12em;">05 APR MMXXVI</span>
+          <span class="roman">→</span>
+        </a>
+        <a class="arch-row" style="display: grid; grid-template-columns: 100px 1fr 200px auto; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--hairline); cursor: pointer;">
+          <span class="roman">LIX</span>
+          <div>
+            <h4 class="display" style="margin: 0 0 4px; font-size: 24px; font-weight: 500;">Of Bach, Palestrina, and Counting</h4>
+            <span style="color: var(--fg-muted); font-size: 13px;">Letter · Music · 9 min</span>
+          </div>
+          <span style="font-family: var(--mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.12em;">29 MAR MMXXVI</span>
+          <span class="roman">→</span>
+        </a>
+        <a class="arch-row" style="display: grid; grid-template-columns: 100px 1fr 200px auto; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--hairline); cursor: pointer;">
+          <span class="roman">LVIII</span>
+          <div>
+            <h4 class="display" style="margin: 0 0 4px; font-size: 24px; font-weight: 500;">The Slow Return of the Long Dinner</h4>
+            <span style="color: var(--fg-muted); font-size: 13px;">Essay · Custom · 17 min</span>
+          </div>
+          <span style="font-family: var(--mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.12em;">22 MAR MMXXVI</span>
+          <span class="roman">→</span>
+        </a>
+        <a class="arch-row" style="display: grid; grid-template-columns: 100px 1fr 200px auto; gap: 32px; align-items: center; padding: 28px 0; border-bottom: 1px solid var(--hairline); cursor: pointer;">
+          <span class="roman">LVII</span>
+          <div>
+            <h4 class="display" style="margin: 0 0 4px; font-size: 24px; font-weight: 500;">A Morning with the Binders of Antwerp</h4>
+            <span style="color: var(--fg-muted); font-size: 13px;">Portrait · Craft · 11 min</span>
+          </div>
+          <span style="font-family: var(--mono); font-size: 11px; color: var(--fg-muted); letter-spacing: 0.12em;">15 MAR MMXXVI</span>
+          <span class="roman">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ -->
+<!-- DONATE PAGE                                                  -->
+<!-- ============================================================ -->
+<div class="page" id="page-donate">
+  <section class="section" style="padding-top: 180px;">
+    <div class="medium">
+      <div class="two-col" style="gap: 80px; align-items: start;">
+        <div>
+          <div class="eyebrow">Patronage · Tax-Deductible</div>
+          <h1 class="display" style="margin: 28px 0;">Your <span class="display italic" style="color: var(--accent);">contribution</span>.</h1>
+          <p class="lede">Code Victorian runs without advertising, subscriptions-to-strangers, or commercial sponsorship. What it runs on — archives, scholarships, the slow work of preservation — is funded entirely by readers who decide, quietly, to give.</p>
+          <div class="dbl-rule" style="margin: 40px 0;"></div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div>
+              <div class="roman" style="font-size: 36px; font-style: italic;">€284K</div>
+              <p style="font-size: 13px; color: var(--fg-muted); margin: 4px 0 0;">Raised in MMXXV</p>
+            </div>
+            <div>
+              <div class="roman" style="font-size: 36px; font-style: italic;">IV</div>
+              <p style="font-size: 13px; color: var(--fg-muted); margin: 4px 0 0;">Scholarships endowed</p>
+            </div>
+            <div>
+              <div class="roman" style="font-size: 36px; font-style: italic;">MCCXIV</div>
+              <p style="font-size: 13px; color: var(--fg-muted); margin: 4px 0 0;">Patrons in XXIV countries</p>
+            </div>
+            <div>
+              <div class="roman" style="font-size: 36px; font-style: italic;">100%</div>
+              <p style="font-size: 13px; color: var(--fg-muted); margin: 4px 0 0;">To preservation work</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ornament" style="border: 1px solid var(--hairline); padding: 44px 40px; background: color-mix(in srgb, var(--bg-2) 60%, transparent);">
+          <div class="eyebrow">Select your gift</div>
+
+          <label style="display:block; margin-top: 28px; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;">Frequency</label>
+          <div class="freq-tabs" id="freqTabs">
+            <div class="tab active" data-freq="once">Once</div>
+            <div class="tab" data-freq="month">Monthly</div>
+            <div class="tab" data-freq="year">Annually</div>
+          </div>
+
+          <label style="display:block; font-size: 10px; letter-spacing: 0.28em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 10px;">Amount</label>
+          <div class="don-grid" id="donGrid">
+            <div class="don-tier" data-amount="10"><div class="amount">€10</div><div class="freq" id="ft1">one-time</div></div>
+            <div class="don-tier active" data-amount="20"><div class="amount">€20</div><div class="freq" id="ft2">one-time</div></div>
+            <div class="don-tier" data-amount="30"><div class="amount">€30</div><div class="freq" id="ft3">one-time</div></div>
+            <div class="don-tier" data-amount="40"><div class="amount">€40</div><div class="freq" id="ft4">one-time</div></div>
+            <div class="don-tier" data-amount="custom"><div class="amount" style="font-size: 20px;">Custom</div><div class="freq">other</div></div>
+          </div>
+          <input id="customAmt" type="number" min="1" placeholder="Enter amount €" style="display:none; width: 100%; padding: 14px 16px; background: transparent; border: 1px solid var(--hairline); color: var(--fg); font-family: var(--serif); font-size: 18px; margin-bottom: 20px;" />
+
+          <button class="btn primary" style="width: 100%; justify-content: center;" id="donateBtn">Donate €20 <span class="arr">→</span></button>
+          <p style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; color: var(--fg-muted); margin-top: 18px; text-align: center;">SECURE · STRIPE · RECEIPT BY EMAIL</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--bg-2); border-top: 1px solid var(--hairline);">
+    <div class="wide">
+      <div class="sec-num">
+        <span class="num">Where it goes</span>
+        <span class="line"></span>
+        <span class="label">The ledger</span>
+      </div>
+      <div class="three-col">
+        <div>
+          <div class="roman" style="font-size: 40px;">I.</div>
+          <h4 class="display" style="font-size: 24px; margin: 8px 0 10px;">Archive & Restoration</h4>
+          <p style="color: var(--fg-muted); font-size: 14px; line-height: 1.7;">Digitisation of rare correspondence, sheet music, and architectural plates — made freely available to members.</p>
+        </div>
+        <div>
+          <div class="roman" style="font-size: 40px;">II.</div>
+          <h4 class="display" style="font-size: 24px; margin: 8px 0 10px;">Scholarships</h4>
+          <p style="color: var(--fg-muted); font-size: 14px; line-height: 1.7;">Four fully-funded placements each year in stone-masonry, bookbinding, bespoke tailoring, and classical composition.</p>
+        </div>
+        <div>
+          <div class="roman" style="font-size: 40px;">III.</div>
+          <h4 class="display" style="font-size: 24px; margin: 8px 0 10px;">Gatherings</h4>
+          <p style="color: var(--fg-muted); font-size: 14px; line-height: 1.7;">Annual summer and winter convenings held in cities that still remember why they were built — at or below cost.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ -->
+<!-- EUROPE FIRST PAGE                                            -->
+<!-- ============================================================ -->
+<div class="page" id="page-europefirst">
+  <section class="mission-hero" style="min-height: 60vh;">
+    <div class="narrow">
+      <div class="eyebrow bothrules" style="justify-content: center;">The Membership</div>
+      <h1 class="display" style="margin: 28px 0;"><span class="display italic" style="color: var(--accent);">Europe</span> First.</h1>
+      <p class="lede">A society of readers, makers, and correspondents. Two tiers. One standard.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wide">
+      <div class="mem-cards">
+
+        <div class="mem-card ornament">
+          <div class="tier-label">Founder · Monthly</div>
+          <h3 class="tier-name">The Correspondent</h3>
+          <div class="tier-price">€9.99 <span style="font-family: var(--body); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted);">/ month</span></div>
+          <p style="color: var(--fg-muted); font-size: 15px; line-height: 1.7;">For those joining the society in its founding year. Locked in for life at the founding rate.</p>
+          <ul>
+            <li>The full weekly Dispatches — long form</li>
+            <li>The complete archive of past issues</li>
+            <li>Member-only correspondence circles</li>
+            <li>Invitation to one annual regional gathering</li>
+            <li>A quarterly printed supplement</li>
+          </ul>
+          <a class="btn primary" style="width: 100%; justify-content: center;">Become a Correspondent <span class="arr">→</span></a>
+        </div>
+
+        <div class="mem-card featured ornament">
+          <div class="tier-label">Lifetime · Founding Circle</div>
+          <h3 class="tier-name">The Patron</h3>
+          <div class="tier-price">€499.99 <span style="font-family: var(--body); font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-muted);">/ one-time</span></div>
+          <p style="color: var(--fg-muted); font-size: 15px; line-height: 1.7;">For those who would see the society endure. Lifetime standing in the Founding Circle, limited to CCCXVI members.</p>
+          <ul>
+            <li>Everything in The Correspondent — for life</li>
+            <li>Named in the founding registry</li>
+            <li>Priority seating at all gatherings, East & West</li>
+            <li>A hand-bound leather volume of the first year's Dispatches</li>
+            <li>Private quarterly correspondence from the editor</li>
+            <li>One guest invitation to each annual summer gathering</li>
+          </ul>
+          <a class="btn primary" style="width: 100%; justify-content: center;">Enter the Founding Circle <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--bg-2); border-top: 1px solid var(--hairline);">
+    <div class="medium">
+      <div class="divider-ornament">✦ &nbsp; ❦ &nbsp; ✦</div>
+      <div class="two-col" style="gap: 80px; margin-top: 40px;">
+        <div>
+          <h3 class="display" style="font-size: 36px; margin: 0 0 20px;">What is expected of a member.</h3>
+          <p style="color: var(--fg-muted); font-size: 16px; line-height: 1.8;">
+            Attention. Correspondence. A willingness, when at a gathering, to set down the telephone for the duration of dinner. Nothing more.
+          </p>
+        </div>
+        <div>
+          <h3 class="display" style="font-size: 36px; margin: 0 0 20px;">What is <em style="color: var(--accent); font-style: italic;">not</em> expected.</h3>
+          <p style="color: var(--fg-muted); font-size: 16px; line-height: 1.8;">
+            Agreement on every point. Residence in Europe. A particular faith. A particular politics. The society is a civil one — conversation, not consensus.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================ -->
+<!-- TERMS                                                        -->
+<!-- ============================================================ -->
+<div class="page" id="page-terms">
+  <section class="section" style="padding-top: 180px;">
+    <div class="terms-body">
+      <div class="eyebrow">Legal</div>
+      <h1 class="display" style="margin: 24px 0 0;">Terms &amp; Conditions</h1>
+      <p style="color: var(--fg-muted); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 8px;">Last revised · XIX April MMXXVI</p>
+
+      <div class="dbl-rule" style="margin: 40px 0;"></div>
+
+      <h3>I. Registered Entity</h3>
+      <p>Code Victorian is a cultural society registered in the Netherlands. All membership fees, patronage, and correspondence are processed under this registration.</p>
+
+      <h3>II. Membership</h3>
+      <p>Membership of Europe First is offered on a monthly or lifetime basis. Monthly membership may be cancelled at any time from the member's account; lifetime membership is non-refundable after fourteen days of registration.</p>
+
+      <h3>III. Patronage &amp; Donations</h3>
+      <p>Gifts made through the Donate page are processed via Stripe. Receipts are issued by email. Where permitted by the laws of the patron's jurisdiction, gifts may be tax-deductible; we do not advise on tax matters.</p>
+
+      <h3>IV. Content &amp; Copyright</h3>
+      <p>All Dispatches, essays, and published correspondence are the property of Code Victorian and its contributors. Personal sharing is welcome; commercial reproduction is not permitted without written consent.</p>
+
+      <h3>V. Privacy</h3>
+      <p>We collect only the information required to send Dispatches and fulfil membership. Your details are never sold, shared, or repurposed for advertising.</p>
+
+      <h3>VI. Governing Law</h3>
+      <p>These terms are governed by the laws of the Netherlands. Any disputes shall be resolved in the courts of Amsterdam.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer class="footer-grand">
+  <div class="wide">
+    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;">
+      <div>
+        <div class="brand-mark" style="margin-bottom: 18px;">
+          <img src="assets/logo.png" alt="Code Victorian" style="height: 56px;" onerror="this.setAttribute('data-broken','')" />
+          <span class="brand-fallback" style="width:56px; height:56px; font-size:28px;">CV</span>
+          <div>
+            <div class="brand-type" style="font-size: 24px;">Code Victorian</div>
+            <div class="brand-sub">A Cultural Society · Est. MMXXVI</div>
+          </div>
+        </div>
+        <p style="color: var(--fg-muted); font-size: 14px; line-height: 1.7; max-width: 44ch; margin: 24px 0;">Heritage, craft, letters, community. The slow work of preservation — made weekly, for readers in twenty-four countries.</p>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="margin-bottom: 18px;">Society</div>
+        <a data-page="mission" style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Mission</a>
+        <a data-page="europefirst" style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Europe First</a>
+        <a data-page="newsletter" style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Dispatches</a>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="margin-bottom: 18px;">Support</div>
+        <a data-page="donate" style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Donate</a>
+        <a style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Contact</a>
+        <a data-page="terms" style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Terms</a>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="margin-bottom: 18px;">Correspondence</div>
+        <a style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Instagram ↗</a>
+        <a style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">YouTube ↗</a>
+        <a style="display:block; padding: 6px 0; font-family: var(--serif); font-size: 15px; color: var(--fg); cursor: pointer;">Facebook ↗</a>
+      </div>
+    </div>
+
+    <img src="assets/footer-graphic.png" class="footer-graphic" alt="" onerror="this.setAttribute('data-broken','')" />
+
+    <div class="dbl-rule" style="margin: 60px 0 24px;"></div>
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--fg-muted);">
+      <span>© MMXXVI CODE VICTORIAN · AMSTERDAM</span>
+      <span>MADE WITH PATIENCE · NOT ADVERTISING</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== TWEAKS ========== -->
+<button class="tweaks-toggle" id="tweaksToggle" title="Tweaks">✦</button>
+
+<div class="tweaks" id="tweaksPanel">
+  <h4>Tweaks</h4>
+
+  <label>Colour theme</label>
+  <div class="chip-row" data-tweak="theme">
+    <div class="chip active" data-value="navy">Navy / Gold</div>
+    <div class="chip" data-value="ivory">Ivory / Gold</div>
+    <div class="chip" data-value="oxblood">Oxblood / Gold</div>
+    <div class="chip" data-value="light">Light</div>
+  </div>
+
+  <label>Display font</label>
+  <div class="chip-row" data-tweak="display">
+    <div class="chip active" data-value="cormorant">Cormorant</div>
+    <div class="chip" data-value="playfair">Playfair</div>
+    <div class="chip" data-value="eb-garamond">EB Garamond</div>
+  </div>
+
+  <label>Hero layout</label>
+  <div class="chip-row" data-tweak="hero-layout">
+    <div class="chip active" data-value="full">Full-bleed video</div>
+    <div class="chip" data-value="split">Split</div>
+    <div class="chip" data-value="framed">Framed plate</div>
+  </div>
+
+  <label>Section density</label>
+  <div class="chip-row" data-tweak="density">
+    <div class="chip active" data-value="normal">Airy</div>
+    <div class="chip" data-value="tight">Tight</div>
+  </div>
+
+  <label>Hero headline</label>
+  <input type="text" id="tweakHeadline" value="Heritage, beautifully preserved." />
+</div>
+
+<!-- ========== DEFAULTS (editmode) ========== -->
+<script>
+  window.__TWEAK_DEFAULTS__ = /*EDITMODE-BEGIN*/{
+    "theme": "navy",
+    "display": "playfair",
+    "density": "normal",
+    "heroLayout": "framed",
+    "headline": "Europe, for native europeans."
+  }/*EDITMODE-END*/;
+</script>
+
+<script>
+  // ----- nav ---------------------------------------------------
+  function goTo(page) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const el = document.getElementById('page-' + page);
+    if (el) el.classList.add('active');
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.dataset.page === page);
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    localStorage.setItem('cv-page', page);
+    // re-observe reveals when switching
+    setTimeout(observeReveals, 40);
+  }
+  document.body.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-page]');
+    if (a) { e.preventDefault(); goTo(a.dataset.page); }
+  });
+  const saved = localStorage.getItem('cv-page');
+  if (saved && document.getElementById('page-' + saved)) goTo(saved);
+
+  // ----- reveal on scroll -------------------------------------
+  let io;
+  function observeReveals() {
+    if (io) io.disconnect();
+    io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.page.active .reveal').forEach(el => io.observe(el));
+  }
+  observeReveals();
+
+  // ----- countdown --------------------------------------------
+  const tgt = new Date('2026-07-21T19:00:00');
+  function tick() {
+    const now = new Date();
+    let d = Math.max(0, tgt - now);
+    const days = Math.floor(d / 86400000); d -= days * 86400000;
+    const hrs  = Math.floor(d / 3600000);  d -= hrs  * 3600000;
+    const min  = Math.floor(d / 60000);    d -= min  * 60000;
+    const sec  = Math.floor(d / 1000);
+    document.getElementById('cd-d').textContent = String(days).padStart(2, '0');
+    document.getElementById('cd-h').textContent = String(hrs ).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(min ).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(sec ).padStart(2, '0');
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ----- donate -----------------------------------------------
+  let donFreq = 'once';
+  let donAmt = 20;
+  const freqWord = { once: 'one-time', month: 'per month', year: 'per year' };
+  function renderDonate() {
+    ['ft1','ft2','ft3','ft4'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = freqWord[donFreq];
+    });
+    const btn = document.getElementById('donateBtn');
+    const customShown = donAmt === 'custom';
+    const customEl = document.getElementById('customAmt');
+    customEl.style.display = customShown ? 'block' : 'none';
+    let amt = donAmt;
+    if (customShown) amt = customEl.value || 0;
+    const freqLabel = donFreq === 'once' ? '' : ' ' + (donFreq === 'month' ? '/ month' : '/ year');
+    btn.innerHTML = 'Donate €' + (amt || '…') + freqLabel + ' <span class="arr">→</span>';
+  }
+  document.getElementById('freqTabs')?.addEventListener('click', (e) => {
+    const t = e.target.closest('.tab'); if (!t) return;
+    document.querySelectorAll('#freqTabs .tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    donFreq = t.dataset.freq;
+    renderDonate();
+  });
+  document.getElementById('donGrid')?.addEventListener('click', (e) => {
+    const t = e.target.closest('.don-tier'); if (!t) return;
+    document.querySelectorAll('#donGrid .don-tier').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    const v = t.dataset.amount;
+    donAmt = v === 'custom' ? 'custom' : Number(v);
+    renderDonate();
+  });
+  document.getElementById('customAmt')?.addEventListener('input', renderDonate);
+  renderDonate();
+
+  // ----- tweaks -----------------------------------------------
+  const body = document.body;
+  const defaults = window.__TWEAK_DEFAULTS__;
+
+  function applyTweak(key, value) {
+    if (key === 'theme')        body.setAttribute('data-theme', value);
+    if (key === 'display')      body.setAttribute('data-display', value);
+    if (key === 'density')      body.setAttribute('data-density', value);
+    if (key === 'hero-layout')  document.getElementById('heroSection').setAttribute('data-layout', value);
+    if (key === 'headline')     setHeadline(value);
+  }
+  function setHeadline(v) {
+    const parts = v.split(',');
+    const h = document.getElementById('heroHeadline');
+    if (!h) return;
+    if (parts.length >= 2) {
+      h.innerHTML = parts[0] + ',<br/><span class="display italic" style="color: var(--accent);">' + parts[1].trim().replace('.', '') + '</span>' + (parts[2] ? '<br/>' + parts[2] : '.');
+    } else {
+      h.textContent = v;
+    }
+  }
+
+  // init from defaults
+  applyTweak('theme', defaults.theme);
+  applyTweak('display', defaults.display);
+  applyTweak('density', defaults.density);
+  applyTweak('hero-layout', defaults.heroLayout);
+  setHeadline(defaults.headline);
+
+  // hook up chips
+  document.querySelectorAll('.chip-row').forEach(row => {
+    row.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip'); if (!chip) return;
+      row.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const key = row.dataset.tweak;
+      const val = chip.dataset.value;
+      applyTweak(key, val);
+      // persist
+      const editKey = key === 'hero-layout' ? 'heroLayout' : key;
+      window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [editKey]: val } }, '*');
+    });
+  });
+  // align chip active state with defaults
+  function syncChip(tweak, value) {
+    const row = document.querySelector('.chip-row[data-tweak="' + tweak + '"]'); if (!row) return;
+    row.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.value === value));
+  }
+  syncChip('theme', defaults.theme);
+  syncChip('display', defaults.display);
+  syncChip('density', defaults.density);
+  syncChip('hero-layout', defaults.heroLayout);
+
+  const headlineInput = document.getElementById('tweakHeadline');
+  headlineInput.value = defaults.headline;
+  headlineInput.addEventListener('input', () => {
+    const v = headlineInput.value;
+    setHeadline(v);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { headline: v } }, '*');
+  });
+
+  // tweaks mode protocol
+  const toggleBtn = document.getElementById('tweaksToggle');
+  const panel = document.getElementById('tweaksPanel');
+  let editMode = false;
+  window.addEventListener('message', (e) => {
+    if (!e.data) return;
+    if (e.data.type === '__activate_edit_mode')   { editMode = true;  toggleBtn.classList.add('visible'); panel.classList.add('open'); }
+    if (e.data.type === '__deactivate_edit_mode') { editMode = false; toggleBtn.classList.remove('visible'); panel.classList.remove('open'); }
+  });
+  toggleBtn.addEventListener('click', () => panel.classList.toggle('open'));
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+</script>
+
+</body>
+</html>

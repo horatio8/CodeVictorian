@@ -1,0 +1,76 @@
+/* =============================================================
+   Code Victorian — Design Tokens
+   Version 1.0 · April 2026
+   Drop this file into your project and @import it from your
+   global stylesheet, or link it from your document head.
+   ============================================================= */
+
+:root {
+  /* Palette — Navy + Gold (default) */
+  --navy:        #0E1A2E;
+  --navy-deep:   #070E1A;
+  --ink:         #0B1320;
+  --parchment:   #F4EDE0;
+  --parchment-2: #EBE2D0;
+  --gold:        #C9A24B;
+  --gold-soft:   #E8C778;
+  --gold-deep:   #9C7A2E;
+  --hairline:    rgba(201, 162, 75, 0.28);
+  --rule:        rgba(201, 162, 75, 0.35);
+
+  /* Semantic */
+  --bg:          var(--navy);
+  --bg-2:        var(--navy-deep);
+  --fg:          var(--parchment);
+  --fg-muted:    rgba(244, 237, 224, 0.72);
+  --accent:      var(--gold);
+  --accent-soft: var(--gold-soft);
+
+  /* Typography */
+  --display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --serif:   'EB Garamond', Georgia, serif;
+  --body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  /* Layout */
+  --sec-py: 140px;
+  --sec-px: clamp(24px, 6vw, 96px);
+  --stack:  28px;
+  --w-wide:   1440px;
+  --w-medium: 1080px;
+  --w-narrow: 760px;
+}
+
+/* Alternate themes — switch via <body data-theme="..."> */
+
+[data-theme="ivory"] {
+  --bg: #F4EDE0;  --bg-2: #EBE2D0;
+  --fg: #1B1409;  --fg-muted: rgba(27, 20, 9, 0.7);
+  --accent: #9C7A2E; --accent-soft: #C9A24B;
+  --hairline: rgba(156, 122, 46, 0.35);
+}
+
+[data-theme="oxblood"] {
+  --bg: #3A1418;  --bg-2: #25090C;
+  --fg: #F4EDE0;  --fg-muted: rgba(244, 237, 224, 0.75);
+  --accent: #D4A64A; --accent-soft: #E8C778;
+  --hairline: rgba(212, 166, 74, 0.3);
+}
+
+[data-theme="light"] {
+  --bg: #FBF7EE;  --bg-2: #F4EDE0;
+  --fg: #0E1A2E;  --fg-muted: rgba(14, 26, 46, 0.72);
+  --accent: #9C7A2E; --accent-soft: #C9A24B;
+  --hairline: rgba(14, 26, 46, 0.2);
+}
+
+/* Density */
+[data-density="tight"] {
+  --sec-py: 88px;
+  --stack: 18px;
+}
+
+/* Display font swap */
+[data-display="cormorant"]  { --display: 'Cormorant Garamond', Georgia, serif; }
+[data-display="playfair"]   { --display: 'Playfair Display', Georgia, serif; }
+[data-display="eb-garamond"]{ --display: 'EB Garamond', Georgia, serif; }
