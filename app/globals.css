@@ -1,0 +1,153 @@
+/* Code Victorian — global stylesheet
+   Pulls the approved handover tokens + components, then layers on
+   a few reference-only patterns that are not in components.css. */
+
+@import "../tokens.css";
+@import "../components.css";
+
+/* ---------- Reference-only patterns ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s ease, transform .9s cubic-bezier(.2, .7, .2, 1);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+.kicker {
+  font-family: var(--display);
+  font-style: italic;
+  color: var(--accent);
+  font-size: 22px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.insta-strip {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
+.insta-tile { aspect-ratio: 1; }
+@media (max-width: 900px) {
+  .insta-strip { grid-template-columns: repeat(3, 1fr); }
+  .insta-tile:nth-child(n+4) { display: none; }
+}
+
+.mission-hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px var(--sec-px) 80px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 30%, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 60%),
+    var(--bg);
+  border-bottom: 1px solid var(--hairline);
+}
+.mission-hero .narrow { margin: 0 auto; }
+.mission-hero .eyebrow { justify-content: center; }
+
+.terms-body { max-width: 720px; margin: 0 auto; }
+.terms-body h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 26px;
+  margin: 40px 0 12px;
+}
+.terms-body p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--fg-muted);
+  margin: 0 0 16px;
+}
+
+.arch-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 200px auto;
+  gap: 32px;
+  align-items: center;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--hairline);
+  cursor: pointer;
+}
+@media (max-width: 700px) {
+  .arch-row { grid-template-columns: 60px 1fr auto; }
+  .arch-row > span:nth-child(3) { display: none; }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--body);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  writing-mode: vertical-rl;
+  padding: 20px 0 40px;
+}
+.scroll-indicator::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 1px;
+  height: 30px;
+  background: var(--accent);
+  animation: scrollLine 1.6s ease-in-out infinite;
+}
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* Hero fallback shown when video is absent or still loading */
+.hero-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+    radial-gradient(ellipse at 20% 80%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 50%),
+    linear-gradient(180deg, var(--bg-2), var(--bg) 60%, var(--bg-2));
+  z-index: 0;
+}
+.hero-fallback::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--accent) 6%, transparent) 0 1px, transparent 1px 80px),
+    repeating-linear-gradient(0deg,  color-mix(in srgb, var(--accent) 6%, transparent) 0 1px, transparent 1px 80px);
+  opacity: 0.6;
+}
+
+/* Framed hero text sits below the gold-bordered video plate */
+.hero[data-layout="framed"] .hero-text-wrap { padding: 0; }
+
+/* Mobile nav collapse — matches reference */
+@media (max-width: 900px) {
+  .nav-links.right a:not(:last-child) { display: none; }
+  .nav-links:not(.right) a { display: none; }
+  h1.display { font-size: 48px !important; }
+}
+
+/* Page container: each route is its own page; keep body padding for fixed nav */
+body { overflow-x: hidden; }
+main { display: block; }
+
+/* Footer column links — matches inline treatment in reference.html */
+.footer-link {
+  display: block;
+  padding: 6px 0;
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--fg);
+  cursor: pointer;
+}
+.footer-link:hover { color: var(--accent); }
