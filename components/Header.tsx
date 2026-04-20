@@ -47,29 +47,26 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-navy-900/97 backdrop-blur-md shadow-lg shadow-navy-950/20"
-          : "bg-transparent"
+          ? "bg-navy-900/92 backdrop-blur-md border-b border-gold-400/25"
+          : "bg-transparent border-b border-transparent"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between lg:h-20">
-          {/* Logo */}
+          {/* Brand mark — text only, no tile */}
           <Link href="/" className="relative z-10 flex items-center gap-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded bg-gold-400 transition-all duration-300 group-hover:bg-gold-300">
-              <span className="font-serif text-xl font-bold text-navy-900">V</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-serif text-lg font-bold tracking-wide text-white leading-tight">
+            <div className="flex flex-col leading-none">
+              <span className="font-serif text-xl font-medium tracking-wide text-white transition-colors group-hover:text-gold-400">
                 Code Victorian
               </span>
-              <span className="hidden text-[0.625rem] font-medium uppercase tracking-[0.2em] text-gold-400/80 sm:block">
-                Europe for Europeans
+              <span className="hidden mt-1 font-mono text-[0.625rem] font-normal uppercase tracking-[0.32em] text-gold-400 sm:block">
+                Est. MMXXVI
               </span>
             </div>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-0 lg:flex">
             {navLinks.map((link) =>
               link.children ? (
                 <div
@@ -78,9 +75,9 @@ export default function Header() {
                   onMouseEnter={() => setDropdownOpen(true)}
                   onMouseLeave={() => setDropdownOpen(false)}
                 >
-                  <button className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:text-gold-400">
+                  <button className="flex items-center gap-1 px-4 py-2 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-gold-400">
                     {link.label}
-                    <ChevronDown className={`h-3.5 w-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-3 w-3 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
                   </button>
                   <div
                     className={`absolute left-0 top-full pt-2 transition-all duration-200 ${
@@ -89,12 +86,12 @@ export default function Header() {
                         : "pointer-events-none -translate-y-1 opacity-0"
                     }`}
                   >
-                    <div className="w-52 rounded-lg bg-navy-800 p-2 shadow-xl shadow-navy-950/30 ring-1 ring-white/10">
+                    <div className="w-56 bg-navy-900/95 backdrop-blur-md border border-gold-400/25 p-1">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="block rounded-md px-3 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-navy-700 hover:text-gold-400"
+                          className="block px-4 py-2.5 font-lede text-sm text-white/80 transition-colors hover:bg-navy-800 hover:text-gold-400"
                         >
                           {child.label}
                         </Link>
@@ -106,7 +103,7 @@ export default function Header() {
                 <Link
                   key={link.href}
                   href={link.href!}
-                  className="px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:text-gold-400"
+                  className="px-4 py-2 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-gold-400"
                 >
                   {link.label}
                 </Link>
@@ -116,14 +113,18 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden items-center gap-3 lg:flex">
-            <Link href="/donate" className="btn-primary !py-2.5 !px-5 !text-xs">
-              Donate
+            <Link
+              href="/donate"
+              className="btn-primary"
+              style={{ padding: "10px 20px", fontSize: "10px" }}
+            >
+              Donate <span className="font-serif">→</span>
             </Link>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="relative z-10 flex h-10 w-10 items-center justify-center rounded-md text-white lg:hidden"
+            className="relative z-10 flex h-10 w-10 items-center justify-center text-gold-400 lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
@@ -138,18 +139,18 @@ export default function Header() {
           mobileOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <nav className="flex h-full flex-col items-center justify-center gap-2 px-6 pt-20">
+        <nav className="flex h-full flex-col items-center justify-center gap-1 px-6 pt-20">
           {navLinks.map((link) =>
             link.children ? (
               <div key={link.label} className="flex flex-col items-center">
-                <span className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-gold-400/60">
+                <span className="mb-2 text-[0.625rem] font-medium uppercase tracking-[0.28em] text-gold-400">
                   {link.label}
                 </span>
                 {link.children.map((child) => (
                   <Link
                     key={child.href}
                     href={child.href}
-                    className="py-2 text-lg font-medium text-white/80 transition-colors hover:text-gold-400"
+                    className="py-1.5 font-lede text-lg text-white/80 transition-colors hover:text-gold-400"
                     onClick={() => setMobileOpen(false)}
                   >
                     {child.label}
@@ -160,14 +161,14 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href!}
-                className="py-2.5 text-xl font-medium text-white transition-colors hover:text-gold-400"
+                className="py-2 font-serif text-2xl text-white transition-colors hover:text-gold-400"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </Link>
             )
           )}
-          <div className="mt-6 flex flex-col items-center gap-3">
+          <div className="mt-8 flex flex-col items-center gap-3">
             <Link
               href="/petition"
               className="btn-primary"

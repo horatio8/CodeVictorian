@@ -3,26 +3,25 @@
 import Link from "next/link"
 import { Mail, MapPin, Clock, MessageSquare } from "lucide-react"
 
-
 const contacts = [
-  { icon: Mail, label: "General Enquiries", value: "info@codevictorian.com" },
-  { icon: MessageSquare, label: "Press & Media", value: "press@codevictorian.com" },
-  { icon: MapPin, label: "Headquarters", value: "Brussels, Belgium" },
-  { icon: Clock, label: "Office Hours", value: "Mon\u2013Fri, 09:00\u201317:30 CET" },
+  { icon: Mail,           label: "General Enquiries", value: "info@codevictorian.com" },
+  { icon: MessageSquare,  label: "Press & Media",     value: "press@codevictorian.com" },
+  { icon: MapPin,         label: "Headquarters",      value: "Brussels, Belgium" },
+  { icon: Clock,          label: "Office Hours",      value: "Mon–Fri · 09:00–17:30 CET" },
 ]
 
 export default function ContactPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 40% 40%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+      <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Reach Out</span>
-          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            Contact Us
+          <span className="eyebrow eyebrow-both">Correspondence</span>
+          <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
+            Contact{" "}
+            <span className="italic font-normal text-gold-400">Us</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+          <p className="lede mx-auto mt-8 max-w-2xl">
             Have a question, want to collaborate, or need to get in touch with our team?
             We&rsquo;d love to hear from you.
           </p>
@@ -35,16 +34,18 @@ export default function ContactPage() {
           <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
             {/* Form */}
             <div className="lg:col-span-3">
-              <h2 className="gold-accent relative font-serif text-2xl font-bold sm:text-3xl">
-                Send a Message
+              <span className="eyebrow">Send a Message</span>
+              <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
+                Write to{" "}
+                <span className="italic font-normal text-gold-400">us</span>.
               </h2>
-              <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
+              <form className="mt-10 space-y-4" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid grid-cols-2 gap-4">
                   <input type="text" placeholder="First name" className="form-input" required />
                   <input type="text" placeholder="Last name" className="form-input" required />
                 </div>
-                <input type="email" placeholder="Email address" className="form-input" required />
-                <select className="form-input text-gray-500" required>
+                <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
+                <select className="form-input" required>
                   <option value="">Subject</option>
                   <option>General Enquiry</option>
                   <option>Press / Media Request</option>
@@ -61,43 +62,43 @@ export default function ContactPage() {
                   className="form-input resize-none"
                   required
                 />
-                <label className="flex items-start gap-2 text-xs text-gray-500">
-                  <input type="checkbox" required className="mt-0.5 h-3.5 w-3.5 rounded accent-gold-400" />
+                <label className="flex items-start gap-2 font-lede text-xs text-navy-800/65">
+                  <input type="checkbox" required className="mt-1 h-3.5 w-3.5 accent-gold-400" />
                   <span>
                     I agree to the{" "}
-                    <Link href="/privacy" className="text-gold-500 underline">privacy policy</Link>.
+                    <Link href="/privacy" className="text-gold-600 underline underline-offset-2">privacy policy</Link>.
                     My data will only be used to respond to this enquiry.
                   </span>
                 </label>
                 <button type="submit" className="btn-primary">
-                  Send Message
+                  Send Message <span className="font-serif">→</span>
                 </button>
               </form>
             </div>
 
             {/* Sidebar */}
             <div className="lg:col-span-2">
-              <div className="sticky top-28 space-y-6">
-                <div className="card p-6">
-                  <h3 className="font-serif text-lg font-bold">Contact Information</h3>
-                  <ul className="mt-5 space-y-5">
+              <div className="sticky top-28 space-y-8">
+                <div className="border border-gold-400/30 bg-ivory p-8">
+                  <span className="eyebrow">Contact Information</span>
+                  <ul className="mt-6 space-y-6 border-t border-gold-400/20 pt-5">
                     {contacts.map((c) => (
-                      <li key={c.label} className="flex items-start gap-3">
-                        <c.icon className="mt-0.5 h-5 w-5 shrink-0 text-gold-500" />
+                      <li key={c.label} className="flex items-start gap-4">
+                        <c.icon className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
                         <div>
-                          <div className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                          <div className="font-mono text-[0.625rem] font-medium uppercase tracking-[0.28em] text-gold-600">
                             {c.label}
                           </div>
-                          <div className="mt-0.5 text-sm font-medium text-navy-700">{c.value}</div>
+                          <div className="mt-1 font-lede text-base text-navy-800">{c.value}</div>
                         </div>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="card p-6">
-                  <h3 className="font-serif text-lg font-bold">Quick Links</h3>
-                  <ul className="mt-4 space-y-2.5">
+                <div className="border border-gold-400/30 bg-ivory p-8">
+                  <span className="eyebrow">Quick Links</span>
+                  <ul className="mt-6 space-y-0 border-t border-gold-400/20">
                     {[
                       { href: "/volunteer", label: "Volunteer with us" },
                       { href: "/donate", label: "Make a donation" },
@@ -105,9 +106,13 @@ export default function ContactPage() {
                       { href: "/privacy#rights", label: "Data subject rights (GDPR)" },
                       { href: "/media", label: "Press kit & resources" },
                     ].map((link) => (
-                      <li key={link.href}>
-                        <Link href={link.href} className="text-sm text-gold-500 hover:text-gold-600 transition-colors">
-                          {link.label} &rarr;
+                      <li key={link.href} className="border-b border-gold-400/15 last:border-b-0">
+                        <Link
+                          href={link.href}
+                          className="flex items-center justify-between py-3 font-lede text-base text-navy-800 transition-colors hover:text-gold-600"
+                        >
+                          {link.label}
+                          <span className="font-serif italic text-gold-400">→</span>
                         </Link>
                       </li>
                     ))}

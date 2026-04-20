@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { MessageSquare, X, Sparkles } from "lucide-react"
+import { X, Sparkles } from "lucide-react"
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false)
@@ -10,47 +10,62 @@ export default function ChatWidget() {
     <>
       <button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-6 right-6 z-[90] flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-gold-400 to-gold-500 text-navy-900 shadow-lg shadow-gold-400/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-gold-400/40"
+        className="fixed bottom-6 right-6 z-[90] flex h-12 w-12 items-center justify-center border border-gold-400 bg-navy-900 text-gold-400 transition-all duration-250 hover:bg-gold-400 hover:text-navy-900 hover:-translate-y-0.5"
+        style={{ boxShadow: open ? "none" : "0 6px 24px -10px var(--color-gold-400)" }}
         aria-label={open ? "Close chat" : "Open design assistant"}
       >
-        {open ? <X className="h-6 w-6" /> : <MessageSquare className="h-6 w-6" />}
+        {open ? (
+          <X className="h-5 w-5" />
+        ) : (
+          <span className="font-serif text-2xl italic leading-none">✦</span>
+        )}
       </button>
 
       {open && (
-        <div className="fixed bottom-24 right-6 z-[90] w-[380px] overflow-hidden rounded-2xl bg-white shadow-2xl shadow-navy-950/20 ring-1 ring-navy-100 animate-fade-in-up sm:w-[420px]">
-          <div className="flex items-center justify-between bg-navy-700 px-5 py-3.5">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gold-400">
-                <span className="font-serif text-sm font-bold text-navy-900">V</span>
-              </div>
+        <div className="fixed bottom-24 right-6 z-[90] w-[380px] overflow-hidden border border-gold-400/40 bg-cream animate-fade-in-up sm:w-[420px]">
+          <div className="flex items-center justify-between border-b border-gold-400/30 bg-navy-900 px-5 py-4">
+            <div className="flex items-center gap-3">
+              <span className="font-serif text-xl italic text-gold-400 leading-none">✦</span>
               <div>
-                <h3 className="text-sm font-semibold text-white">Design Assistant</h3>
-                <p className="text-[0.625rem] text-white/50">Powered by 21st.dev</p>
+                <h3 className="font-serif text-base font-medium text-white leading-tight">
+                  Design Assistant
+                </h3>
+                <p className="mt-0.5 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-gold-400/70">
+                  Powered by 21st.dev
+                </p>
               </div>
             </div>
             <button
               onClick={() => setOpen(false)}
-              className="text-white/50 transition-colors hover:text-white"
+              className="text-white/50 transition-colors hover:text-gold-400"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
           <div className="flex flex-col items-center justify-center px-6 py-12 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gold-400/10 mb-4">
-              <Sparkles className="h-8 w-8 text-gold-500" />
+            <div className="flex h-16 w-16 items-center justify-center border border-gold-400/40 mb-5">
+              <Sparkles className="h-7 w-7 text-gold-400" />
             </div>
-            <h4 className="font-serif text-lg font-bold text-navy-700">AI Design Assistant</h4>
-            <p className="mt-2 text-sm leading-relaxed text-gray-500">
-              This assistant helps refine the site&rsquo;s UI design using 21st.dev AI agents.
-              To activate, deploy to Vercel and add your <code className="rounded bg-navy-50 px-1.5 py-0.5 text-xs font-mono text-navy-600">API_KEY_21ST</code> environment variable.
+            <span className="eyebrow">An Aide-Mémoire</span>
+            <h4 className="mt-5 font-serif text-xl font-medium text-navy-800">
+              AI Design Assistant
+            </h4>
+            <p className="mt-3 font-lede text-sm leading-relaxed text-navy-800/70">
+              This assistant helps refine the site&rsquo;s UI design using 21st.dev
+              AI agents. To activate, deploy to Vercel and add your{" "}
+              <code className="font-mono text-[0.75rem] text-gold-600">
+                API_KEY_21ST
+              </code>{" "}
+              environment variable.
             </p>
             <a
               href="https://21st.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary mt-6 !text-xs !py-2.5 !px-5"
+              className="btn-primary mt-6"
+              style={{ padding: "10px 20px", fontSize: "10px" }}
             >
-              Get an API Key
+              Get an API Key <span className="font-serif">→</span>
             </a>
           </div>
         </div>

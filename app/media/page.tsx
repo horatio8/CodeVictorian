@@ -1,44 +1,55 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Download, Play, Image, FileText, ArrowRight } from "lucide-react"
+import { Download, Play, FileText, ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = { title: "Media Centre" }
 
 const pressReleases = [
-  { date: "12 April 2026", title: "European Heritage Summit 2026 Concludes with Historic Joint Declaration" },
-  { date: "8 April 2026", title: "Code Victorian Petition Surpasses 125,000 Signatures" },
-  { date: "3 April 2026", title: "New Policy Paper Proposes EU-Wide Remigration Framework" },
-  { date: "22 March 2026", title: "Code Victorian Establishes Chapters in All 27 EU Member States" },
-  { date: "1 March 2026", title: "Statement on EU Migration Pact Implementation Timeline" },
+  { date: "12 April MMXXVI",  title: "European Heritage Summit 2026 Concludes with Historic Joint Declaration" },
+  { date: "8 April MMXXVI",   title: "Code Victorian Petition Surpasses 125,000 Signatures" },
+  { date: "3 April MMXXVI",   title: "New Policy Paper Proposes EU-Wide Remigration Framework" },
+  { date: "22 March MMXXVI",  title: "Code Victorian Establishes Chapters in All 27 EU Member States" },
+  { date: "1 March MMXXVI",   title: "Statement on EU Migration Pact Implementation Timeline" },
 ]
 
 const videos = [
-  { title: "European Heritage Summit 2026 \u2014 Highlights", duration: "12:34", views: "45K" },
-  { title: "What Is Remigration? An Explainer", duration: "8:21", views: "128K" },
-  { title: "Campaign Director Interview \u2014 Le Monde", duration: "22:15", views: "67K" },
-  { title: "Volunteer Stories: Building the Movement", duration: "15:47", views: "23K" },
+  { title: "European Heritage Summit 2026 — Highlights", duration: "12:34", views: "45K",  label: "video · summit"      },
+  { title: "What Is Remigration? An Explainer",          duration: "8:21",  views: "128K", label: "video · explainer"   },
+  { title: "Campaign Director Interview — Le Monde",     duration: "22:15", views: "67K",  label: "video · le monde"    },
+  { title: "Volunteer Stories: Building the Movement",   duration: "15:47", views: "23K",  label: "video · volunteers"  },
 ]
 
 const resources = [
-  { title: "Brand Guidelines & Logo Pack", type: "ZIP", size: "14 MB" },
-  { title: "Campaign Leaflet Templates", type: "PDF", size: "8.2 MB" },
-  { title: "Policy Briefing: Remigration Framework", type: "PDF", size: "2.4 MB" },
-  { title: "Infographic: Immigration Statistics 2025", type: "PNG", size: "1.8 MB" },
-  { title: "Press Kit \u2014 Q2 2026", type: "ZIP", size: "22 MB" },
+  { title: "Brand Guidelines & Logo Pack",            type: "ZIP", size: "14 MB"  },
+  { title: "Campaign Leaflet Templates",              type: "PDF", size: "8.2 MB" },
+  { title: "Policy Briefing: Remigration Framework",  type: "PDF", size: "2.4 MB" },
+  { title: "Infographic: Immigration Statistics 2025",type: "PNG", size: "1.8 MB" },
+  { title: "Press Kit — Q2 2026",                     type: "ZIP", size: "22 MB"  },
+]
+
+const galleryLabels = [
+  "gallery · 01 · vienna",
+  "gallery · 02 · brussels",
+  "gallery · 03 · prague",
+  "gallery · 04 · berlin",
+  "gallery · 05 · rome",
+  "gallery · 06 · paris",
+  "gallery · 07 · london",
+  "gallery · 08 · lisbon",
 ]
 
 export default function MediaPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 50% 40%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+      <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Resources</span>
-          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            Media Centre
+          <span className="eyebrow eyebrow-both">Resources</span>
+          <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
+            Media{" "}
+            <span className="italic font-normal text-gold-400">Centre</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+          <p className="lede mx-auto mt-8 max-w-2xl">
             Press releases, videos, downloadable resources, and brand assets.
             Everything journalists and supporters need.
           </p>
@@ -48,28 +59,43 @@ export default function MediaPage() {
       {/* Press Releases */}
       <section className="section-padding bg-cream">
         <div className="mx-auto max-w-7xl">
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. I</span>
+            <span className="line" />
+            <span className="label">Press</span>
+          </div>
+
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
             <div>
-              <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Press</span>
-              <h2 className="gold-accent relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
-                Press Releases
+              <span className="eyebrow">Press</span>
+              <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
+                Press{" "}
+                <span className="italic font-normal text-gold-400">Releases</span>
               </h2>
             </div>
-            <span className="text-sm font-medium text-gray-500">Media enquiries: press@codevictorian.com</span>
+            <span className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-navy-800/55">
+              Media enquiries · press@codevictorian.com
+            </span>
           </div>
-          <div className="mt-10 space-y-3">
+
+          <div className="mt-12 border-y border-gold-400/25">
             {pressReleases.map((pr) => (
-              <div key={pr.title} className="card group flex items-center justify-between p-5">
-                <div className="flex items-start gap-4">
-                  <FileText className="mt-0.5 h-5 w-5 shrink-0 text-navy-400" />
+              <div
+                key={pr.title}
+                className="group flex items-center justify-between gap-6 border-b border-gold-400/15 p-6 transition-colors last:border-b-0 hover:bg-ivory"
+              >
+                <div className="flex items-start gap-5">
+                  <FileText className="mt-1 h-5 w-5 shrink-0 text-gold-400" />
                   <div>
-                    <h3 className="font-serif text-base font-bold group-hover:text-gold-600 transition-colors">
+                    <h3 className="font-serif text-lg font-medium transition-colors group-hover:text-gold-600">
                       {pr.title}
                     </h3>
-                    <span className="text-xs text-gray-400">{pr.date}</span>
+                    <span className="mt-1 inline-block font-mono text-[0.625rem] uppercase tracking-[0.22em] text-navy-800/50">
+                      {pr.date}
+                    </span>
                   </div>
                 </div>
-                <ArrowRight className="h-4 w-4 shrink-0 text-gray-300 transition-transform group-hover:translate-x-1 group-hover:text-gold-500" />
+                <ArrowRight className="h-4 w-4 shrink-0 text-gold-400/50 transition-all group-hover:translate-x-1 group-hover:text-gold-500" />
               </div>
             ))}
           </div>
@@ -77,32 +103,46 @@ export default function MediaPage() {
       </section>
 
       {/* Videos */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-ivory border-y border-gold-400/20">
         <div className="mx-auto max-w-7xl">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Watch</span>
-          <h2 className="gold-accent relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
-            Videos
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. II</span>
+            <span className="line" />
+            <span className="label">Watch</span>
+          </div>
+          <span className="eyebrow">Watch</span>
+          <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
+            Videos &amp;{" "}
+            <span className="italic font-normal text-gold-400">Interviews</span>
           </h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {videos.map((v) => (
-              <div key={v.title} className="card group">
-                <div className="relative aspect-video bg-gradient-to-br from-navy-300 to-navy-500">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/90 text-navy-700 shadow-lg transition-transform group-hover:scale-110">
-                      <Play className="h-5 w-5 ml-0.5" />
+
+          <div className="mt-12 grid gap-0 border border-gold-400/25 sm:grid-cols-2 lg:grid-cols-4">
+            {videos.map((v, i, arr) => (
+              <article
+                key={v.title}
+                className={`group ${i < arr.length - 1 ? "lg:border-r lg:border-gold-400/20" : ""} ${
+                  i % 2 === 0 ? "sm:border-r sm:border-gold-400/20" : ""
+                } ${i < 2 ? "border-b border-gold-400/20 lg:border-b-0" : ""}`}
+              >
+                <div className="plate relative aspect-video" data-label={v.label}>
+                  <div className="absolute inset-0 z-10 flex items-center justify-center">
+                    <div className="flex h-12 w-12 items-center justify-center border border-gold-400 bg-navy-900/60 text-gold-400 transition-transform group-hover:scale-110">
+                      <Play className="h-4 w-4 ml-0.5 fill-current" />
                     </div>
                   </div>
-                  <div className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-0.5 text-xs font-medium text-white">
+                  <div className="absolute bottom-2 right-2 z-10 border border-gold-400/40 bg-navy-900/80 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-gold-400">
                     {v.duration}
                   </div>
                 </div>
-                <div className="p-4">
-                  <h3 className="text-sm font-bold leading-snug group-hover:text-gold-600 transition-colors">
+                <div className="p-5">
+                  <h3 className="font-serif text-base font-medium leading-snug transition-colors group-hover:text-gold-600">
                     {v.title}
                   </h3>
-                  <span className="mt-1 text-xs text-gray-400">{v.views} views</span>
+                  <span className="mt-2 inline-block font-mono text-[0.625rem] uppercase tracking-[0.18em] text-navy-800/50">
+                    {v.views} views
+                  </span>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </div>
@@ -111,63 +151,93 @@ export default function MediaPage() {
       {/* Downloadable Resources */}
       <section className="section-padding bg-cream">
         <div className="mx-auto max-w-7xl">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Downloads</span>
-          <h2 className="gold-accent relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
-            Resources &amp; Assets
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. III</span>
+            <span className="line" />
+            <span className="label">Downloads</span>
+          </div>
+          <span className="eyebrow">Downloads</span>
+          <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
+            Resources &amp;{" "}
+            <span className="italic font-normal text-gold-400">Assets</span>
           </h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {resources.map((r) => (
-              <div key={r.title} className="card group flex items-center justify-between p-5">
-                <div>
-                  <h3 className="text-sm font-bold group-hover:text-gold-600 transition-colors">
-                    {r.title}
-                  </h3>
-                  <span className="text-xs text-gray-400">{r.type} &middot; {r.size}</span>
+
+          <div className="mt-12 grid gap-0 border border-gold-400/25 sm:grid-cols-2 lg:grid-cols-3">
+            {resources.map((r, i, arr) => {
+              const col = i % 3
+              const row = Math.floor(i / 3)
+              const totalRows = Math.ceil(arr.length / 3)
+              return (
+                <div
+                  key={r.title}
+                  className={`group flex items-center justify-between gap-5 p-6 transition-colors hover:bg-ivory ${
+                    col < 2 ? "lg:border-r lg:border-gold-400/20" : ""
+                  } ${
+                    row < totalRows - 1 ? "border-b border-gold-400/20" : ""
+                  } ${
+                    i % 2 === 0 ? "sm:border-r sm:border-gold-400/20 lg:border-r" : ""
+                  }`}
+                >
+                  <div>
+                    <h3 className="font-serif text-base font-medium transition-colors group-hover:text-gold-600">
+                      {r.title}
+                    </h3>
+                    <span className="mt-1 inline-block font-mono text-[0.625rem] uppercase tracking-[0.18em] text-navy-800/50">
+                      {r.type} · {r.size}
+                    </span>
+                  </div>
+                  <button
+                    aria-label={`Download ${r.title}`}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center border border-gold-400/40 text-gold-400 transition-colors group-hover:bg-gold-400 group-hover:text-navy-900"
+                  >
+                    <Download className="h-4 w-4" />
+                  </button>
                 </div>
-                <button className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-navy-50 text-navy-600 transition-colors group-hover:bg-gold-400 group-hover:text-navy-900">
-                  <Download className="h-4 w-4" />
-                </button>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Photo Gallery Placeholder */}
-      <section className="section-padding bg-white">
+      {/* Photo Gallery */}
+      <section className="section-padding bg-ivory border-t border-gold-400/20">
         <div className="mx-auto max-w-7xl">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Gallery</span>
-          <h2 className="gold-accent relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
-            Photo Gallery
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. IV</span>
+            <span className="line" />
+            <span className="label">Gallery</span>
+          </div>
+          <span className="eyebrow">Gallery</span>
+          <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
+            Photo{" "}
+            <span className="italic font-normal text-gold-400">Gallery</span>
           </h2>
-          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {[...Array(8)].map((_, i) => (
+
+          <div className="mt-12 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+            {galleryLabels.map((label, i) => (
               <div
                 key={i}
-                className="group aspect-square cursor-pointer overflow-hidden rounded-lg bg-gradient-to-br from-navy-200 to-navy-400 transition-all hover:shadow-lg"
-              >
-                <div className="flex h-full items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
-                  <div className="rounded-full bg-white/90 p-2">
-                    <Image className="h-5 w-5 text-navy-700" />
-                  </div>
-                </div>
-              </div>
+                className="plate aspect-square cursor-pointer"
+                data-label={label}
+              />
             ))}
           </div>
         </div>
       </section>
 
       {/* Contact CTA */}
-      <section className="gradient-navy py-20 text-center">
+      <section className="gradient-navy py-24 text-center on-dark">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
-            Media Enquiries
+          <div className="fleur">✦ ❦ ✦</div>
+          <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl">
+            Media{" "}
+            <span className="italic font-normal text-gold-400">enquiries</span>.
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/70">
+          <p className="lede mx-auto mt-5 max-w-xl">
             For press enquiries, interview requests, or media accreditation, contact our communications team.
           </p>
-          <div className="mt-8">
-            <Link href="/contact" className="btn-primary">Contact Press Team</Link>
+          <div className="mt-9">
+            <Link href="/contact" className="btn-primary">Contact Press Team <span className="font-serif">→</span></Link>
           </div>
         </div>
       </section>

@@ -1,16 +1,14 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Users, Star, Crown, CheckCircle } from "lucide-react"
 
 export const metadata: Metadata = { title: "Join Us" }
 
 const tiers = [
   {
+    roman: "I.",
     name: "Supporter",
     price: "€5",
     period: "/month",
-    icon: Users,
-    colour: "navy",
     features: [
       "Official membership card",
       "Monthly newsletter",
@@ -20,11 +18,10 @@ const tiers = [
     ],
   },
   {
+    roman: "II.",
     name: "Patriot",
     price: "€15",
     period: "/month",
-    icon: Star,
-    colour: "gold",
     popular: true,
     features: [
       "Everything in Supporter",
@@ -36,11 +33,10 @@ const tiers = [
     ],
   },
   {
+    roman: "III.",
     name: "Guardian",
     price: "€50",
     period: "/month",
-    icon: Crown,
-    colour: "navy",
     features: [
       "Everything in Patriot",
       "Direct access to campaign leadership",
@@ -57,14 +53,14 @@ export default function JoinPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-navy relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-28">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "radial-gradient(circle at 60% 40%, rgba(212,175,55,0.4) 0%, transparent 50%)" }} />
+      <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">Membership</span>
-          <h1 className="mt-4 font-serif text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
-            Join the Movement
+          <span className="eyebrow eyebrow-both">The Membership</span>
+          <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
+            Join the{" "}
+            <span className="italic font-normal text-gold-400">Movement</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/70 lg:text-lg">
+          <p className="lede mx-auto mt-8 max-w-2xl">
             Become part of Europe&rsquo;s most determined civic movement. Your membership
             empowers our campaigns and gives you a voice in shaping our strategy.
           </p>
@@ -74,44 +70,54 @@ export default function JoinPage() {
       {/* Tiers */}
       <section className="section-padding bg-cream">
         <div className="mx-auto max-w-7xl">
+          <div className="sec-num">
+            <span className="num">N<sup>o</sup>. I</span>
+            <span className="line" />
+            <span className="label">The Tiers</span>
+          </div>
+
           <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gold-500">Choose Your Level</span>
-            <h2 className="gold-accent-center relative mt-3 font-serif text-3xl font-bold sm:text-4xl">
-              Membership Tiers
+            <span className="eyebrow eyebrow-both">Choose Your Level</span>
+            <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl">
+              Membership{" "}
+              <span className="italic font-normal text-gold-400">Tiers</span>
             </h2>
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {tiers.map((tier) => (
               <div
                 key={tier.name}
-                className={`card relative p-8 ${
-                  tier.popular ? "ring-2 ring-gold-400 shadow-lg shadow-gold-400/10" : ""
+                className={`relative p-10 ${
+                  tier.popular
+                    ? "ornament border border-gold-400 bg-gold-400/5"
+                    : "border border-gold-400/25 bg-ivory"
                 }`}
               >
                 {tier.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold-400 px-4 py-1 text-[0.625rem] font-bold uppercase tracking-wider text-navy-900">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-navy-800 px-4 py-1 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-gold-400 border border-gold-400">
                     Most Popular
                   </div>
                 )}
-                <tier.icon className={`h-10 w-10 ${tier.popular ? "text-gold-500" : "text-navy-600"}`} />
-                <h3 className="mt-4 font-serif text-xl font-bold">{tier.name}</h3>
-                <div className="mt-2 flex items-baseline gap-1">
-                  <span className="font-serif text-3xl font-bold text-navy-700">{tier.price}</span>
-                  <span className="text-sm text-gray-500">{tier.period}</span>
+                <div className="font-serif text-4xl italic text-gold-400 leading-none">
+                  {tier.roman}
                 </div>
-                <ul className="mt-6 space-y-3">
+                <span className="eyebrow mt-6">Tier {tier.roman.replace(".", "")}</span>
+                <h3 className="mt-4 font-serif text-3xl font-medium">{tier.name}</h3>
+                <div className="mt-3 flex items-baseline gap-2">
+                  <span className="font-serif text-4xl italic font-normal text-gold-400">{tier.price}</span>
+                  <span className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-navy-800/60">{tier.period}</span>
+                </div>
+                <ul className="mt-8 space-y-0 border-y border-gold-400/20">
                   {tier.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-gray-600">
-                      <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-gold-500" />
+                    <li key={f} className="flex items-start gap-3 border-b border-gold-400/15 py-3 font-lede text-sm text-navy-800/75 last:border-b-0">
+                      <span className="text-gold-400">✦</span>
                       {f}
                     </li>
                   ))}
                 </ul>
-                <button
-                  className={`mt-8 w-full ${tier.popular ? "btn-primary" : "btn-navy"}`}
-                >
-                  Join as {tier.name}
+                <button className={`mt-10 w-full ${tier.popular ? "btn-primary" : "btn-secondary"}`}>
+                  Join as {tier.name} <span className="font-serif">→</span>
                 </button>
               </div>
             ))}
@@ -120,21 +126,31 @@ export default function JoinPage() {
       </section>
 
       {/* Benefits */}
-      <section className="section-padding bg-white">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="font-serif text-3xl font-bold sm:text-4xl">
-            Why Join Code Victorian?
-          </h2>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2">
+      <section className="section-padding bg-ivory border-y border-gold-400/20">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center">
+            <span className="eyebrow eyebrow-both">Why Join</span>
+            <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl">
+              Why join{" "}
+              <span className="italic font-normal text-gold-400">Code Victorian</span>?
+            </h2>
+          </div>
+          <div className="mt-14 grid gap-0 border border-gold-400/25 sm:grid-cols-2">
             {[
-              { title: "Shape Our Strategy", desc: "Members vote on campaign priorities and strategy decisions at our annual congress." },
-              { title: "Connect With Like-minded Europeans", desc: "Access our exclusive member network spanning 28 countries across the continent." },
-              { title: "Stay Ahead of the Curve", desc: "Receive early access to policy papers, research findings, and campaign plans." },
-              { title: "Make a Real Impact", desc: "Your membership directly funds campaigns that are changing the political landscape." },
-            ].map((item) => (
-              <div key={item.title} className="text-left">
-                <h3 className="font-serif text-lg font-bold">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-gray-600">{item.desc}</p>
+              { roman: "I.",  title: "Shape Our Strategy", desc: "Members vote on campaign priorities and strategy decisions at our annual congress." },
+              { roman: "II.", title: "Connect With Like-minded Europeans", desc: "Access our exclusive member network spanning 28 countries across the continent." },
+              { roman: "III.",title: "Stay Ahead of the Curve", desc: "Receive early access to policy papers, research findings, and campaign plans." },
+              { roman: "IV.", title: "Make a Real Impact", desc: "Your membership directly funds campaigns that are changing the political landscape." },
+            ].map((item, i) => (
+              <div
+                key={item.title}
+                className={`p-8 ${
+                  i % 2 === 0 ? "sm:border-r sm:border-gold-400/20" : ""
+                } ${i < 2 ? "border-b border-gold-400/20" : ""}`}
+              >
+                <div className="font-serif text-2xl italic text-gold-400 leading-none">{item.roman}</div>
+                <h3 className="mt-4 font-serif text-xl font-medium">{item.title}</h3>
+                <p className="mt-3 font-lede text-base leading-relaxed text-navy-800/70">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -142,15 +158,17 @@ export default function JoinPage() {
       </section>
 
       {/* CTA */}
-      <section className="gradient-navy py-20 text-center">
+      <section className="gradient-navy py-24 text-center on-dark">
         <div className="mx-auto max-w-3xl px-6">
-          <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
-            Not Ready to Join Yet?
+          <div className="fleur">✦ ❦ ✦</div>
+          <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl">
+            Not ready to join{" "}
+            <span className="italic font-normal text-gold-400">yet</span>?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/70">
+          <p className="lede mx-auto mt-5 max-w-xl">
             You can still make a difference. Sign our petition or make a one-time donation.
           </p>
-          <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link href="/petition" className="btn-primary">Sign the Petition</Link>
             <Link href="/donate" className="btn-secondary">Make a Donation</Link>
           </div>

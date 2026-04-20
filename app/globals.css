@@ -1,36 +1,61 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Code Victorian — Editorial Design System
+   ==========================================================================
+   Palette: navy #0E1A2E + gold #C9A24B + parchment #F4EDE0
+   Type:    Playfair Display (display) · EB Garamond (lede/quote) ·
+            Inter (body) · JetBrains Mono (labels/dates)
+   Motifs:  Roman numerals · small-caps eyebrows · fleur dividers
+            corner brackets · hairline borders · no rounded corners
+   ========================================================================== */
+
 @theme {
-  --color-navy-50: #f0f3f7;
-  --color-navy-100: #d9e0ea;
-  --color-navy-200: #b3c1d5;
-  --color-navy-300: #8da2c0;
-  --color-navy-400: #6783ab;
-  --color-navy-500: #4a6a96;
-  --color-navy-600: #3a5478;
-  --color-navy-700: #2A3E5C;
-  --color-navy-800: #1e2d43;
-  --color-navy-900: #131d2b;
-  --color-navy-950: #0a1018;
+  /* Navy family — shifted to the editorial navy hub (#0E1A2E) */
+  --color-navy-50:  #e9edf2;
+  --color-navy-100: #c7cfdb;
+  --color-navy-200: #9fafc2;
+  --color-navy-300: #7588a2;
+  --color-navy-400: #4c6383;
+  --color-navy-500: #2d4664;
+  --color-navy-600: #1c2f4a;
+  --color-navy-700: #132240;
+  --color-navy-800: #0E1A2E;
+  --color-navy-900: #070E1A;
+  --color-navy-950: #030611;
 
-  --color-gold-50: #fdf9ef;
-  --color-gold-100: #f9f0d4;
-  --color-gold-200: #f0dda3;
-  --color-gold-300: #e6c86d;
-  --color-gold-400: #D4AF37;
-  --color-gold-500: #c49b1f;
-  --color-gold-600: #a37d18;
-  --color-gold-700: #825f14;
-  --color-gold-800: #6b4e16;
-  --color-gold-900: #5b4218;
-  --color-gold-950: #352309;
+  /* Gold family — shifted to the editorial gold hub (#C9A24B) */
+  --color-gold-50:  #fbf6e6;
+  --color-gold-100: #f5ebc7;
+  --color-gold-200: #ecd595;
+  --color-gold-300: #E8C778;
+  --color-gold-400: #C9A24B;
+  --color-gold-500: #b58c34;
+  --color-gold-600: #9C7A2E;
+  --color-gold-700: #7f6326;
+  --color-gold-800: #614c1e;
+  --color-gold-900: #453718;
+  --color-gold-950: #26200f;
 
-  --color-cream: #FAF8F5;
-  --color-cream-dark: #F0ECE6;
-  --color-ivory: #FFFDF8;
+  /* Parchment (formerly cream) */
+  --color-cream:      #F4EDE0;
+  --color-cream-dark: #EBE2D0;
+  --color-ivory:      #FFFDF8;
 
-  --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  /* Typography */
+  --font-serif:      "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-serif-lede: "EB Garamond", Georgia, serif;
+  --font-sans:       "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono:       "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Editorial tokens — used by the primitives below and inline styles. */
+:root {
+  --hairline: color-mix(in srgb, var(--color-gold-400) 28%, transparent);
+  --rule:     color-mix(in srgb, var(--color-gold-400) 35%, transparent);
+  --fg-muted: color-mix(in srgb, var(--color-cream) 72%, transparent);
+  --sec-px:   clamp(24px, 6vw, 96px);
+  --sec-py:   140px;
 }
 
 @layer base {
@@ -42,14 +67,16 @@
 
   body {
     font-family: var(--font-sans);
-    color: #2D3748;
+    color: var(--color-navy-800);
     background-color: var(--color-cream);
+    letter-spacing: -0.005em;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
-    color: var(--color-navy-700);
-    line-height: 1.15;
+    color: var(--color-navy-800);
+    line-height: 1.05;
+    letter-spacing: -0.012em;
   }
 
   ::selection {
@@ -59,123 +86,136 @@
 }
 
 @layer components {
+  /* -------- Buttons: flat, hairline, no gradients, no rounded corners. -- */
   .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.875rem 2.25rem;
-    background: linear-gradient(135deg, var(--color-gold-400), var(--color-gold-500));
+    padding: 0.875rem 2rem;
+    background: var(--color-gold-400);
     color: var(--color-navy-900);
-    font-weight: 700;
-    font-size: 0.9375rem;
-    letter-spacing: 0.03em;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    border-radius: 0.25rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    border: 1px solid var(--color-gold-400);
+    border-radius: 0;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
+                border-color 0.25s ease, transform 0.25s ease;
     cursor: pointer;
-    border: none;
     text-decoration: none;
+    gap: 0.75rem;
   }
 
   .btn-primary:hover {
-    background: linear-gradient(135deg, var(--color-gold-300), var(--color-gold-400));
-    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.45);
+    background: var(--color-gold-300);
+    border-color: var(--color-gold-300);
+    color: var(--color-navy-900);
     transform: translateY(-1px);
+    box-shadow: 0 6px 24px -10px var(--color-gold-400);
   }
 
-  .btn-primary:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(212, 175, 55, 0.3);
-  }
+  .btn-primary:active { transform: translateY(0); }
 
   .btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.875rem 2.25rem;
+    padding: 0.875rem 2rem;
     background: transparent;
-    color: white;
-    font-weight: 600;
-    font-size: 0.9375rem;
-    letter-spacing: 0.03em;
+    color: var(--color-gold-400);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    border-radius: 0.25rem;
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid var(--color-gold-400);
+    border-radius: 0;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
+                transform 0.25s ease;
     cursor: pointer;
     text-decoration: none;
+    gap: 0.75rem;
   }
 
   .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: white;
+    background: var(--color-gold-400);
+    color: var(--color-navy-900);
     transform: translateY(-1px);
+    box-shadow: 0 6px 24px -10px var(--color-gold-400);
   }
 
   .btn-navy {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.875rem 2.25rem;
-    background: var(--color-navy-700);
-    color: white;
-    font-weight: 700;
-    font-size: 0.9375rem;
-    letter-spacing: 0.03em;
+    padding: 0.875rem 2rem;
+    background: var(--color-navy-800);
+    color: var(--color-gold-400);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
-    border-radius: 0.25rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(42, 62, 92, 0.3);
+    border: 1px solid var(--color-gold-400);
+    border-radius: 0;
+    transition: all 0.25s ease;
     cursor: pointer;
-    border: none;
     text-decoration: none;
   }
 
   .btn-navy:hover {
-    background: var(--color-navy-800);
-    box-shadow: 0 4px 16px rgba(42, 62, 92, 0.45);
-    transform: translateY(-1px);
+    background: var(--color-gold-400);
+    color: var(--color-navy-900);
   }
 
   .section-padding {
     padding: 5rem 1.5rem;
   }
-
   @media (min-width: 768px) {
-    .section-padding {
-      padding: 7rem 2rem;
-    }
+    .section-padding { padding: 7rem 2rem; }
   }
 
+  /* -------- Cards: hairline, flat, no radius, no shadow. ---------------- */
   .card {
-    background: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    border: 1px solid var(--hairline);
+    border-radius: 0;
+    transition: border-color 0.3s ease, background 0.3s ease;
     overflow: hidden;
   }
 
   .card:hover {
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
-    transform: translateY(-2px);
+    border-color: var(--color-gold-400);
+    background: color-mix(in srgb, var(--color-cream-dark) 60%, transparent);
   }
 
+  /* Allow explicit light card bodies over parchment sections. */
+  .card.card-white {
+    background: var(--color-ivory);
+  }
+  .card.card-white:hover { background: var(--color-ivory); }
+
+  /* -------- Gold accents -> small-caps eyebrows with leading hairline. -- */
   .gold-accent {
     position: relative;
+    display: inline-block;
   }
-
   .gold-accent::after {
     content: "";
     position: absolute;
     bottom: -0.5rem;
     left: 0;
     width: 3rem;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-gold-400), var(--color-gold-300));
-    border-radius: 2px;
+    height: 1px;
+    background: var(--color-gold-400);
+    opacity: 0.7;
   }
-
+  .gold-accent-center {
+    position: relative;
+    display: inline-block;
+  }
   .gold-accent-center::after {
     content: "";
     position: absolute;
@@ -183,127 +223,269 @@
     left: 50%;
     transform: translateX(-50%);
     width: 4rem;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-gold-300), var(--color-gold-400), var(--color-gold-300));
-    border-radius: 2px;
+    height: 1px;
+    background: var(--color-gold-400);
+    opacity: 0.7;
   }
 
+  /* -------- Editorial primitives ---------------------------------------- */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-gold-400);
+    font-weight: 500;
+    display: inline-flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 36px;
+    height: 1px;
+    background: var(--color-gold-400);
+    opacity: 0.7;
+  }
+  .eyebrow.eyebrow-both::after {
+    content: "";
+    width: 36px;
+    height: 1px;
+    background: var(--color-gold-400);
+    opacity: 0.7;
+  }
+
+  .roman {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-gold-400);
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+  }
+
+  .lede {
+    font-family: var(--font-serif-lede);
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.55;
+    color: color-mix(in srgb, var(--color-navy-800) 72%, transparent);
+    font-weight: 400;
+  }
+  .on-dark .lede,
+  .gradient-navy .lede {
+    color: color-mix(in srgb, var(--color-cream) 72%, transparent);
+  }
+
+  .sec-num {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3.75rem;
+    gap: 2.5rem;
+  }
+  .sec-num .num {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-gold-400);
+    font-size: 1.125rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .sec-num .line { flex: 1; height: 1px; background: var(--hairline); }
+  .sec-num .label {
+    font-family: var(--font-sans);
+    font-size: 0.625rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--color-navy-800) 60%, transparent);
+    white-space: nowrap;
+  }
+  .on-dark .sec-num .label,
+  .gradient-navy .sec-num .label {
+    color: color-mix(in srgb, var(--color-cream) 60%, transparent);
+  }
+
+  .fleur {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--color-gold-400);
+    font-size: 1.75rem;
+    letter-spacing: 0.6em;
+    padding: 1.25rem 0;
+  }
+  .fleur::before,
+  .fleur::after {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    width: 80px;
+    height: 1px;
+    background: var(--hairline);
+    margin: 0 1.5rem;
+  }
+
+  .ornament { position: relative; }
+  .ornament::before,
+  .ornament::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--color-gold-400);
+    pointer-events: none;
+  }
+  .ornament::before {
+    top: 10px; left: 10px;
+    border-right: none; border-bottom: none;
+  }
+  .ornament::after {
+    bottom: 10px; right: 10px;
+    border-left: none; border-top: none;
+  }
+
+  .dbl-rule {
+    height: 4px;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .terms-body {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .hairline {
+    width: 100%;
+    height: 1px;
+    background: var(--hairline);
+  }
+
+  /* Diagonal gold-stripe plate — placeholder for imagery not yet wired. */
+  .plate {
+    position: relative;
+    background:
+      repeating-linear-gradient(135deg,
+        color-mix(in srgb, var(--color-gold-400) 10%, transparent) 0 1px,
+        transparent 1px 14px),
+      var(--color-navy-900);
+    border: 1px solid var(--hairline);
+    overflow: hidden;
+  }
+  .plate::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid var(--hairline);
+    pointer-events: none;
+  }
+  .plate::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--color-gold-400);
+    opacity: 0.8;
+    text-transform: uppercase;
+  }
+
+  /* -------- Forms: hairline, square, no radius -------------------------- */
   .form-input {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1.5px solid #d1d5db;
-    border-radius: 0.375rem;
-    font-size: 0.9375rem;
-    transition: all 0.2s ease;
-    background: white;
-    color: #1a202c;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--hairline);
+    border-radius: 0;
+    font-family: var(--font-serif-lede);
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    background: var(--color-ivory);
+    color: var(--color-navy-800);
   }
-
   .form-input:focus {
     outline: none;
     border-color: var(--color-gold-400);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 0 0 1px var(--color-gold-400);
   }
-
   .form-input::placeholder {
-    color: #9ca3af;
+    color: color-mix(in srgb, var(--color-navy-800) 45%, transparent);
+    font-style: italic;
   }
 
+  /* -------- Backgrounds ------------------------------------------------- */
   .gradient-navy {
-    background: linear-gradient(135deg, var(--color-navy-800) 0%, var(--color-navy-700) 50%, var(--color-navy-600) 100%);
+    background: var(--color-navy-800);
+    color: var(--color-cream);
+  }
+  .gradient-navy h1,
+  .gradient-navy h2,
+  .gradient-navy h3,
+  .gradient-navy h4,
+  .gradient-navy h5,
+  .gradient-navy h6 {
+    color: var(--color-cream);
   }
 
-  .gradient-overlay {
-    position: relative;
-  }
-
+  /* Subtle vignette reserved for hero/feature sections only. */
+  .gradient-overlay { position: relative; }
   .gradient-overlay::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(10, 16, 24, 0.85) 0%,
-      rgba(42, 62, 92, 0.75) 40%,
-      rgba(42, 62, 92, 0.6) 100%
-    );
+    background:
+      radial-gradient(ellipse at 50% 40%, transparent 30%,
+        color-mix(in srgb, var(--color-navy-900) 55%, transparent) 70%,
+        color-mix(in srgb, var(--color-navy-900) 85%, transparent) 100%);
     z-index: 1;
+    pointer-events: none;
   }
 
   .text-shadow {
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+    /* No drop shadows — keep identifier to avoid breakage but render nothing. */
+    text-shadow: none;
   }
 
   .divider-gold {
     width: 100%;
     height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      var(--color-gold-400),
-      transparent
-    );
+    background: var(--hairline);
   }
 }
 
 @layer utilities {
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
-  }
+  .font-mono { font-family: var(--font-mono); }
+  .font-lede { font-family: var(--font-serif-lede); }
 
-  .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out forwards;
-  }
-
-  .animate-fade-in-delay-1 {
-    animation: fadeInUp 0.6s ease-out 0.15s forwards;
-    opacity: 0;
-  }
-
-  .animate-fade-in-delay-2 {
-    animation: fadeInUp 0.6s ease-out 0.3s forwards;
-    opacity: 0;
-  }
-
-  .animate-fade-in-delay-3 {
-    animation: fadeInUp 0.6s ease-out 0.45s forwards;
-    opacity: 0;
-  }
-
-  .animate-count-up {
-    animation: countPulse 0.4s ease-out;
-  }
-
-  .animate-shimmer {
-    background-size: 200% 100%;
-    animation: shimmer 2s linear infinite;
-  }
+  .animate-fade-in     { animation: fadeIn   0.6s ease-out forwards; }
+  .animate-fade-in-up  { animation: fadeInUp 0.6s ease-out forwards; }
+  .animate-fade-in-delay-1 { animation: fadeInUp 0.6s ease-out 0.15s forwards; opacity: 0; }
+  .animate-fade-in-delay-2 { animation: fadeInUp 0.6s ease-out 0.30s forwards; opacity: 0; }
+  .animate-fade-in-delay-3 { animation: fadeInUp 0.6s ease-out 0.45s forwards; opacity: 0; }
+  .animate-count-up    { animation: countPulse 0.4s ease-out; }
+  .animate-shimmer     { background-size: 200% 100%; animation: shimmer 2s linear infinite; }
 }
 
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(1.5rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(1.5rem); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes countPulse {
-  0% { transform: scale(0.8); opacity: 0; }
-  60% { transform: scale(1.05); }
+  0%   { transform: scale(0.8); opacity: 0; }
+  60%  { transform: scale(1.05); }
   100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
+  0%   { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 

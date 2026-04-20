@@ -8,7 +8,6 @@ import {
   Youtube,
   Mail,
   MapPin,
-  Phone,
 } from "lucide-react"
 
 const footerLinks = {
@@ -43,26 +42,33 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="gradient-navy text-white">
+    <footer className="bg-navy-900 text-white border-t border-gold-400/25 on-dark">
       {/* Newsletter strip */}
-      <div className="border-b border-white/10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 px-6 py-10 md:flex-row md:justify-between md:py-12">
+      <div className="border-b border-gold-400/20">
+        <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 py-12 md:flex-row md:justify-between md:py-14">
           <div>
-            <h3 className="font-serif text-xl font-bold text-white md:text-2xl">
+            <span className="eyebrow">Dispatches · Weekly</span>
+            <h3 className="mt-4 font-serif text-2xl font-medium text-white md:text-3xl">
               Stay Informed
             </h3>
-            <p className="mt-1 text-sm text-white/60">
+            <p className="mt-2 font-lede text-sm text-white/60">
               Join thousands of Europeans who receive our weekly updates.
             </p>
           </div>
-          <form className="flex w-full max-w-md gap-2" onSubmit={(e) => e.preventDefault()}>
+          <form
+            className="grid w-full max-w-md grid-cols-[1fr_auto] border border-gold-400/40"
+            onSubmit={(e) => e.preventDefault()}
+          >
             <input
               type="email"
-              placeholder="Your email address"
-              className="form-input !border-white/20 !bg-white/10 !text-white !placeholder-white/40 flex-1"
+              placeholder="your name@correspondence.eu"
+              className="bg-transparent px-5 py-4 font-lede text-base text-white placeholder:italic placeholder:text-white/40 outline-none focus:bg-white/5"
               required
             />
-            <button type="submit" className="btn-primary whitespace-nowrap !py-3 !px-6">
+            <button
+              type="submit"
+              className="bg-gold-400 px-6 text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-navy-900 transition-colors hover:bg-gold-300"
+            >
               Subscribe
             </button>
           </form>
@@ -70,19 +76,19 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="mx-auto max-w-7xl px-6 py-12 lg:py-16">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mx-auto max-w-7xl px-6 py-14 lg:py-20">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
           {/* Brand column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded bg-gold-400">
-                <span className="font-serif text-xl font-bold text-navy-900">V</span>
-              </div>
-              <span className="font-serif text-xl font-bold text-white">
+            <Link href="/" className="inline-flex flex-col leading-tight">
+              <span className="font-serif text-2xl font-medium text-white">
                 Code Victorian
               </span>
+              <span className="mt-2 font-mono text-[0.625rem] font-normal uppercase tracking-[0.32em] text-gold-400">
+                A Cultural Society · Est. MMXXVI
+              </span>
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">
+            <p className="mt-6 max-w-xs font-lede text-base leading-relaxed text-white/60">
               A movement dedicated to preserving European heritage, culture, and
               identity for future generations. Together, we stand for a Europe
               that honours its people and traditions.
@@ -93,7 +99,7 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white/70 transition-all duration-200 hover:bg-gold-400 hover:text-navy-900"
+                  className="flex h-9 w-9 items-center justify-center border border-gold-400/40 text-white/70 transition-colors duration-200 hover:bg-gold-400 hover:text-navy-900 hover:border-gold-400"
                 >
                   <Icon className="h-4 w-4" />
                 </a>
@@ -103,15 +109,15 @@ export default function Footer() {
 
           {/* Link columns */}
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">
+            <h4 className="text-[0.6875rem] font-medium uppercase tracking-[0.28em] text-gold-400">
               Campaign
             </h4>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-5 space-y-2.5">
               {footerLinks.campaign.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-white/60 transition-colors hover:text-gold-400"
+                    className="font-lede text-sm text-white/70 transition-colors hover:text-gold-400"
                   >
                     {label}
                   </Link>
@@ -121,15 +127,15 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">
+            <h4 className="text-[0.6875rem] font-medium uppercase tracking-[0.28em] text-gold-400">
               Get Involved
             </h4>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-5 space-y-2.5">
               {footerLinks.involved.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-white/60 transition-colors hover:text-gold-400"
+                    className="font-lede text-sm text-white/70 transition-colors hover:text-gold-400"
                   >
                     {label}
                   </Link>
@@ -139,28 +145,28 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-gold-400">
-              Legal
+            <h4 className="text-[0.6875rem] font-medium uppercase tracking-[0.28em] text-gold-400">
+              Correspondence
             </h4>
-            <ul className="mt-4 space-y-2.5">
+            <ul className="mt-5 space-y-2.5">
               {footerLinks.legal.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="text-sm text-white/60 transition-colors hover:text-gold-400"
+                    className="font-lede text-sm text-white/70 transition-colors hover:text-gold-400"
                   >
                     {label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="mt-6 space-y-2 text-xs text-white/40">
+            <div className="mt-6 space-y-2 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-white/40">
               <div className="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-                <span>Brussels, Belgium</span>
+                <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-400/70" />
+                <span>Brussels · Belgium</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 shrink-0" />
+                <Mail className="h-3.5 w-3.5 shrink-0 text-gold-400/70" />
                 <span>info@codevictorian.com</span>
               </div>
             </div>
@@ -168,18 +174,18 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-6 py-6">
-          <div className="flex flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
-            <p className="text-xs text-white/40">
-              &copy; {new Date().getFullYear()} Code Victorian. All rights reserved.
+      {/* Bottom bar — double-rule + mono copyright */}
+      <div className="border-t border-gold-400/20">
+        <div className="mx-auto max-w-7xl px-6 py-7">
+          <div className="dbl-rule mb-6" />
+          <div className="flex flex-col items-center gap-4 text-center font-mono text-[0.6875rem] uppercase tracking-[0.14em] md:flex-row md:justify-between md:text-left">
+            <p className="text-white/50">
+              © MMXXVI Code Victorian · All Rights Reserved
             </p>
-            <p className="max-w-xl text-[0.6875rem] leading-relaxed text-white/30">
+            <p className="max-w-xl text-[0.625rem] leading-relaxed text-white/35">
               Published by Code Victorian, a registered third-party campaigner.
               Consult your national electoral authority for required disclaimer
-              format. This campaign material is published in accordance with
-              applicable EU electoral regulations.
+              format. Made with patience · Not advertising.
             </p>
           </div>
         </div>
