@@ -10,20 +10,20 @@ import {
   MapPin,
 } from "lucide-react"
 
+// Apr 23 client brief: hide Events / Media / Store; rename News → Updates;
+// add Europe First (community) and Membership Tiers under Get Involved.
 const footerLinks = {
   campaign: [
     { href: "/about", label: "About Us" },
     { href: "/issues", label: "Our Issues" },
-    { href: "/news", label: "News" },
-    { href: "/media", label: "Media Centre" },
-    { href: "/events", label: "Events" },
+    { href: "/updates", label: "Updates" },
   ],
   involved: [
     { href: "/petition", label: "Sign the Petition" },
     { href: "/donate", label: "Donate" },
+    { href: "/member", label: "Europe First" },
+    { href: "/join", label: "Membership Tiers" },
     { href: "/volunteer", label: "Volunteer" },
-    { href: "/join", label: "Join Us" },
-    { href: "/store", label: "Store" },
   ],
   legal: [
     { href: "/privacy", label: "Privacy Policy" },

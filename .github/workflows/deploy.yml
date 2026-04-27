@@ -26,7 +26,15 @@ jobs:
 
       - run: npm install --legacy-peer-deps
 
-      - run: npx next build
+      # The GH Pages mirror is a static export; Stripe checkout requires a
+      # real Next.js runtime. Strip the API route before building so the
+      # static export is allowed.
+      - name: Strip server-only routes for static export
+        run: rm -rf app/api
+
+      - env:
+          STATIC_EXPORT: "1"
+        run: npx next build
 
       - uses: actions/upload-pages-artifact@v3
         with:

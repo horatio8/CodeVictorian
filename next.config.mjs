@@ -1,19 +1,32 @@
 /** @type {import('next').NextConfig} */
 
-// basePath is required when the static export is served from a
-// subpath (e.g. GitHub Pages at username.github.io/CodeVictorian/),
-// but breaks when served from a domain root (Vercel serves
-// code-victorian.vercel.app at /). Vercel sets VERCEL=1 automatically,
-// so only apply the GitHub Pages basePath when NOT on Vercel.
+// Builds:
+//   - Vercel (default): full Next.js runtime, API routes work, basePath off.
+//   - GH Pages mirror: STATIC_EXPORT=1 → static export under /CodeVictorian.
+//     The CI workflow removes app/api before this build because static
+//     export does not support server-side API routes.
+//   - Local dev / local build: normal Next.js build (closest to Vercel).
+const isStaticExport = process.env.STATIC_EXPORT === "1"
 const isVercel = process.env.VERCEL === "1"
 
 const nextConfig = {
   reactStrictMode: true,
-  output: "export",
-  ...(isVercel ? {} : { basePath: "/CodeVictorian" }),
+  ...(isStaticExport ? { output: "export", basePath: "/CodeVictorian" } : {}),
   images: {
     unoptimized: true,
   },
+  async redirects() {
+    if (isStaticExport) return [] // static export can't issue redirects
+    return [
+      // /news was renamed to /updates per the Apr 23 brief.
+      { source: "/news", destination: "/updates", permanent: true },
+      { source: "/news/:path*", destination: "/updates/:path*", permanent: true },
+    ]
+  },
 }
+
+// Quiet "isVercel unused" warning in static-export builds without losing the
+// reference (kept for future per-runtime branching).
+void isVercel
 
 export default nextConfig

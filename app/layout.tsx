@@ -1,9 +1,6 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
-import CookieConsent from "@/components/CookieConsent"
-import ChatWidget from "@/components/ChatWidget"
+import SiteChrome from "@/components/SiteChrome"
 
 export const metadata: Metadata = {
   title: {
@@ -44,11 +41,7 @@ export default function RootLayout({
         data-theme="navy"
         data-display="playfair"
       >
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <CookieConsent />
-        <ChatWidget />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )
