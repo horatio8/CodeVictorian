@@ -4,6 +4,9 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
 
+// Per the Apr 23 client brief: hide Events / Media / Store from nav for now.
+// "News" is renamed to "Updates" and points at the new /updates route.
+// The membership entry now points at /member (Europe First community).
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
@@ -13,13 +16,11 @@ const navLinks = [
     children: [
       { href: "/petition", label: "Sign the Petition" },
       { href: "/volunteer", label: "Volunteer" },
-      { href: "/join", label: "Join Us" },
-      { href: "/events", label: "Events" },
+      { href: "/member", label: "Europe First" },
+      { href: "/join", label: "Membership Tiers" },
     ],
   },
-  { href: "/news", label: "News" },
-  { href: "/media", label: "Media" },
-  { href: "/store", label: "Store" },
+  { href: "/updates", label: "Updates" },
   { href: "/contact", label: "Contact" },
 ]
 
@@ -53,8 +54,15 @@ export default function Header() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between lg:h-20">
-          {/* Brand mark — text only, no tile */}
+          {/* Brand mark — small logo + text wordmark */}
           <Link href="/" className="relative z-10 flex items-center gap-3 group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt=""
+              aria-hidden="true"
+              className="h-9 w-auto shrink-0 transition-opacity group-hover:opacity-90"
+            />
             <div className="flex flex-col leading-none">
               <span className="font-serif text-xl font-medium tracking-wide text-white transition-colors group-hover:text-gold-400">
                 Code Victorian

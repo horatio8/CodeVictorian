@@ -54,7 +54,8 @@ const issues = [
 const additionalIssues = [
   { roman: "IV.", title: "Democratic Sovereignty", desc: "Restoring decision-making power to national parliaments and the citizens they represent." },
   { roman: "V.", title: "Economic Justice", desc: "Ensuring that globalisation benefits European workers and small businesses, not just multinational corporations." },
-  { roman: "VI.", title: "Education Reform", desc: "Reforming curricula to teach European history, culture, and civic values with pride and accuracy." },
+  // Apr 23 brief: Education Reform wording sharpened.
+  { roman: "VI.", title: "Education Reform", desc: "Remove woke propaganda and ideology from our education system. Restore the teaching of European history, culture, and civic values." },
 ]
 
 export default function IssuesPage() {

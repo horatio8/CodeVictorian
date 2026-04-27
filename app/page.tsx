@@ -2,12 +2,20 @@
 
 import Link from "next/link"
 import { ArrowRight, ChevronRight } from "lucide-react"
+import {
+  CURRENT_SIGNATURES,
+  showSignatureCounter,
+} from "@/lib/petition-stats"
 
+// PLACEHOLDER stats — currently hidden behind showSignatureCounter().
+// Replace these with real figures (and remove the threshold gate in
+// app/page.tsx Home() / petition-stats.ts) once Code Victorian has
+// numbers it's comfortable showing publicly.
 const stats = [
-  { value: "127,843", label: "Petition Signatures" },
-  { value: "28", label: "Countries Represented" },
-  { value: "€2.4M", label: "Raised This Year" },
-  { value: "15,000+", label: "Active Members" },
+  { value: "—", label: "Petition Signatures" },
+  { value: "—", label: "Countries Represented" },
+  { value: "—", label: "Raised This Year" },
+  { value: "—", label: "Active Members" },
 ]
 
 const issues = [
@@ -56,10 +64,13 @@ const news = [
 ]
 
 export default function Home() {
+  // Apr 23 brief: hide the public-stats bar until we have credible
+  // numbers (using the same threshold gate as the petition counter).
+  const showStats = showSignatureCounter()
   return (
     <>
       <HeroSection />
-      <StatsBar />
+      {showStats && <StatsBar />}
       <IssuesSection />
       <PetitionCTA />
       <NewsSection />
@@ -72,7 +83,17 @@ export default function Home() {
 function HeroSection() {
   return (
     <section className="gradient-overlay relative flex min-h-[100vh] items-center overflow-hidden bg-navy-900 on-dark">
-      {/* Subtle vignette overlay only — no tiled pattern */}
+      {/* Background video — muted, looped, dimmed under a vignette */}
+      <video
+        className="absolute inset-0 h-full w-full object-cover opacity-35"
+        src="/hero-video.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-32 lg:py-40">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left content */}
@@ -104,9 +125,12 @@ function HeroSection() {
               </Link>
             </div>
 
-            <p className="mt-5 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-white/40">
-              Join 127,843 Europeans who have already signed
-            </p>
+            {/* Social-proof line is hidden until we have a credible signature count. */}
+            {showSignatureCounter() && (
+              <p className="mt-5 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-white/40">
+                Join {CURRENT_SIGNATURES.toLocaleString("en-GB")} Europeans who have already signed
+              </p>
+            )}
           </div>
 
           {/* Right — Quick petition form, hairline-bordered, flat */}
@@ -134,11 +158,20 @@ function HeroSection() {
                   style={{ background: "rgba(255,255,255,0.05)", color: "white", borderColor: "rgba(201,162,75,0.4)" }}
                   required
                 />
+                <input
+                  type="tel"
+                  placeholder="Mobile (optional)"
+                  className="form-input"
+                  style={{ background: "rgba(255,255,255,0.05)", color: "white", borderColor: "rgba(201,162,75,0.4)" }}
+                  autoComplete="tel"
+                  inputMode="tel"
+                />
                 <select
                   className="form-input"
+                  defaultValue=""
                   style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.7)", borderColor: "rgba(201,162,75,0.4)" }}
                 >
-                  <option value="">Select your country</option>
+                  <option value="" disabled>Select your country</option>
                   <option>Austria</option>
                   <option>Belgium</option>
                   <option>Czech Republic</option>
@@ -156,25 +189,23 @@ function HeroSection() {
                   <option>Portugal</option>
                   <option>Spain</option>
                   <option>Sweden</option>
-                  <option>Other EU Country</option>
+                  <option>United Kingdom</option>
+                  <option>United States</option>
+                  <option>Canada</option>
+                  <option>Australia</option>
+                  <option>New Zealand</option>
+                  <option>Other</option>
                 </select>
-                <label className="flex items-start gap-2 font-lede text-xs text-white/55">
-                  <input
-                    type="checkbox"
-                    required
-                    className="mt-1 h-3.5 w-3.5 accent-gold-400"
-                  />
-                  <span>
-                    I agree to the{" "}
-                    <Link href="/privacy" className="text-gold-400 underline underline-offset-2">
-                      privacy policy
-                    </Link>{" "}
-                    and consent to my data being processed for this petition.
-                  </span>
-                </label>
                 <button type="submit" className="btn-primary w-full">
                   Add My Signature <span className="font-serif">→</span>
                 </button>
+                <p className="text-center text-xs leading-relaxed text-white/55">
+                  By signing, you agree to the{" "}
+                  <Link href="/privacy" className="text-gold-400 underline underline-offset-2">
+                    privacy policy
+                  </Link>{" "}
+                  and consent to receive campaign updates. Unsubscribe at any time.
+                </p>
               </form>
             </div>
           </div>
@@ -297,22 +328,20 @@ function PetitionCTA() {
         </h2>
         <p className="lede mx-auto mt-6 max-w-xl">
           Every signature brings us closer to making our voices heard at the EU
-          level. Stand with over 127,000 fellow Europeans.
+          level. Add yours.
         </p>
 
-        {/* Progress bar — flat gold, square edges */}
-        <div className="mx-auto mt-10 max-w-lg">
-          <div className="mb-3 flex justify-between font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-white/60">
-            <span>127,843 signed</span>
-            <span>Goal: 200,000</span>
+        {/* Progress bar — gated until we cross the credibility threshold. */}
+        {showSignatureCounter() && (
+          <div className="mx-auto mt-10 max-w-lg">
+            <div className="mb-3 flex justify-between font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-white/60">
+              <span>{CURRENT_SIGNATURES.toLocaleString("en-GB")} signed</span>
+              <span>next milestone</span>
+            </div>
+            <div className="h-px w-full bg-gold-400/25" />
+            <div className="mt-1 h-1 w-full bg-white/5" />
           </div>
-          <div className="h-px w-full bg-gold-400/25">
-            <div className="h-px bg-gold-400" style={{ width: "64%" }} />
-          </div>
-          <div className="mt-1 h-1 w-full bg-white/5">
-            <div className="h-1 bg-gold-400" style={{ width: "64%" }} />
-          </div>
-        </div>
+        )}
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <Link href="/petition" className="btn-primary">
@@ -348,7 +377,7 @@ function NewsSection() {
             </h2>
           </div>
           <Link
-            href="/news"
+            href="/updates"
             className="inline-flex items-center gap-2 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-gold-600 transition-colors hover:text-gold-500"
           >
             View all news
@@ -508,8 +537,8 @@ function FinalCTA() {
           <Link href="/petition" className="btn-primary">
             Sign the Petition <span className="font-serif">→</span>
           </Link>
-          <Link href="/join" className="btn-secondary">
-            Become a Member
+          <Link href="/member" className="btn-secondary">
+            Join Europe First
           </Link>
         </div>
       </div>

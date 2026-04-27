@@ -265,15 +265,15 @@
   }
 
   .lede {
-    font-family: var(--font-serif-lede);
-    font-size: clamp(18px, 1.5vw, 22px);
-    line-height: 1.55;
-    color: color-mix(in srgb, var(--color-navy-800) 72%, transparent);
+    font-family: var(--font-sans);
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.6;
+    color: color-mix(in srgb, var(--color-navy-800) 78%, transparent);
     font-weight: 400;
   }
   .on-dark .lede,
   .gradient-navy .lede {
-    color: color-mix(in srgb, var(--color-cream) 72%, transparent);
+    color: color-mix(in srgb, var(--color-cream) 78%, transparent);
   }
 
   .sec-num {
@@ -399,8 +399,8 @@
     padding: 0.85rem 1rem;
     border: 1px solid var(--hairline);
     border-radius: 0;
-    font-family: var(--font-serif-lede);
-    font-size: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     background: var(--color-ivory);
     color: var(--color-navy-800);
@@ -457,7 +457,11 @@
 
 @layer utilities {
   .font-mono { font-family: var(--font-mono); }
-  .font-lede { font-family: var(--font-serif-lede); }
+  /* font-lede kept as a class for backwards compatibility, but routed
+     to Inter for legibility — EB Garamond reserved for the rare italic
+     pull quote (set explicitly with var(--font-serif-lede)). */
+  .font-lede { font-family: var(--font-sans); }
+  .font-quote { font-family: var(--font-serif-lede); font-style: italic; }
 
   .animate-fade-in     { animation: fadeIn   0.6s ease-out forwards; }
   .animate-fade-in-up  { animation: fadeInUp 0.6s ease-out forwards; }
