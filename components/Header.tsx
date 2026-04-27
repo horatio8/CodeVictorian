@@ -54,8 +54,15 @@ export default function Header() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between lg:h-20">
-          {/* Brand mark — text only, no tile */}
+          {/* Brand mark — small logo + text wordmark */}
           <Link href="/" className="relative z-10 flex items-center gap-3 group">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo.png"
+              alt=""
+              aria-hidden="true"
+              className="h-9 w-auto shrink-0 transition-opacity group-hover:opacity-90"
+            />
             <div className="flex flex-col leading-none">
               <span className="font-serif text-xl font-medium tracking-wide text-white transition-colors group-hover:text-gold-400">
                 Code Victorian
