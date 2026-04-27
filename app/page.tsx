@@ -83,7 +83,17 @@ export default function Home() {
 function HeroSection() {
   return (
     <section className="gradient-overlay relative flex min-h-[100vh] items-center overflow-hidden bg-navy-900 on-dark">
-      {/* Subtle vignette overlay only — no tiled pattern */}
+      {/* Background video — muted, looped, dimmed under a vignette */}
+      <video
+        className="absolute inset-0 h-full w-full object-cover opacity-35"
+        src="/hero-video.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      />
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-32 lg:py-40">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left content */}
