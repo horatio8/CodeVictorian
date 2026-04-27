@@ -414,6 +414,12 @@
     color: color-mix(in srgb, var(--color-navy-800) 45%, transparent);
     font-style: italic;
   }
+  /* Form fields placed on dark surfaces (home hero, /remigration, etc.)
+     need a lighter placeholder to be readable. */
+  .on-dark .form-input::placeholder,
+  .gradient-navy .form-input::placeholder {
+    color: rgba(244, 237, 224, 0.55);
+  }
 
   /* -------- Backgrounds ------------------------------------------------- */
   .gradient-navy {
