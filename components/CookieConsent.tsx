@@ -25,6 +25,9 @@ export default function CookieConsent() {
       ? { necessary: true, analytics: true, marketing: true }
       : prefs
     localStorage.setItem("cv_cookie_consent", JSON.stringify(consent))
+    // Tell same-tab listeners (Clarity, etc.) consent has changed.
+    // Cross-tab updates fire the standard storage event automatically.
+    window.dispatchEvent(new CustomEvent("cv:consent-changed", { detail: consent }))
     setVisible(false)
   }
 

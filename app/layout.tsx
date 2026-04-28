@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import SiteChrome from "@/components/SiteChrome"
+import ClarityTracking from "@/components/ClarityTracking"
 
 export const metadata: Metadata = {
   title: {
@@ -42,6 +43,7 @@ export default function RootLayout({
         data-display="playfair"
       >
         <SiteChrome>{children}</SiteChrome>
+        <ClarityTracking />
       </body>
     </html>
   )
