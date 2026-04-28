@@ -1,13 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { Mail, MapPin, Clock, MessageSquare } from "lucide-react"
+import { MapPin, Clock } from "lucide-react"
 
 const contacts = [
-  { icon: Mail,           label: "General Enquiries", value: "info@codevictorian.com" },
-  { icon: MessageSquare,  label: "Press & Media",     value: "press@codevictorian.com" },
-  { icon: MapPin,         label: "Headquarters",      value: "Brussels, Belgium" },
-  { icon: Clock,          label: "Office Hours",      value: "Mon–Fri · 09:00–17:30 CET" },
+  { icon: MapPin, label: "Headquarters", value: "Budapest, Hungary" },
+  { icon: Clock,  label: "Office Hours", value: "Mon–Fri · 09:00–17:30 CET" },
 ]
 
 export default function ContactPage() {
@@ -48,10 +46,8 @@ export default function ContactPage() {
                 <select className="form-input" required>
                   <option value="">Subject</option>
                   <option>General Enquiry</option>
-                  <option>Press / Media Request</option>
                   <option>Volunteer Enquiry</option>
                   <option>Donation Query</option>
-                  <option>Event Information</option>
                   <option>Partnership / Collaboration</option>
                   <option>Data Subject Request (GDPR)</option>
                   <option>Other</option>
@@ -104,7 +100,6 @@ export default function ContactPage() {
                       { href: "/donate", label: "Make a donation" },
                       { href: "/petition", label: "Sign the petition" },
                       { href: "/privacy#rights", label: "Data subject rights (GDPR)" },
-                      { href: "/media", label: "Press kit & resources" },
                     ].map((link) => (
                       <li key={link.href} className="border-b border-gold-400/15 last:border-b-0">
                         <Link
