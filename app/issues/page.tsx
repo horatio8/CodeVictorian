@@ -26,7 +26,6 @@ const issues = [
     title: "Stop Harmful Immigration",
     subtitle: "Ending the unchecked flow that threatens our communities",
     paragraphs: [
-      "Not all immigration is equal. We distinguish between skilled, legal immigration that benefits host societies and the mass, uncontrolled migration that has overwhelmed European infrastructure, depressed wages, and imported crime and cultural values incompatible with European norms.",
       "We demand the immediate closure of illegal migration routes, the reform of the asylum system to prevent exploitation, and the introduction of strict integration requirements for all legal migrants. Europe must regain control of its borders.",
     ],
     stats: [
