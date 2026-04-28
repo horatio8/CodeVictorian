@@ -13,7 +13,7 @@ const issues = [
     subtitle: "Restoring demographic balance through lawful, humane policy",
     paragraphs: [
       "Europe\u2019s demographic transformation is not a natural phenomenon — it is the result of decades of policy failure. Remigration is the lawful, organised return of those who have no legal right to reside in Europe, or whose presence poses a demonstrable threat to public safety.",
-      "We advocate for clear, transparent legal frameworks that prioritise the rights and safety of European citizens while respecting international law. Our policy papers propose a phased approach that begins with enforcing existing deportation orders and ending asylum fraud.",
+      "We advocate for clear, transparent legal frameworks that prioritise the rights and safety of native Europeans while respecting international law. Our policy papers propose a phased approach that begins with enforcing existing deportation orders and ending asylum fraud.",
     ],
     stats: [
       { value: "1.2M", label: "Pending deportation orders in the EU" },
