@@ -355,7 +355,7 @@ function NewsSection() {
 }
 
 function DonationSection() {
-  const amounts = [65, 135, 265, 600]
+  const amounts = [65, 135, 265, 600, 1500]
 
   return (
     <section className="section-padding bg-cream border-y border-gold-400/20">
@@ -410,18 +410,22 @@ function DonationSection() {
             </p>
 
             <div className="mt-6 grid grid-cols-3 gap-0 border border-gold-400/25">
-              {amounts.map((a, i) => (
-                <button
-                  key={a}
-                  className={`py-5 text-center font-sans text-2xl font-semibold tracking-tight text-navy-800 transition-colors hover:bg-gold-400/10 ${
-                    i < amounts.length - 1 || true ? "border-r border-gold-400/25" : ""
-                  } ${i < 3 ? "border-b border-gold-400/25" : ""}`}
-                >
-                  €{a.toLocaleString("en-GB")}
-                </button>
-              ))}
-              <button className="py-5 text-center font-mono text-xs uppercase tracking-[0.2em] text-navy-800 transition-colors hover:bg-gold-400/10 col-span-3 border-t-0">
-                Other amount
+              {amounts.map((a, i) => {
+                const col = i % 3
+                const row = Math.floor(i / 3)
+                return (
+                  <button
+                    key={a}
+                    className={`py-5 text-center font-sans text-2xl font-semibold tracking-tight text-navy-800 transition-colors hover:bg-gold-400/10 ${
+                      col < 2 ? "border-r border-gold-400/25" : ""
+                    } ${row === 0 ? "border-b border-gold-400/25" : ""}`}
+                  >
+                    €{a.toLocaleString("en-GB")}
+                  </button>
+                )
+              })}
+              <button className="py-5 text-center font-mono text-xs uppercase tracking-[0.2em] text-navy-800 transition-colors hover:bg-gold-400/10">
+                Other
               </button>
             </div>
 
