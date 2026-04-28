@@ -39,8 +39,8 @@ const issues = [
     title: "Preserve European Culture",
     subtitle: "Safeguarding our heritage for future generations",
     paragraphs: [
-      "European civilisation has given the world democracy, the scientific method, the rule of law, classical music, Renaissance art, and the very concept of human rights. This heritage is not a museum piece — it is a living tradition that must be actively defended and transmitted.",
-      "We campaign for strengthened heritage protection laws, mandatory civic and cultural education in schools, the protection of European languages and traditions, and public investment in the arts and cultural institutions that define who we are.",
+      "European civilisation, built on the bedrock of Christianity, gave the world democracy, the scientific method, the rule of law, classical music, Renaissance art, and the very concept of human rights. These achievements did not emerge in a vacuum — they grew from a Christian moral tradition that shaped the continent's understanding of human dignity, individual conscience, and the duty to govern justly. This heritage is not a museum piece — it is a living tradition that must be actively defended and transmitted.",
+      "We campaign for strengthened heritage protection laws, mandatory civic and cultural education in schools that includes the Christian foundations of European thought, the protection of European languages, traditions, and sacred architecture, and public investment in the arts and cultural institutions that define who we are.",
     ],
     stats: [
       { value: "47", label: "European languages under threat" },
