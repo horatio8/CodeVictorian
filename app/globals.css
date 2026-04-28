@@ -414,8 +414,23 @@
     color: color-mix(in srgb, var(--color-navy-800) 45%, transparent);
     font-style: italic;
   }
-  /* Form fields placed on dark surfaces (home hero, /remigration, etc.)
-     need a lighter placeholder to be readable. */
+  /* Form fields placed on dark surfaces (home hero, dark variants of
+     PetitionForm, the cookie banner) get a translucent dark background
+     and parchment text instead of the default ivory card colour, so
+     the inputs read as inset wells on the navy panel rather than as
+     stark white blocks. */
+  .on-dark .form-input,
+  .gradient-navy .form-input {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(201, 162, 75, 0.4);
+    color: var(--color-cream);
+  }
+  .on-dark .form-input:focus,
+  .gradient-navy .form-input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-gold-400);
+    box-shadow: 0 0 0 1px var(--color-gold-400);
+  }
   .on-dark .form-input::placeholder,
   .gradient-navy .form-input::placeholder {
     color: rgba(244, 237, 224, 0.55);
