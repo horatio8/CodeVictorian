@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { ArrowRight, ChevronRight } from "lucide-react"
+import PetitionForm from "@/components/PetitionForm"
 import {
   CURRENT_SIGNATURES,
   showSignatureCounter,
@@ -133,81 +134,10 @@ function HeroSection() {
             )}
           </div>
 
-          {/* Right — Quick petition form, hairline-bordered, flat */}
+          {/* Right — shared PetitionForm in dark variant; same component used on
+              /petition and /remigration so all three feed into /api/petition. */}
           <div className="animate-fade-in-delay-2 mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
-            <div className="ornament border border-gold-400/40 bg-navy-800/40 p-8 sm:p-10 backdrop-blur-md">
-              <span className="eyebrow">Sign Now</span>
-              <h2 className="mt-4 font-serif text-3xl font-medium text-white">
-                Add your name.
-              </h2>
-              <p className="mt-2 font-lede text-sm text-white/60">
-                Defend Europe&rsquo;s future.
-              </p>
-              <form className="mt-6 space-y-3" onSubmit={(e) => e.preventDefault()}>
-                <input
-                  type="text"
-                  placeholder="Full name"
-                  className="form-input"
-                  style={{ background: "rgba(255,255,255,0.05)", color: "white", borderColor: "rgba(201,162,75,0.4)" }}
-                  required
-                />
-                <input
-                  type="email"
-                  placeholder="your name@correspondence.eu"
-                  className="form-input"
-                  style={{ background: "rgba(255,255,255,0.05)", color: "white", borderColor: "rgba(201,162,75,0.4)" }}
-                  required
-                />
-                <input
-                  type="tel"
-                  placeholder="Mobile (optional)"
-                  className="form-input"
-                  style={{ background: "rgba(255,255,255,0.05)", color: "white", borderColor: "rgba(201,162,75,0.4)" }}
-                  autoComplete="tel"
-                  inputMode="tel"
-                />
-                <select
-                  className="form-input"
-                  defaultValue=""
-                  style={{ background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.7)", borderColor: "rgba(201,162,75,0.4)" }}
-                >
-                  <option value="" disabled>Select your country</option>
-                  <option>Austria</option>
-                  <option>Belgium</option>
-                  <option>Czech Republic</option>
-                  <option>Denmark</option>
-                  <option>Finland</option>
-                  <option>France</option>
-                  <option>Germany</option>
-                  <option>Greece</option>
-                  <option>Hungary</option>
-                  <option>Ireland</option>
-                  <option>Italy</option>
-                  <option>Netherlands</option>
-                  <option>Norway</option>
-                  <option>Poland</option>
-                  <option>Portugal</option>
-                  <option>Spain</option>
-                  <option>Sweden</option>
-                  <option>United Kingdom</option>
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Australia</option>
-                  <option>New Zealand</option>
-                  <option>Other</option>
-                </select>
-                <button type="submit" className="btn-primary w-full">
-                  Add My Signature <span className="font-serif">→</span>
-                </button>
-                <p className="text-center text-xs leading-relaxed text-white/55">
-                  By signing, you agree to the{" "}
-                  <Link href="/privacy" className="text-gold-400 underline underline-offset-2">
-                    privacy policy
-                  </Link>{" "}
-                  and consent to receive campaign updates. Unsubscribe at any time.
-                </p>
-              </form>
-            </div>
+            <PetitionForm variant="dark" />
           </div>
         </div>
       </div>
@@ -483,7 +413,7 @@ function DonationSection() {
               {amounts.map((a, i) => (
                 <button
                   key={a}
-                  className={`py-5 text-center font-serif text-2xl font-medium text-navy-800 transition-colors hover:bg-gold-400/10 ${
+                  className={`py-5 text-center font-sans text-2xl font-semibold tracking-tight text-navy-800 transition-colors hover:bg-gold-400/10 ${
                     i < amounts.length - 1 || true ? "border-r border-gold-400/25" : ""
                   } ${i < 3 ? "border-b border-gold-400/25" : ""}`}
                 >

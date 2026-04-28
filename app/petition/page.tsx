@@ -2,21 +2,12 @@
 
 import Link from "next/link"
 import { Share2, Shield, Users, CheckCircle } from "lucide-react"
+import PetitionForm from "@/components/PetitionForm"
 import {
   CURRENT_SIGNATURES,
-  SIGNATURE_THRESHOLD,
   showSignatureCounter,
   nextGoal,
 } from "@/lib/petition-stats"
-
-const countries = [
-  "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic",
-  "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary",
-  "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta",
-  "Netherlands", "Poland", "Portugal", "Romania", "Slovakia", "Slovenia",
-  "Spain", "Sweden", "United Kingdom", "United States", "Canada", "Australia",
-  "New Zealand", "Other",
-]
 
 const demands: { roman: string; title: string; body: string }[] = [
   {
@@ -222,48 +213,3 @@ export default function PetitionPage() {
   )
 }
 
-export function PetitionForm({ sticky = false }: { sticky?: boolean }) {
-  return (
-    <div
-      className={`${
-        sticky ? "sticky top-28 " : ""
-      }ornament border border-gold-400/40 bg-ivory p-8 sm:p-10`}
-    >
-      <span className="eyebrow">Sign Now</span>
-      <h3 className="mt-4 font-serif text-2xl font-medium">Add your name.</h3>
-      <p className="mt-2 text-sm text-navy-800/65">
-        Your signature is powerful. Add it today.
-      </p>
-      <form className="mt-7 space-y-3" onSubmit={(e) => e.preventDefault()}>
-        <div className="grid grid-cols-2 gap-3">
-          <input type="text" placeholder="First name" className="form-input" required />
-          <input type="text" placeholder="Last name" className="form-input" required />
-        </div>
-        <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
-        <input
-          type="tel"
-          placeholder="Mobile (optional)"
-          className="form-input"
-          autoComplete="tel"
-          inputMode="tel"
-        />
-        <select className="form-input" required defaultValue="">
-          <option value="" disabled>Select your country</option>
-          {countries.map((c) => <option key={c}>{c}</option>)}
-        </select>
-        <input type="text" placeholder="City (optional)" className="form-input" />
-        <button type="submit" className="btn-primary w-full">
-          Add My Signature <span className="font-serif">→</span>
-        </button>
-        <p className="text-center text-xs leading-relaxed text-navy-800/65">
-          By signing, you agree to the{" "}
-          <Link href="/privacy" className="text-gold-600 underline underline-offset-2">
-            privacy policy
-          </Link>
-          {" "}and consent to receive campaign updates. Unsubscribe at any time.
-        </p>
-      </form>
-      {SIGNATURE_THRESHOLD > 0 && CURRENT_SIGNATURES < SIGNATURE_THRESHOLD && null}
-    </div>
-  )
-}

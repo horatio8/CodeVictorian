@@ -190,7 +190,7 @@ export default function DonatePage() {
                           : "bg-transparent text-navy-800 hover:bg-gold-400/10"
                       }`}
                     >
-                      <span className="font-serif text-2xl font-medium">{symbol}{a.toLocaleString("en-GB")}</span>
+                      <span className="font-sans text-2xl font-semibold tracking-tight">{symbol}{a.toLocaleString("en-GB")}</span>
                       <span className="font-mono text-[0.5625rem] uppercase tracking-[0.2em] opacity-70">
                         {frequency === "monthly" ? "/mo" : "once"}
                       </span>
@@ -270,7 +270,7 @@ export default function DonatePage() {
                         key={item.amount}
                         className="flex items-start gap-4 border-b border-gold-400/15 py-4 last:border-b-0"
                       >
-                        <span className="shrink-0 font-serif text-xl italic text-gold-400">
+                        <span className="shrink-0 font-sans text-lg font-semibold tracking-tight text-gold-600">
                           {item.amount}
                         </span>
                         <span className="text-sm leading-relaxed text-navy-800/75">{item.desc}</span>
