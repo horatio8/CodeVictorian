@@ -143,7 +143,7 @@ export default function PetitionForm({
         />
         <input
           type="text"
-          placeholder="Postcode (optional)"
+          placeholder="Postcode / ZIP (optional)"
           className="form-input"
           autoComplete="postal-code"
           value={postcode}
