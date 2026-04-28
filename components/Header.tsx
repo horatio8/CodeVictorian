@@ -5,8 +5,9 @@ import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
 
 // Per the Apr 23 client brief: hide Events / Media / Store from nav for now.
-// "News" is renamed to "Updates" and points at the new /updates route.
-// The membership entry now points at /member (Europe First community).
+// Apr 28: also hide Updates until the monthly newsletter archive is ready.
+// "News" was renamed to "Updates" and points at the new /updates route
+// when re-enabled. The membership entry now points at /member.
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
@@ -20,7 +21,6 @@ const navLinks = [
       { href: "/join", label: "Membership Tiers" },
     ],
   },
-  { href: "/updates", label: "Updates" },
   { href: "/contact", label: "Contact" },
 ]
 

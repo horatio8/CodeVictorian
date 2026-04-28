@@ -12,11 +12,11 @@ import {
 
 // Apr 23 client brief: hide Events / Media / Store; rename News → Updates;
 // add Europe First (community) and Membership Tiers under Get Involved.
+// Apr 28: hide Updates from nav + footer until newsletter archive is ready.
 const footerLinks = {
   campaign: [
     { href: "/about", label: "About Us" },
     { href: "/issues", label: "Our Issues" },
-    { href: "/updates", label: "Updates" },
   ],
   involved: [
     { href: "/petition", label: "Sign the Petition" },
