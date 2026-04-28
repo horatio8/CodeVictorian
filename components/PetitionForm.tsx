@@ -27,6 +27,11 @@ export default function PetitionForm({
   const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
   const [postcode, setPostcode] = useState("")
   const [countryIso, setCountryIso] = useState("") // optional; ISO from CALLING_CODES
+  // Soft-link the residence country to the phone calling code: when the
+  // user picks a calling code, mirror it into the country selector below
+  // — but only until they manually touch the country dropdown. After that
+  // the two decouple, so a Brit on a French phone can stay British.
+  const [countryTouched, setCountryTouched] = useState(false)
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -138,7 +143,15 @@ export default function PetitionForm({
         />
         <PhoneField
           countryIso={phoneCountry}
-          onCountryIso={setPhoneCountry}
+          onCountryIso={(iso) => {
+            setPhoneCountry(iso)
+            // Soft-link: prefill the residence country to match the
+            // chosen calling code, but only if the user hasn't manually
+            // picked a country below. Skip the "Other" placeholder code.
+            if (!countryTouched && iso && iso !== "XX") {
+              setCountryIso(iso)
+            }
+          }}
           number={phone}
           onNumber={setPhone}
           placeholder="Phone (optional)"
@@ -157,7 +170,10 @@ export default function PetitionForm({
             aria-label="Country"
             className="form-input"
             value={countryIso}
-            onChange={(e) => setCountryIso(e.target.value)}
+            onChange={(e) => {
+              setCountryIso(e.target.value)
+              setCountryTouched(true) // decouple from the phone code
+            }}
           >
             <option value="">Country</option>
             {CALLING_CODES.map((c) => (
