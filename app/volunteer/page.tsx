@@ -1,6 +1,9 @@
 "use client"
 
 import Link from "next/link"
+import { useState } from "react"
+import PhoneField from "@/components/PhoneField"
+import { DEFAULT_CALLING_CODE } from "@/lib/calling-codes"
 
 const roles = [
   { roman: "I.",   title: "Campaign Outreach",         desc: "Distribute materials, attend rallies, and engage with the public at local events across your city.",       commitment: "4–8 hours/week" },
@@ -12,6 +15,8 @@ const roles = [
 ]
 
 export default function VolunteerPage() {
+  const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
+  const [phone, setPhone] = useState("")
   return (
     <>
       {/* Hero */}
@@ -102,7 +107,13 @@ export default function VolunteerPage() {
               <input type="text" placeholder="Last name" className="form-input" required />
             </div>
             <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
-            <input type="tel" placeholder="Phone number (optional)" className="form-input" />
+            <PhoneField
+              countryIso={phoneCountry}
+              onCountryIso={setPhoneCountry}
+              number={phone}
+              onNumber={setPhone}
+              placeholder="Phone number (optional)"
+            />
             <div className="grid grid-cols-2 gap-4">
               <select className="form-input" required>
                 <option value="">Country</option>

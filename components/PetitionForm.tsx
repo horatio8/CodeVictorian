@@ -2,6 +2,8 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import PhoneField from "@/components/PhoneField"
+import { DEFAULT_CALLING_CODE, composePhone } from "@/lib/calling-codes"
 
 // Shared petition form. Posts to /api/petition which forwards to the
 // Campaign Nucleus receiver. Used on:
@@ -22,6 +24,7 @@ export default function PetitionForm({
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
+  const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
   const [postcode, setPostcode] = useState("")
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [submitting, setSubmitting] = useState(false)
@@ -40,7 +43,7 @@ export default function PetitionForm({
           first_name: firstName,
           last_name: lastName,
           email,
-          phone,
+          phone: composePhone(phoneCountry, phone),
           postcode,
           website,
         }),
@@ -131,15 +134,12 @@ export default function PetitionForm({
           onChange={(e) => setEmail(e.target.value)}
           maxLength={250}
         />
-        <input
-          type="tel"
+        <PhoneField
+          countryIso={phoneCountry}
+          onCountryIso={setPhoneCountry}
+          number={phone}
+          onNumber={setPhone}
           placeholder="Phone (optional)"
-          className="form-input"
-          autoComplete="tel"
-          inputMode="tel"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          maxLength={250}
         />
         <input
           type="text"

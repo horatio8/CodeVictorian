@@ -1,8 +1,14 @@
 "use client"
 
 import Link from "next/link"
+import { useState } from "react"
+import PhoneField from "@/components/PhoneField"
+import { DEFAULT_CALLING_CODE } from "@/lib/calling-codes"
 
 export default function MemberApplyForm() {
+  const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
+  const [phone, setPhone] = useState("")
+
   return (
     <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
       <div className="grid grid-cols-2 gap-3">
@@ -10,7 +16,13 @@ export default function MemberApplyForm() {
         <input type="text" placeholder="Last name" className="form-input" required />
       </div>
       <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
-      <input type="tel" placeholder="Mobile (optional)" className="form-input" />
+      <PhoneField
+        countryIso={phoneCountry}
+        onCountryIso={setPhoneCountry}
+        number={phone}
+        onNumber={setPhone}
+        placeholder="Mobile (optional)"
+      />
       <input type="text" placeholder="City, Country" className="form-input" required />
       <textarea
         rows={4}
