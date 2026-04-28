@@ -413,7 +413,7 @@ function DonationSection() {
               {amounts.map((a, i) => (
                 <button
                   key={a}
-                  className={`py-5 text-center font-serif text-2xl font-medium text-navy-800 transition-colors hover:bg-gold-400/10 ${
+                  className={`py-5 text-center font-sans text-2xl font-semibold tracking-tight text-navy-800 transition-colors hover:bg-gold-400/10 ${
                     i < amounts.length - 1 || true ? "border-r border-gold-400/25" : ""
                   } ${i < 3 ? "border-b border-gold-400/25" : ""}`}
                 >
