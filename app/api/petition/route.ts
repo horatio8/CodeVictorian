@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { CALLING_CODES } from "@/lib/calling-codes"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -16,7 +17,16 @@ type PetitionBody = {
   email?: string
   phone?: string
   postcode?: string
+  /** ISO-3166-1 alpha-2 from the CALLING_CODES list, or empty */
+  country?: string
   website?: string // honeypot — bots fill this; humans never see it
+}
+
+function isoToCountryName(iso: string): string {
+  const trimmed = (iso ?? "").trim().toUpperCase()
+  if (!trimmed) return ""
+  const match = CALLING_CODES.find((c) => c.iso === trimmed)
+  return match ? match.name : trimmed
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -44,6 +54,7 @@ export async function POST(req: Request) {
   const email = (body.email ?? "").trim().toLowerCase()
   const phone = (body.phone ?? "").trim()
   const postcode = (body.postcode ?? "").trim()
+  const country = isoToCountryName(body.country ?? "")
 
   if (!first_name) return badRequest("Please enter your first name.")
   if (!last_name) return badRequest("Please enter your last name.")
@@ -55,12 +66,15 @@ export async function POST(req: Request) {
   }
 
   // Campaign Nucleus receivers expect application/x-www-form-urlencoded.
+  // Unknown fields are silently ignored by CN; if/when they add a Country
+  // field to the form schema, this will start populating automatically.
   const params = new URLSearchParams()
   params.set("first_name", first_name)
   params.set("last_name", last_name)
   params.set("email", email)
   if (phone) params.set("phone", phone)
   if (postcode) params.set("postcode", postcode)
+  if (country) params.set("country", country)
 
   try {
     const res = await fetch(CN_RECEIVER_URL, {

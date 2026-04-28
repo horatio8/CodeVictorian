@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useState } from "react"
 import PhoneField from "@/components/PhoneField"
-import { DEFAULT_CALLING_CODE, composePhone } from "@/lib/calling-codes"
+import { CALLING_CODES, DEFAULT_CALLING_CODE, composePhone } from "@/lib/calling-codes"
 
 // Shared petition form. Posts to /api/petition which forwards to the
 // Campaign Nucleus receiver. Used on:
@@ -26,6 +26,7 @@ export default function PetitionForm({
   const [phone, setPhone] = useState("")
   const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
   const [postcode, setPostcode] = useState("")
+  const [countryIso, setCountryIso] = useState("") // optional; ISO from CALLING_CODES
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -45,6 +46,7 @@ export default function PetitionForm({
           email,
           phone: composePhone(phoneCountry, phone),
           postcode,
+          country: countryIso, // ISO code; server resolves to a readable name
           website,
         }),
       })
@@ -141,15 +143,30 @@ export default function PetitionForm({
           onNumber={setPhone}
           placeholder="Phone (optional)"
         />
-        <input
-          type="text"
-          placeholder="Postcode / ZIP (optional)"
-          className="form-input"
-          autoComplete="postal-code"
-          value={postcode}
-          onChange={(e) => setPostcode(e.target.value)}
-          maxLength={250}
-        />
+        <div className="grid grid-cols-2 gap-3">
+          <input
+            type="text"
+            placeholder="Postcode / ZIP"
+            className="form-input"
+            autoComplete="postal-code"
+            value={postcode}
+            onChange={(e) => setPostcode(e.target.value)}
+            maxLength={250}
+          />
+          <select
+            aria-label="Country"
+            className="form-input"
+            value={countryIso}
+            onChange={(e) => setCountryIso(e.target.value)}
+          >
+            <option value="">Country</option>
+            {CALLING_CODES.map((c) => (
+              <option key={c.iso} value={c.iso}>
+                {c.flag} {c.name}
+              </option>
+            ))}
+          </select>
+        </div>
         {/* Honeypot — visually hidden; bots fill it and we silently drop them. */}
         <input
           type="text"
