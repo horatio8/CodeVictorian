@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { PetitionForm } from "@/app/petition/page"
+import PetitionForm from "@/components/PetitionForm"
 
 export const metadata: Metadata = {
   title: "Sign the Petition — Code Victorian",
