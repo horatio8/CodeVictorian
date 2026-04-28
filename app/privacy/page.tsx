@@ -38,7 +38,7 @@ export default function PrivacyPage() {
 
           {romanHeading("I.", "Data Controller")}
           <p className="mt-4 font-lede text-base leading-relaxed text-navy-800/75">
-            The data controller is Code Victorian, headquartered in Brussels, Belgium. For all data protection enquiries, contact our Data Protection Officer at <strong>dpo@codevictorian.com</strong>.
+            The data controller is Code Victorian, headquartered in Budapest, Hungary. For all data protection enquiries, contact our Data Protection Officer through the <Link href="/contact" className="text-gold-600 underline underline-offset-2">contact form</Link>.
           </p>
 
           {romanHeading("II.", "Data We Collect")}
@@ -114,8 +114,8 @@ export default function PrivacyPage() {
             ))}
           </ul>
           <p className="mt-4 font-lede text-base leading-relaxed text-navy-800/75">
-            To exercise any of these rights, contact <strong>dpo@codevictorian.com</strong> or use our{" "}
-            <Link href="/contact" className="text-gold-600 underline underline-offset-2">contact form</Link> (select &ldquo;Data Subject Request&rdquo;). We will respond within 30 days.
+            To exercise any of these rights, use our{" "}
+            <Link href="/contact" className="text-gold-600 underline underline-offset-2">contact form</Link> and select &ldquo;Data Subject Request&rdquo; as the subject. We will respond within 30 days.
           </p>
 
           <h2 id="cookies" className="mt-12 flex items-baseline gap-4 font-serif text-2xl font-medium text-navy-800">
@@ -171,7 +171,7 @@ export default function PrivacyPage() {
             <span className="eyebrow">Data Protection</span>
             <h3 className="mt-4 font-serif text-2xl font-medium">Questions about your data?</h3>
             <p className="mt-3 font-lede text-base leading-relaxed text-navy-800/75">
-              Contact our Data Protection Officer at <strong>dpo@codevictorian.com</strong> or use the{" "}
+              Reach our Data Protection Officer via the{" "}
               <Link href="/contact" className="text-gold-600 underline underline-offset-2">contact form</Link>.
             </p>
           </div>

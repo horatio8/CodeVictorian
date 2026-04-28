@@ -74,7 +74,7 @@ export default function MediaPage() {
               </h2>
             </div>
             <span className="font-mono text-[0.6875rem] uppercase tracking-[0.18em] text-navy-800/55">
-              Media enquiries · press@codevictorian.com
+              Media enquiries · via the contact form
             </span>
           </div>
 

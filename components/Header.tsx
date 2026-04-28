@@ -124,7 +124,7 @@ export default function Header() {
             <Link
               href="/donate"
               className="btn-primary"
-              style={{ padding: "10px 20px", fontSize: "10px" }}
+              style={{ padding: "10px 20px", fontSize: "10px", fontWeight: 700 }}
             >
               Donate <span className="font-serif">→</span>
             </Link>

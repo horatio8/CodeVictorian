@@ -6,7 +6,6 @@ import {
   Twitter,
   Instagram,
   Youtube,
-  Mail,
   MapPin,
 } from "lucide-react"
 
@@ -163,11 +162,7 @@ export default function Footer() {
             <div className="mt-6 space-y-2 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-white/40">
               <div className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-400/70" />
-                <span>Brussels · Belgium</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="h-3.5 w-3.5 shrink-0 text-gold-400/70" />
-                <span>info@codevictorian.com</span>
+                <span>Budapest · Hungary</span>
               </div>
             </div>
           </div>
