@@ -82,8 +82,12 @@ export default function Home() {
 }
 
 function HeroSection() {
+  // Force vertical-centred 100vh hero only at lg+; on smaller screens
+  // the stacked headline + form is taller than the viewport, and
+  // items-center pushes the form off-screen, so we let the section
+  // grow naturally below lg.
   return (
-    <section className="gradient-overlay relative flex min-h-[100vh] items-center overflow-hidden bg-navy-900 on-dark">
+    <section className="gradient-overlay relative overflow-hidden bg-navy-900 on-dark lg:flex lg:min-h-[100vh] lg:items-center">
       {/* Background video — muted, looped, dimmed under a vignette */}
       <video
         className="absolute inset-0 h-full w-full object-cover opacity-35"
@@ -95,15 +99,15 @@ function HeroSection() {
         preload="metadata"
         aria-hidden="true"
       />
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-32 lg:py-40">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-24 sm:pt-32 lg:py-40">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left content */}
           <div className="animate-fade-in-up text-center lg:text-left">
             <span className="eyebrow" style={{ justifyContent: "flex-start" }}>
               A Cultural Society · Since MMXXVI
             </span>
 
-            <h1 className="mt-7 font-serif text-5xl font-medium leading-[1.02] text-white sm:text-6xl lg:text-7xl xl:text-[7.5rem]">
+            <h1 className="mt-7 font-serif text-[2.75rem] font-medium leading-[1.04] text-white sm:text-5xl lg:text-7xl xl:text-[7.5rem]">
               Europe for
               <br />
               <span className="italic font-normal text-gold-400">Native</span>
@@ -142,8 +146,10 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom marquee: stats + roman issue number */}
-      <div className="absolute inset-x-0 bottom-0 z-10 border-t border-gold-400/20 bg-navy-950/40">
+      {/* Bottom marquee: stats + roman issue number. Hidden below lg
+          where the absolute-bottom positioning would overlap the
+          stacked form on tablet portrait. */}
+      <div className="absolute inset-x-0 bottom-0 z-10 hidden border-t border-gold-400/20 bg-navy-950/40 lg:block">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-5 font-mono text-[0.625rem] uppercase tracking-[0.24em] text-white/50 sm:flex-row">
           <span>
             Instagram · 316K <span className="mx-3 inline-block h-1.5 w-1.5 rounded-none bg-gold-400 align-middle" />
