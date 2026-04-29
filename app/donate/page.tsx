@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, Suspense } from "react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { CheckCircle } from "lucide-react"
 import {
   PRESET_AMOUNTS,
@@ -28,7 +29,91 @@ const impact: Record<Currency, { amount: string; desc: string }[]> = {
   ],
 }
 
+type StatusBanner =
+  | { kind: "success"; amount: number | null; currency: string | null; mode: string | null; email: string | null }
+  | { kind: "cancelled" }
+  | { kind: "verifying" }
+  | { kind: "verifyError"; error: string }
+  | null
+
 export default function DonatePage() {
+  // useSearchParams must sit under a Suspense boundary so the page can
+  // still prerender at build time.
+  return (
+    <Suspense fallback={<DonatePageInner status={null} sessionId={null} />}>
+      <DonatePageWithParams />
+    </Suspense>
+  )
+}
+
+function DonatePageWithParams() {
+  const searchParams = useSearchParams()
+  return (
+    <DonatePageInner
+      status={searchParams.get("status")}
+      sessionId={searchParams.get("session_id")}
+    />
+  )
+}
+
+function DonatePageInner({
+  status,
+  sessionId,
+}: {
+  status: string | null
+  sessionId: string | null
+}) {
+
+  const [banner, setBanner] = useState<StatusBanner>(() => {
+    if (status === "cancelled") return { kind: "cancelled" }
+    if (status === "success") return { kind: "verifying" }
+    return null
+  })
+
+  // After Stripe redirects with ?status=success&session_id=…, verify the
+  // session was actually paid before showing the thank-you state.
+  useEffect(() => {
+    if (status !== "success" || !sessionId) return
+    let cancelled = false
+    ;(async () => {
+      try {
+        const res = await fetch(`/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`)
+        const data = (await res.json().catch(() => ({}))) as {
+          paid?: boolean
+          amount_total?: number | null
+          currency?: string | null
+          mode?: string | null
+          customer_email?: string | null
+          error?: string
+        }
+        if (cancelled) return
+        if (res.ok && data.paid) {
+          setBanner({
+            kind: "success",
+            amount: data.amount_total ?? null,
+            currency: data.currency ?? null,
+            mode: data.mode ?? null,
+            email: data.customer_email ?? null,
+          })
+        } else {
+          setBanner({
+            kind: "verifyError",
+            error: data?.error || "We couldn't confirm the payment. If you completed checkout, please refresh in a minute.",
+          })
+        }
+      } catch (err) {
+        if (cancelled) return
+        setBanner({
+          kind: "verifyError",
+          error: err instanceof Error ? err.message : "Verification failed.",
+        })
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [status, sessionId])
+
   const [currency, setCurrency] = useState<Currency>("EUR")
   const [frequency, setFrequency] = useState<Frequency>("monthly")
   const presets = PRESET_AMOUNTS[currency]
@@ -103,6 +188,8 @@ export default function DonatePage() {
             <span className="line" />
             <span className="label">Your Contribution</span>
           </div>
+
+          {banner && <StatusBanner banner={banner} />}
 
           <div className="grid items-start gap-12 lg:grid-cols-5 lg:gap-16">
             {/* Form */}
@@ -309,5 +396,81 @@ export default function DonatePage() {
         </div>
       </section>
     </>
+  )
+}
+
+function StatusBanner({ banner }: { banner: NonNullable<StatusBanner> }) {
+  if (banner.kind === "verifying") {
+    return (
+      <div className="mb-10 border border-gold-400/40 bg-ivory p-6 text-center">
+        <span className="eyebrow eyebrow-both">Confirming…</span>
+        <p className="mt-3 text-sm text-navy-800/75">
+          Confirming your payment with Stripe. This usually takes a moment.
+        </p>
+      </div>
+    )
+  }
+  if (banner.kind === "verifyError") {
+    return (
+      <div className="mb-10 border border-gold-400/60 bg-gold-50 p-6 text-center">
+        <span className="eyebrow eyebrow-both">Payment status unclear</span>
+        <p className="mt-3 text-sm text-navy-800/85">{banner.error}</p>
+        <p className="mt-2 text-xs text-navy-800/60">
+          If your card was charged, you&rsquo;ll receive a Stripe receipt shortly even
+          without a confirmation here.
+        </p>
+      </div>
+    )
+  }
+  if (banner.kind === "cancelled") {
+    return (
+      <div className="mb-10 border border-gold-400/40 bg-ivory p-6 text-center">
+        <span className="eyebrow eyebrow-both">Cancelled</span>
+        <h3 className="mt-4 font-serif text-2xl font-medium">No problem.</h3>
+        <p className="mt-2 text-sm text-navy-800/75">
+          The checkout was cancelled — no card was charged. You can pick a different
+          amount or come back later.
+        </p>
+      </div>
+    )
+  }
+  // success
+  const amount =
+    banner.amount != null && banner.currency
+      ? new Intl.NumberFormat("en-GB", {
+          style: "currency",
+          currency: banner.currency.toUpperCase(),
+          maximumFractionDigits: 0,
+        }).format((banner.amount ?? 0) / 100)
+      : null
+  return (
+    <div className="mb-10 ornament border border-gold-400 bg-gold-50 p-8 text-center">
+      <div className="fleur">✦ ❦ ✦</div>
+      <span className="eyebrow eyebrow-both mt-6">Thank you</span>
+      <h3 className="mt-5 font-serif text-3xl font-medium">
+        Your contribution is{" "}
+        <span className="italic font-normal text-gold-600">received</span>.
+      </h3>
+      {amount && (
+        <p className="mt-3 text-base text-navy-800/85">
+          {banner.mode === "subscription"
+            ? `${amount} per month — recurring`
+            : `${amount} — one-time`}
+        </p>
+      )}
+      {banner.email && (
+        <p className="mt-2 font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-navy-800/55">
+          A receipt is on its way to {banner.email}.
+        </p>
+      )}
+      <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <Link href="/member" className="btn-primary">
+          Join Europe First <span className="font-serif">→</span>
+        </Link>
+        <Link href="/" className="btn-secondary">
+          Back to Home
+        </Link>
+      </div>
+    </div>
   )
 }
