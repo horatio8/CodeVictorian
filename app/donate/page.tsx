@@ -123,6 +123,22 @@ function DonatePageInner({
   const [error, setError] = useState<string | null>(null)
   const symbol = SYMBOL[currency]
 
+  // When the user hits "Back" from Stripe Checkout, browsers may restore
+  // this page from the bfcache with submitting=true still set — leaving
+  // the Donate button stuck on "Redirecting…". The pageshow event with
+  // event.persisted === true tells us we were just restored, so reset
+  // the transient state and let the user try again.
+  useEffect(() => {
+    function onPageShow(event: PageTransitionEvent) {
+      if (event.persisted) {
+        setSubmitting(false)
+        setError(null)
+      }
+    }
+    window.addEventListener("pageshow", onPageShow)
+    return () => window.removeEventListener("pageshow", onPageShow)
+  }, [])
+
   function switchCurrency(next: Currency) {
     setCurrency(next)
     setSelected(PRESET_AMOUNTS[next][1] ?? PRESET_AMOUNTS[next][0])
