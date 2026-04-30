@@ -1,11 +1,8 @@
-"use client"
-
 import Link from "next/link"
-import { useState } from "react"
-import PhoneField from "@/components/PhoneField"
-import { DEFAULT_CALLING_CODE } from "@/lib/calling-codes"
+import VolunteerForm from "./VolunteerForm"
+import { getVolunteerPage } from "@/lib/cms"
 
-const roles = [
+const FALLBACK_ROLES = [
   { roman: "I.",   title: "Campaign Outreach",         desc: "Distribute materials, attend rallies, and engage with the public at local events across your city.",       commitment: "4–8 hours/week" },
   { roman: "II.",  title: "Content & Communications",  desc: "Write articles, create social media content, produce videos, or help translate materials into European languages.", commitment: "3–6 hours/week" },
   { roman: "III.", title: "Digital Campaigning",       desc: "Manage social media accounts, run online campaigns, moderate forums, and grow our digital presence.",        commitment: "5–10 hours/week" },
@@ -14,23 +11,27 @@ const roles = [
   { roman: "VI.",  title: "Community Building",        desc: "Welcome new members, facilitate discussions, and build relationships within the movement.",                   commitment: "2–4 hours/week" },
 ]
 
-export default function VolunteerPage() {
-  const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
-  const [phone, setPhone] = useState("")
+export default async function VolunteerPage() {
+  const cms = await getVolunteerPage()
+  const heroEyebrow = cms?.heroEyebrow ?? "Take Action"
+  const heroHeadline = cms?.heroHeadline ?? "Volunteer"
+  const heroItalicWord = cms?.heroItalicWord ?? "With Us"
+  const heroLede =
+    cms?.heroLede ??
+    "Your time and talent can change the course of history. Join thousands of dedicated volunteers working to preserve Europe’s future."
+  const roles = cms?.roles && cms.roles.length > 0 ? cms.roles : FALLBACK_ROLES
+
   return (
     <>
       {/* Hero */}
       <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="eyebrow eyebrow-both">Take Action</span>
+          <span className="eyebrow eyebrow-both">{heroEyebrow}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            Volunteer{" "}
-            <span className="italic font-normal text-gold-400">With Us</span>
+            {heroHeadline}{" "}
+            <span className="italic font-normal text-gold-400">{heroItalicWord}</span>
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            Your time and talent can change the course of history. Join thousands of
-            dedicated volunteers working to preserve Europe&rsquo;s future.
-          </p>
+          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
         </div>
       </section>
 
@@ -62,7 +63,7 @@ export default function VolunteerPage() {
               const totalRows = Math.ceil(arr.length / 3)
               return (
                 <article
-                  key={role.title}
+                  key={role.title ?? i}
                   className={`group p-8 transition-colors hover:bg-ivory ${
                     col < 2 ? "lg:border-r lg:border-gold-400/20" : ""
                   } ${i % 2 === 0 ? "sm:border-r sm:border-gold-400/20 lg:border-r" : ""} ${
@@ -101,67 +102,7 @@ export default function VolunteerPage() {
             </h2>
           </div>
 
-          <form className="mt-14 space-y-4" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-2 gap-4">
-              <input type="text" placeholder="First name" className="form-input" required />
-              <input type="text" placeholder="Last name" className="form-input" required />
-            </div>
-            <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
-            <PhoneField
-              countryIso={phoneCountry}
-              onCountryIso={setPhoneCountry}
-              number={phone}
-              onNumber={setPhone}
-              placeholder="Phone number (optional)"
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <select className="form-input" required>
-                <option value="">Country</option>
-                <option>Austria</option><option>Belgium</option><option>France</option>
-                <option>Germany</option><option>Italy</option><option>Netherlands</option>
-                <option>Poland</option><option>Spain</option><option>Sweden</option>
-                <option>Other EU Country</option>
-              </select>
-              <input type="text" placeholder="City" className="form-input" />
-            </div>
-            <div>
-              <label className="block mb-3 font-mono text-[0.625rem] font-medium uppercase tracking-[0.28em] text-gold-600">
-                Which roles interest you? (select all that apply)
-              </label>
-              <div className="grid gap-0 border border-gold-400/25 sm:grid-cols-2">
-                {roles.map((r, i, arr) => (
-                  <label
-                    key={r.title}
-                    className={`flex items-center gap-3 p-4 font-lede text-base text-navy-800 cursor-pointer transition-colors hover:bg-gold-400/5 ${
-                      i % 2 === 0 ? "sm:border-r sm:border-gold-400/20" : ""
-                    } ${i < arr.length - 2 ? "border-b border-gold-400/15" : "sm:border-b-0"} ${
-                      i === arr.length - 2 ? "border-b border-gold-400/15 sm:border-b-0" : ""
-                    }`}
-                  >
-                    <input type="checkbox" className="h-3.5 w-3.5 accent-gold-400" />
-                    <span className="font-serif italic text-sm text-gold-400">{r.roman}</span>
-                    {r.title}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <textarea
-              placeholder="Tell us about yourself and why you want to volunteer (optional)"
-              rows={4}
-              className="form-input resize-none"
-            />
-            <label className="flex items-start gap-2 font-lede text-xs text-navy-800/65">
-              <input type="checkbox" required className="mt-1 h-3.5 w-3.5 accent-gold-400" />
-              <span>
-                I agree to the{" "}
-                <Link href="/privacy" className="text-gold-600 underline underline-offset-2">privacy policy</Link>
-                {" "}and consent to being contacted about volunteer opportunities.
-              </span>
-            </label>
-            <button type="submit" className="btn-primary w-full">
-              Submit Application <span className="font-serif">→</span>
-            </button>
-          </form>
+          <VolunteerForm roles={roles} />
         </div>
       </section>
 

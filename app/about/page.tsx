@@ -1,20 +1,17 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { getAboutPage } from "@/lib/cms"
 
 export const metadata: Metadata = { title: "About Us" }
 
-// Per Apr 23 brief: 4 values (was 6).
-// - Solidarity, Excellence, Pan-European Vision merged into Pro-Native European
-// - Transparency renamed Good Governance, no "personal financial disclosure" line
-const values = [
+const FALLBACK_VALUES = [
   { roman: "I.",   title: "Clarity of Purpose",  text: "We are direct and unapologetic about our mission to preserve European civilisation." },
   { roman: "II.",  title: "Good Governance",     text: "We operate openly with transparency and strong governance." },
   { roman: "III.", title: "Cultural Pride",      text: "We celebrate the extraordinary achievements and heritage of European peoples without reservation." },
   { roman: "IV.",  title: "Pro-Native European", text: "We unite people around the world of European descent under a common cause, building alliances from New York to Paris, from Sydney to Athens." },
 ]
 
-// Per Apr 23 brief: six milestones from founding to real-world organising.
-const timeline = [
+const FALLBACK_TIMELINE = [
   { date: "February MMXXV",   short: "II · XXV",  title: "Code Victorian Founded",         desc: "The movement is established by a small circle of correspondents." },
   { date: "June MMXXV",       short: "VI · XXV",  title: "Pan-European Tour",               desc: "An on-the-road tour through France, Germany, Italy, and Hungary — meeting allies in person." },
   { date: "July MMXXV",       short: "VII · XXV", title: "&ldquo;Dare to Dream&rdquo; Goes Viral", desc: "The flagship campaign reaches six million people across Europe and the diaspora." },
@@ -23,7 +20,30 @@ const timeline = [
   { date: "April MMXXVI",     short: "IV · XXVI", title: "Real-World Political Organising",  desc: "The transition from publishing to political action begins in earnest." },
 ]
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const cms = await getAboutPage()
+  const heroEyebrow = cms?.heroEyebrow ?? "Our Story"
+  const heroHeadline = cms?.heroHeadline ?? "About"
+  const heroItalicWord = cms?.heroItalicWord ?? "Code Victorian"
+  const heroLede =
+    cms?.heroLede ??
+    "We are a supranational third-party campaigning organisation dedicated to the preservation of European culture, identity, and heritage through democratic action and civic engagement."
+  const missionHeadline = cms?.mission?.headline ?? "Defending Europe’s"
+  const missionItalic = cms?.mission?.italicWord ?? "future"
+  const missionQuote =
+    cms?.mission?.quote ??
+    "“Europe’s native peoples have the right — and the duty — to preserve their cultures, communities, and way of life.”"
+  const missionParagraphs =
+    cms?.mission?.paragraphs && cms.mission.paragraphs.length > 0
+      ? cms.mission.paragraphs
+      : [
+          "Code Victorian was born from a simple conviction: in an era of unprecedented demographic change, the millions of Europeans who feel unrepresented by mainstream politics deserve a voice that speaks plainly.",
+          "We operate at the supranational level, building coalitions across EU member states — and with the diaspora in the United States, Canada, Australia, and New Zealand — to advocate for sensible immigration policies, cultural preservation, and the democratic right of European peoples to determine the future of their own nations.",
+        ]
+  const values =
+    cms?.values && cms.values.length > 0 ? cms.values : FALLBACK_VALUES
+  const timeline =
+    cms?.timeline && cms.timeline.length > 0 ? cms.timeline : FALLBACK_TIMELINE
   return (
     <>
       {/* Hero */}
@@ -36,15 +56,12 @@ export default function AboutPage() {
             alt="Code Victorian"
             className="mx-auto mb-10 h-20 w-auto"
           />
-          <span className="eyebrow eyebrow-both">Our Story</span>
+          <span className="eyebrow eyebrow-both">{heroEyebrow}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            About{" "}
-            <span className="italic font-normal text-gold-400">Code Victorian</span>
+            {heroHeadline}{" "}
+            <span className="italic font-normal text-gold-400">{heroItalicWord}</span>
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            We are a supranational third-party campaigning organisation dedicated to the preservation
-            of European culture, identity, and heritage through democratic action and civic engagement.
-          </p>
+          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
         </div>
       </section>
 
@@ -59,27 +76,22 @@ export default function AboutPage() {
 
           <span className="eyebrow">Our Mission</span>
           <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
-            Defending Europe&rsquo;s{" "}
-            <span className="italic font-normal text-gold-400">future</span>.
+            {missionHeadline}{" "}
+            <span className="italic font-normal text-gold-400">{missionItalic}</span>.
           </h2>
 
           <p className="font-quote mt-9 text-2xl leading-relaxed text-navy-800 sm:text-3xl">
-            &ldquo;Europe&rsquo;s native peoples have the right — and the duty — to preserve
-            their cultures, communities, and way of life.&rdquo;
+            {missionQuote}
           </p>
 
-          <p className="mt-9 text-base leading-relaxed text-navy-800/80">
-            Code Victorian was born from a simple conviction: in an era of unprecedented
-            demographic change, the millions of Europeans who feel unrepresented by
-            mainstream politics deserve a voice that speaks plainly.
-          </p>
-          <p className="mt-5 text-base leading-relaxed text-navy-800/80">
-            We operate at the supranational level, building coalitions across EU member
-            states — and with the diaspora in the United States, Canada, Australia, and
-            New Zealand — to advocate for sensible immigration policies, cultural
-            preservation, and the democratic right of European peoples to determine the
-            future of their own nations.
-          </p>
+          {missionParagraphs.map((p, i) => (
+            <p
+              key={i}
+              className={`${i === 0 ? "mt-9" : "mt-5"} text-base leading-relaxed text-navy-800/80`}
+            >
+              {p}
+            </p>
+          ))}
 
           <div className="mt-10 flex flex-wrap gap-4">
             <Link href="/petition" className="btn-primary">Sign Our Petition</Link>
@@ -131,7 +143,7 @@ export default function AboutPage() {
           <div className="mt-16 grid gap-0 border border-gold-400/25 sm:grid-cols-2">
             {values.map((v, i) => (
               <div
-                key={v.title}
+                key={v.title ?? i}
                 className={`p-10 ${i % 2 === 0 ? "sm:border-r sm:border-gold-400/20" : ""} ${
                   i < values.length - 2 ? "border-b border-gold-400/20" : ""
                 }`}
@@ -165,7 +177,7 @@ export default function AboutPage() {
 
           <div className="mt-14 space-y-0">
             {timeline.map((item, i) => (
-              <div key={item.title} className="relative flex gap-6 pb-10 last:pb-0">
+              <div key={item.title ?? i} className="relative flex gap-6 pb-10 last:pb-0">
                 <div className="flex flex-col items-center">
                   <div className="flex h-12 min-w-12 shrink-0 items-center justify-center border border-gold-400 bg-ivory px-2 font-serif text-xs italic text-gold-400">
                     {item.short}
@@ -178,7 +190,7 @@ export default function AboutPage() {
                   </div>
                   <h3
                     className="mt-1 font-serif text-xl font-medium"
-                    dangerouslySetInnerHTML={{ __html: item.title }}
+                    dangerouslySetInnerHTML={{ __html: item.title ?? "" }}
                   />
                   <p className="mt-2 text-base leading-relaxed text-navy-800/70">{item.desc}</p>
                 </div>

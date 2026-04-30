@@ -3,12 +3,12 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
+import type { SiteSettings } from "@/lib/cms"
 
-// Per the Apr 23 client brief: hide Events / Media / Store from nav for now.
-// Apr 28: also hide Updates until the monthly newsletter archive is ready.
-// "News" was renamed to "Updates" and points at the new /updates route
-// when re-enabled. The membership entry now points at /member.
-const navLinks = [
+// Default nav fallback used when CMS hasn't been configured / hasn't
+// populated the navigation field. Editable via Sanity Studio under
+// "Site Settings → Header navigation".
+const DEFAULT_NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/issues", label: "Issues" },
@@ -24,7 +24,20 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ]
 
-export default function Header() {
+type NavLink = {
+  label?: string
+  href?: string
+  children?: Array<{ label?: string; href?: string }>
+}
+
+export default function Header({ settings }: { settings?: SiteSettings | null }) {
+  const navLinks: NavLink[] =
+    settings?.navigation && settings.navigation.length > 0
+      ? settings.navigation
+      : DEFAULT_NAV_LINKS
+  const brandName = settings?.brandName ?? "Code Victorian"
+  const tagline = settings?.tagline ?? "Est. MMXXVI"
+  const logoUrl = settings?.logo?.asset?.url ?? "/logo.png"
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -58,17 +71,17 @@ export default function Header() {
           <Link href="/" className="relative z-10 flex items-center gap-3 group">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logo.png"
+              src={logoUrl}
               alt=""
               aria-hidden="true"
               className="h-9 w-auto shrink-0 transition-opacity group-hover:opacity-90"
             />
             <div className="flex flex-col leading-none">
               <span className="font-serif text-xl font-medium tracking-wide text-white transition-colors group-hover:text-gold-400">
-                Code Victorian
+                {brandName}
               </span>
               <span className="hidden mt-1 font-mono text-[0.625rem] font-normal uppercase tracking-[0.32em] text-gold-400 sm:block">
-                Est. MMXXVI
+                {tagline}
               </span>
             </div>
           </Link>
@@ -97,8 +110,8 @@ export default function Header() {
                     <div className="w-56 bg-navy-900/95 backdrop-blur-md border border-gold-400/25 p-1">
                       {link.children.map((child) => (
                         <Link
-                          key={child.href}
-                          href={child.href}
+                          key={(child.href ?? child.label ?? "")}
+                          href={child.href ?? "#"}
                           className="block px-4 py-2.5 font-lede text-sm text-white/80 transition-colors hover:bg-navy-800 hover:text-gold-400"
                         >
                           {child.label}
@@ -109,8 +122,8 @@ export default function Header() {
                 </div>
               ) : (
                 <Link
-                  key={link.href}
-                  href={link.href!}
+                  key={(link.href ?? link.label ?? "")}
+                  href={link.href ?? "#"}
                   className="px-4 py-2 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-gold-400"
                 >
                   {link.label}
@@ -156,8 +169,8 @@ export default function Header() {
                 </span>
                 {link.children.map((child) => (
                   <Link
-                    key={child.href}
-                    href={child.href}
+                    key={(child.href ?? child.label ?? "")}
+                    href={child.href ?? "#"}
                     className="py-1.5 font-lede text-lg text-white/80 transition-colors hover:text-gold-400"
                     onClick={() => setMobileOpen(false)}
                   >
@@ -167,8 +180,8 @@ export default function Header() {
               </div>
             ) : (
               <Link
-                key={link.href}
-                href={link.href!}
+                key={(link.href ?? link.label ?? "")}
+                href={link.href ?? "#"}
                 className="py-2 font-serif text-2xl text-white transition-colors hover:text-gold-400"
                 onClick={() => setMobileOpen(false)}
               >
