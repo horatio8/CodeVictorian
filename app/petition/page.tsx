@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link"
 import { Share2, Shield, Users, CheckCircle } from "lucide-react"
 import PetitionForm from "@/components/PetitionForm"
@@ -8,8 +6,9 @@ import {
   showSignatureCounter,
   nextGoal,
 } from "@/lib/petition-stats"
+import { getPetitionPage } from "@/lib/cms"
 
-const demands: { roman: string; title: string; body: string }[] = [
+const FALLBACK_DEMANDS: { roman: string; title: string; body: string }[] = [
   {
     roman: "I",
     title: "Enforce existing deportation orders",
@@ -30,27 +29,46 @@ const demands: { roman: string; title: string; body: string }[] = [
   },
 ]
 
-export default function PetitionPage() {
+export default async function PetitionPage() {
+  const cms = await getPetitionPage()
+  const heroEyebrow = cms?.heroEyebrow ?? "Active Petition"
+  const heroHeadline =
+    cms?.heroHeadline ?? "Defend Europe’s {italic}Future{/italic}"
+  const heroLede =
+    cms?.heroLede ??
+    "Sign our petition calling on EU institutions to enforce existing deportation orders, reform the immigration system, and establish a transparent remigration framework across all member states."
+  const demands =
+    cms?.demands && cms.demands.length > 0 ? cms.demands : FALLBACK_DEMANDS
+  const preamble =
+    cms?.preamble ??
+    "“We, the undersigned citizens of Europe, call upon the European Parliament, the European Commission, and all national governments of EU member states to:"
+  const closing =
+    cms?.closing ??
+    "Signed by the citizens of Europe and friends of Europe across the free world.”"
   const showCounter = showSignatureCounter()
   const goal = nextGoal(CURRENT_SIGNATURES)
   const progressPct = Math.min(100, Math.round((CURRENT_SIGNATURES / goal) * 100))
   const remaining = Math.max(0, goal - CURRENT_SIGNATURES)
+
+  // Render headline with optional {italic}…{/italic} markers as the gold accent.
+  const headlineParts = heroHeadline.split(/\{italic\}|\{\/italic\}/)
 
   return (
     <>
       {/* Hero */}
       <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="eyebrow eyebrow-both">Active Petition</span>
+          <span className="eyebrow eyebrow-both">{heroEyebrow}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            Defend Europe&rsquo;s{" "}
-            <span className="italic font-normal text-gold-400">Future</span>
+            {headlineParts.map((p, i) =>
+              i % 2 === 1 ? (
+                <span key={i} className="italic font-normal text-gold-400">{p}</span>
+              ) : (
+                <span key={i}>{p}</span>
+              ),
+            )}
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            Sign our petition calling on EU institutions to enforce existing deportation
-            orders, reform the immigration system, and establish a transparent remigration
-            framework across all member states.
-          </p>
+          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
         </div>
       </section>
 
@@ -109,13 +127,11 @@ export default function PetitionPage() {
               </h2>
               <div className="mt-10 border border-gold-400/30 bg-ivory p-8 sm:p-10">
                 <p className="font-quote text-lg leading-relaxed text-navy-800">
-                  &ldquo;We, the undersigned citizens of Europe, call upon the European
-                  Parliament, the European Commission, and all national governments of
-                  EU member states to:
+                  {preamble}
                 </p>
                 <ol className="mt-8 space-y-6 text-base leading-relaxed text-navy-800/85">
-                  {demands.map((d) => (
-                    <li key={d.roman} className="flex gap-5">
+                  {demands.map((d, i) => (
+                    <li key={d.roman ?? i} className="flex gap-5">
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-gold-400/40 font-serif text-lg italic text-gold-400">
                         {d.roman}
                       </span>
@@ -129,8 +145,7 @@ export default function PetitionPage() {
                   ))}
                 </ol>
                 <p className="mt-8 font-quote text-lg leading-relaxed text-navy-800/85">
-                  Signed by the citizens of Europe and friends of Europe across the
-                  free world.&rdquo;
+                  {closing}
                 </p>
               </div>
 

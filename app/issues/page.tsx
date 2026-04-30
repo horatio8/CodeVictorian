@@ -1,12 +1,13 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { getIssuesPage } from "@/lib/cms"
 
 export const metadata: Metadata = { title: "Our Issues" }
 
 const romans = ["I", "II", "III", "IV", "V", "VI"]
 
-const issues = [
+const FALLBACK_ISSUES = [
   {
     id: "remigration",
     title: "Start Remigration",
@@ -50,28 +51,38 @@ const issues = [
   },
 ]
 
-const additionalIssues = [
+const FALLBACK_ADDITIONAL = [
   { roman: "IV.", title: "Democratic Sovereignty", desc: "Restoring decision-making power to national parliaments and the citizens they represent." },
   { roman: "V.", title: "Economic Justice", desc: "Ensuring that globalisation benefits European workers and small businesses, not just multinational corporations." },
   // Apr 23 brief: Education Reform wording sharpened.
   { roman: "VI.", title: "Education Reform", desc: "Remove woke propaganda and ideology from our education system. Restore the teaching of European history, culture, and civic values." },
 ]
 
-export default function IssuesPage() {
+export default async function IssuesPage() {
+  const cms = await getIssuesPage()
+  const heroEyebrow = cms?.heroEyebrow ?? "Our Platform"
+  const heroHeadline = cms?.heroHeadline ?? "The"
+  const heroItalicWord = cms?.heroItalicWord ?? "Issues"
+  const heroLede =
+    cms?.heroLede ??
+    "We confront the existential challenges facing Europe with clear, evidence-based policies and the courage to speak truths that mainstream politics avoids."
+  const issues =
+    cms?.mainIssues && cms.mainIssues.length > 0 ? cms.mainIssues : FALLBACK_ISSUES
+  const additionalIssues =
+    cms?.additionalPriorities && cms.additionalPriorities.length > 0
+      ? cms.additionalPriorities
+      : FALLBACK_ADDITIONAL
   return (
     <>
       {/* Hero */}
       <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="eyebrow eyebrow-both">Our Platform</span>
+          <span className="eyebrow eyebrow-both">{heroEyebrow}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            The{" "}
-            <span className="italic font-normal text-gold-400">Issues</span>
+            {heroHeadline}{" "}
+            <span className="italic font-normal text-gold-400">{heroItalicWord}</span>
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            We confront the existential challenges facing Europe with clear, evidence-based
-            policies and the courage to speak truths that mainstream politics avoids.
-          </p>
+          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
         </div>
       </section>
 
@@ -103,7 +114,7 @@ export default function IssuesPage() {
                   {issue.title}
                 </h2>
                 <p className="mt-3 font-lede text-xl italic text-navy-800/70">{issue.subtitle}</p>
-                {issue.paragraphs.map((p, j) => (
+                {(issue.paragraphs ?? []).map((p, j) => (
                   <p key={j} className="mt-5 font-lede text-base leading-relaxed text-navy-800/75">{p}</p>
                 ))}
                 <Link
@@ -117,9 +128,9 @@ export default function IssuesPage() {
               {/* Stats */}
               <div className={`lg:col-span-2 ${i % 2 === 1 ? "lg:col-start-1 lg:row-start-1" : ""}`}>
                 <div className="border border-gold-400/25">
-                  {issue.stats.map((s, k, arr) => (
+                  {(issue.stats ?? []).map((s, k, arr) => (
                     <div
-                      key={s.label}
+                      key={s.label ?? k}
                       className={`p-8 text-center ${
                         k < arr.length - 1 ? "border-b border-gold-400/20" : ""
                       }`}
