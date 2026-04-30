@@ -6,6 +6,10 @@ import {
   type Currency,
   type Frequency,
 } from "@/lib/donate-config"
+import { getDonatePage } from "@/lib/cms"
+
+const FALLBACK_PRODUCT_DESCRIPTION =
+  "Supports the fight to keep Europe for native Europeans."
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -70,6 +74,12 @@ export async function POST(req: Request) {
   const email = (body.email ?? "").trim().toLowerCase()
   const validEmail = email && EMAIL_RE.test(email) && email.length <= 250 ? email : ""
 
+  // Pull the editor-set product description from the CMS, fall back to
+  // the hardcoded copy if Sanity isn't configured / hasn't been edited.
+  const donateCms = await getDonatePage().catch(() => null)
+  const productDescription =
+    donateCms?.stripeProductDescription?.trim() || FALLBACK_PRODUCT_DESCRIPTION
+
   const stripe = new Stripe(secret, { apiVersion: STRIPE_API_VERSION })
 
   const origin =
@@ -114,7 +124,7 @@ export async function POST(req: Request) {
                   frequency === "monthly"
                     ? "Code Victorian — Monthly Patronage"
                     : "Code Victorian — One-time Donation",
-                description: "Supports the fight to keep Europe for native Europeans.",
+                description: productDescription,
               },
               ...(frequency === "monthly" ? { recurring: { interval: "month" as const } } : {}),
             },

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import SiteChrome from "@/components/SiteChrome"
 import ClarityTracking from "@/components/ClarityTracking"
+import { getSiteSettings } from "@/lib/cms"
 
 export const metadata: Metadata = {
   title: {
@@ -18,11 +19,12 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const settings = await getSiteSettings()
   return (
     <html lang="en-GB" className="antialiased">
       <head>
@@ -42,7 +44,7 @@ export default function RootLayout({
         data-theme="navy"
         data-display="playfair"
       >
-        <SiteChrome>{children}</SiteChrome>
+        <SiteChrome settings={settings}>{children}</SiteChrome>
         <ClarityTracking />
       </body>
     </html>

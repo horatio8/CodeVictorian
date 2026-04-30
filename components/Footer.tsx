@@ -8,6 +8,7 @@ import {
   Youtube,
   MapPin,
 } from "lucide-react"
+import type { SiteSettings } from "@/lib/cms"
 
 // Apr 23 client brief: hide Events / Media / Store; rename News → Updates;
 // add Europe First (community) and Membership Tiers under Get Involved.
@@ -39,7 +40,13 @@ const socialLinks = [
   { href: "#", icon: Youtube, label: "YouTube" },
 ]
 
-export default function Footer() {
+export default function Footer({ settings }: { settings?: SiteSettings | null }) {
+  const headquarters = settings?.headquarters ?? "Budapest · Hungary"
+  const copyright =
+    settings?.footerCopyright ?? "© MMXXVI Code Victorian · All Rights Reserved"
+  const disclaimer =
+    settings?.footerDisclaimer ??
+    "Published by Code Victorian, a registered third-party campaigner. Consult your national electoral authority for required disclaimer format. Made with patience · Not advertising."
   return (
     <footer className="bg-navy-900 text-white border-t border-gold-400/25 on-dark">
       {/* Newsletter strip */}
@@ -162,7 +169,7 @@ export default function Footer() {
             <div className="mt-6 space-y-2 font-mono text-[0.625rem] uppercase tracking-[0.14em] text-white/40">
               <div className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-400/70" />
-                <span>Budapest · Hungary</span>
+                <span>{headquarters}</span>
               </div>
             </div>
           </div>
@@ -174,13 +181,9 @@ export default function Footer() {
         <div className="mx-auto max-w-7xl px-6 py-7">
           <div className="dbl-rule mb-6" />
           <div className="flex flex-col items-center gap-4 text-center font-mono text-[0.6875rem] uppercase tracking-[0.14em] md:flex-row md:justify-between md:text-left">
-            <p className="text-white/50">
-              © MMXXVI Code Victorian · All Rights Reserved
-            </p>
+            <p className="text-white/50">{copyright}</p>
             <p className="max-w-xl text-[0.625rem] leading-relaxed text-white/35">
-              Published by Code Victorian, a registered third-party campaigner.
-              Consult your national electoral authority for required disclaimer
-              format. Made with patience · Not advertising.
+              {disclaimer}
             </p>
           </div>
         </div>
