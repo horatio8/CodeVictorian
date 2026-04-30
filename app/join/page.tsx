@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { getJoinPage } from "@/lib/cms"
 
 export const metadata: Metadata = { title: "Join Us" }
 
-const tiers = [
+const FALLBACK_TIERS = [
   {
     roman: "I.",
     name: "Supporter",
@@ -49,21 +50,26 @@ const tiers = [
   },
 ]
 
-export default function JoinPage() {
+export default async function JoinPage() {
+  const cms = await getJoinPage()
+  const heroEyebrow = cms?.heroEyebrow ?? "The Membership"
+  const heroHeadline = cms?.heroHeadline ?? "Join the"
+  const heroItalicWord = cms?.heroItalicWord ?? "Movement"
+  const heroLede =
+    cms?.heroLede ??
+    "Become part of Europe’s most determined civic movement. Your membership empowers our campaigns and gives you a voice in shaping our strategy."
+  const tiers = cms?.tiers && cms.tiers.length > 0 ? cms.tiers : FALLBACK_TIERS
   return (
     <>
       {/* Hero */}
       <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="eyebrow eyebrow-both">The Membership</span>
+          <span className="eyebrow eyebrow-both">{heroEyebrow}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            Join the{" "}
-            <span className="italic font-normal text-gold-400">Movement</span>
+            {heroHeadline}{" "}
+            <span className="italic font-normal text-gold-400">{heroItalicWord}</span>
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            Become part of Europe&rsquo;s most determined civic movement. Your membership
-            empowers our campaigns and gives you a voice in shaping our strategy.
-          </p>
+          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
         </div>
       </section>
 
@@ -87,7 +93,7 @@ export default function JoinPage() {
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {tiers.map((tier) => (
               <div
-                key={tier.name}
+                key={tier.name ?? tier.roman}
                 className={`relative p-10 ${
                   tier.popular
                     ? "ornament border border-gold-400 bg-gold-400/5"
@@ -102,14 +108,14 @@ export default function JoinPage() {
                 <div className="font-serif text-4xl italic text-gold-400 leading-none">
                   {tier.roman}
                 </div>
-                <span className="eyebrow mt-6">Tier {tier.roman.replace(".", "")}</span>
+                <span className="eyebrow mt-6">Tier {(tier.roman ?? "").replace(".", "")}</span>
                 <h3 className="mt-4 font-serif text-3xl font-medium">{tier.name}</h3>
                 <div className="mt-3 flex items-baseline gap-2">
                   <span className="font-serif text-4xl italic font-normal text-gold-400">{tier.price}</span>
                   <span className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-navy-800/60">{tier.period}</span>
                 </div>
                 <ul className="mt-8 space-y-0 border-y border-gold-400/20">
-                  {tier.features.map((f) => (
+                  {(tier.features ?? []).map((f) => (
                     <li key={f} className="flex items-start gap-3 border-b border-gold-400/15 py-3 font-lede text-sm text-navy-800/75 last:border-b-0">
                       <span className="text-gold-400">✦</span>
                       {f}

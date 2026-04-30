@@ -1,5 +1,6 @@
 import Link from "next/link"
 import MemberApplyForm from "./MemberApplyForm"
+import { getMemberPage } from "@/lib/cms"
 
 export const metadata = {
   title: "Europe First — The Community",
@@ -7,35 +8,48 @@ export const metadata = {
     "Europe First is the community arm of Code Victorian. Members in twenty-four countries, organising in person and online.",
 }
 
-const principles = [
+const FALLBACK_PRINCIPLES = [
   { roman: "I.", title: "Native Europeans, Worldwide", desc: "We unite people of European descent across continents — from Lisbon to Boston to Sydney — under a common cause." },
   { roman: "II.", title: "Quiet Action, Not Noise", desc: "Correspondence circles, regional gatherings, mutual aid. The slow work, not the loud kind." },
   { roman: "III.", title: "Civil Conversation", desc: "Disagreement on detail is welcome. Agreement on the inheritance is the entry condition." },
   { roman: "IV.", title: "Real-World Organising", desc: "We move beyond the timeline. Members meet in person, often, in their cities and ours." },
 ]
 
-const expectations = [
+const FALLBACK_EXPECTATIONS = [
   "Show up — at least once a year, in person.",
   "Correspond — write to your circle, read what they send.",
   "Set the phone down at dinner.",
   "Bring a friend, when one is ready.",
 ]
 
-export default function MemberPage() {
+export default async function MemberPage() {
+  const cms = await getMemberPage()
+  const heroEyebrow = cms?.heroEyebrow ?? "The Community"
+  const heroItalicWord = cms?.heroItalicWord ?? "Europe"
+  const heroHeadlineRest =
+    cms?.heroHeadline ?? "First."
+  const heroLede =
+    cms?.heroLede ??
+    "A community of native Europeans — at home and abroad — organising for the preservation of European civilisation. Members in twenty-four countries. New York to Paris, Sydney to Athens."
+  const principles =
+    cms?.principles && cms.principles.length > 0 ? cms.principles : FALLBACK_PRINCIPLES
+  const expectations =
+    cms?.expectations && cms.expectations.length > 0
+      ? cms.expectations
+      : FALLBACK_EXPECTATIONS
+  const notExpected =
+    cms?.notExpected ??
+    "Agreement on every point. Residence in Europe. A particular faith. A particular politics. Membership is a civil one — conversation, not consensus."
   return (
     <>
       {/* Hero */}
       <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="eyebrow eyebrow-both">The Community</span>
+          <span className="eyebrow eyebrow-both">{heroEyebrow}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            <span className="italic font-normal text-gold-400">Europe</span> First.
+            <span className="italic font-normal text-gold-400">{heroItalicWord}</span> {heroHeadlineRest}
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            A community of native Europeans — at home and abroad — organising for the
-            preservation of European civilisation. Members in twenty-four countries.
-            New York to Paris, Sydney to Athens.
-          </p>
+          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link href="#join" className="btn-primary">
               Join the Community <span className="font-serif">→</span>
@@ -110,11 +124,7 @@ export default function MemberPage() {
                 What we{" "}
                 <em className="italic font-normal text-gold-400">don&rsquo;t</em>.
               </h3>
-              <p className="mt-7 text-base leading-relaxed text-navy-800/75">
-                Agreement on every point. Residence in Europe. A particular faith. A
-                particular politics. Membership is a civil one — conversation, not
-                consensus.
-              </p>
+              <p className="mt-7 text-base leading-relaxed text-navy-800/75">{notExpected}</p>
             </div>
           </div>
         </div>
