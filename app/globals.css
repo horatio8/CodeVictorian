@@ -63,7 +63,9 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    /* clip rather than hidden — `hidden` creates a containing block for
+       position:fixed in iOS WebKit, which breaks the mobile menu overlay. */
+    overflow-x: clip;
   }
 
   body {
