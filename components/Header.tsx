@@ -44,6 +44,15 @@ export default function Header() {
     return () => { document.body.style.overflow = "" }
   }, [mobileOpen])
 
+  useEffect(() => {
+    if (!mobileOpen) return
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setMobileOpen(false)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [mobileOpen])
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -130,22 +139,27 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger — z-50 keeps the close (X) above the open menu. */}
           <button
-            className="relative z-10 flex h-10 w-10 items-center justify-center text-gold-400 lg:hidden"
+            className="relative z-50 flex h-10 w-10 items-center justify-center text-gold-400 lg:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
           >
             {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — solid navy panel, dismissed on backdrop tap or Escape. */}
       <div
-        className={`fixed inset-0 z-40 bg-navy-900 transition-all duration-300 lg:hidden ${
+        id="mobile-menu"
+        className={`fixed inset-0 z-40 bg-navy-900 transition-opacity duration-300 lg:hidden ${
           mobileOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
+        onClick={() => setMobileOpen(false)}
+        aria-hidden={!mobileOpen}
       >
         <nav className="flex h-full flex-col items-center justify-center gap-1 px-6 pt-20">
           {navLinks.map((link) =>

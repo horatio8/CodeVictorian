@@ -55,18 +55,19 @@ export default function Footer() {
             </p>
           </div>
           <form
-            className="grid w-full max-w-md grid-cols-[1fr_auto] border border-gold-400/40"
+            className="flex w-full max-w-md flex-col border border-gold-400/40 sm:flex-row"
             onSubmit={(e) => e.preventDefault()}
           >
             <input
               type="email"
-              placeholder="your name@correspondence.eu"
-              className="bg-transparent px-5 py-4 font-lede text-base text-white placeholder:italic placeholder:text-white/40 outline-none focus:bg-white/5"
+              placeholder="your@email.eu"
+              aria-label="Email address"
+              className="min-w-0 flex-1 bg-transparent px-5 py-4 font-lede text-base text-white placeholder:italic placeholder:text-white/40 outline-none focus:bg-white/5"
               required
             />
             <button
               type="submit"
-              className="bg-gold-400 px-6 text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-navy-900 transition-colors hover:bg-gold-300"
+              className="bg-gold-400 px-6 py-4 text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-navy-900 transition-colors hover:bg-gold-300 sm:py-0"
             >
               Subscribe
             </button>
