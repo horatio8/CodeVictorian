@@ -63,6 +63,11 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* clip rather than hidden — clip doesn't establish a containing block
+       per spec, so position:fixed elements (mobile menu, cookie banner)
+       still attach to the viewport. Belt-and-braces with body + main. */
+    overflow-x: clip;
+    overscroll-behavior-x: none;
   }
 
   body {
@@ -70,6 +75,8 @@
     color: var(--color-navy-800);
     background-color: var(--color-cream);
     letter-spacing: -0.005em;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
   }
 
   h1, h2, h3, h4, h5, h6 {
