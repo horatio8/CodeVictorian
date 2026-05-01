@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { CALLING_CODES } from "@/lib/calling-codes"
+import { syncToManyChat } from "@/lib/manychat"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -54,7 +55,8 @@ export async function POST(req: Request) {
   const email = (body.email ?? "").trim().toLowerCase()
   const phone = (body.phone ?? "").trim()
   const postcode = (body.postcode ?? "").trim()
-  const country = isoToCountryName(body.country ?? "")
+  const countryIso = (body.country ?? "").trim().toUpperCase()
+  const country = isoToCountryName(countryIso)
 
   if (!first_name) return badRequest("Please enter your first name.")
   if (!last_name) return badRequest("Please enter your last name.")
@@ -91,6 +93,22 @@ export async function POST(req: Request) {
 
     // CN typically responds 200 / 204 / 302 on success. Treat any 2xx or 3xx as accepted.
     if (res.ok || (res.status >= 300 && res.status < 400)) {
+      // Mirror the signup into ManyChat. Failures here must NOT block
+      // the petition save, so swallow errors and just log them.
+      try {
+        await syncToManyChat({
+          firstName: first_name,
+          lastName: last_name,
+          email,
+          phone: phone || undefined,
+          country: countryIso || undefined,
+          postcode: postcode || undefined,
+          source: "petition",
+          signupUrl: req.headers.get("referer") ?? undefined,
+        })
+      } catch (err) {
+        console.error("[manychat] petition sync failed:", err)
+      }
       return NextResponse.json({ ok: true })
     }
     // Pass through CN's status if it's an obvious 4xx (e.g. duplicate email).
