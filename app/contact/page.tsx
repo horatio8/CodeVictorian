@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { MapPin, Clock, Mail, MessageSquare, Phone } from "lucide-react"
 import { getContactPage } from "@/lib/cms"
+import ContactForm from "./ContactForm"
 
 export const metadata: Metadata = { title: "Contact" }
 
@@ -72,36 +73,7 @@ export default async function ContactPage() {
                 Write to{" "}
                 <span className="italic font-normal text-gold-400">us</span>.
               </h2>
-              <form className="mt-10 space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <input type="text" placeholder="First name" className="form-input" required />
-                  <input type="text" placeholder="Last name" className="form-input" required />
-                </div>
-                <input type="email" placeholder="your name@correspondence.eu" className="form-input" required />
-                <select className="form-input" required defaultValue="">
-                  <option value="">Subject</option>
-                  {subjects.map((s) => (
-                    <option key={s}>{s}</option>
-                  ))}
-                </select>
-                <textarea
-                  placeholder="Your message"
-                  rows={6}
-                  className="form-input resize-none"
-                  required
-                />
-                <label className="flex items-start gap-2 font-lede text-xs text-navy-800/65">
-                  <input type="checkbox" required className="mt-1 h-3.5 w-3.5 accent-gold-400" />
-                  <span>
-                    I agree to the{" "}
-                    <Link href="/privacy" className="text-gold-600 underline underline-offset-2">privacy policy</Link>.
-                    My data will only be used to respond to this enquiry.
-                  </span>
-                </label>
-                <button type="submit" className="btn-primary">
-                  Send Message <span className="font-serif">→</span>
-                </button>
-              </form>
+              <ContactForm subjects={subjects} />
             </div>
 
             {/* Sidebar */}
