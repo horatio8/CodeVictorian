@@ -54,14 +54,15 @@ export default function Header() {
   }, [mobileOpen])
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-navy-900/92 backdrop-blur-md border-b border-gold-400/25"
-          : "bg-transparent border-b border-transparent"
-      }`}
-    >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-navy-900/92 backdrop-blur-md border-b border-gold-400/25"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-18 items-center justify-between lg:h-20">
           {/* Brand mark — small logo + text wordmark */}
           <Link href="/" className="relative z-10 flex items-center gap-3 group">
@@ -151,16 +152,22 @@ export default function Header() {
           </button>
         </div>
       </div>
+    </header>
 
-      {/* Mobile menu — solid navy panel, dismissed on backdrop tap or Escape. */}
-      <div
-        id="mobile-menu"
-        className={`fixed inset-0 z-40 bg-navy-900 transition-opacity duration-300 lg:hidden ${
-          mobileOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={() => setMobileOpen(false)}
-        aria-hidden={!mobileOpen}
-      >
+    {/* Mobile menu — sibling of <header>, NOT a descendant. The header
+        applies backdrop-blur-md when scrolled, and `backdrop-filter`
+        promotes its element to a containing block for fixed descendants —
+        which would re-anchor `fixed inset-0` to the header's bounding box
+        (a thin top bar) instead of the viewport, leaving most of the page
+        visible behind the menu. Sitting outside the header avoids that. */}
+    <div
+      id="mobile-menu"
+      className={`fixed inset-0 z-40 bg-navy-900 transition-opacity duration-300 lg:hidden ${
+        mobileOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+      }`}
+      onClick={() => setMobileOpen(false)}
+      aria-hidden={!mobileOpen}
+    >
         <nav className="flex h-full flex-col items-center justify-center gap-1 px-6 pt-20">
           {navLinks.map((link) =>
             link.children ? (
@@ -208,6 +215,6 @@ export default function Header() {
           </div>
         </nav>
       </div>
-    </header>
+    </>
   )
 }
