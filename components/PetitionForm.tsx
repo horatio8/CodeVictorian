@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 import PhoneField from "@/components/PhoneField"
 import { CALLING_CODES, DEFAULT_CALLING_CODE, composePhone } from "@/lib/calling-codes"
 
@@ -36,6 +37,23 @@ export default function PetitionForm({
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [signed, setSigned] = useState(false)
+
+  // After signing, push the user onto the donate page. Counts down so the
+  // user has a moment to register that the submission worked, and a manual
+  // CTA is still rendered in case they'd rather click than wait.
+  const router = useRouter()
+  const REDIRECT_SECONDS = 3
+  const [redirectIn, setRedirectIn] = useState(REDIRECT_SECONDS)
+  useEffect(() => {
+    if (!signed) return
+    router.prefetch("/donate")
+    const tick = setInterval(() => setRedirectIn((s) => s - 1), 1000)
+    const go = setTimeout(() => router.push("/donate"), REDIRECT_SECONDS * 1000)
+    return () => {
+      clearInterval(tick)
+      clearTimeout(go)
+    }
+  }, [signed, router])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -75,6 +93,7 @@ export default function PetitionForm({
   } p-8 sm:p-10`
 
   if (signed) {
+    const seconds = Math.max(0, redirectIn)
     return (
       <div className={wrapperClass}>
         <span className="eyebrow">Signed</span>
@@ -82,18 +101,22 @@ export default function PetitionForm({
           Thank you, {firstName || "friend"}.
         </h3>
         <p className={`mt-2 text-sm ${isDark ? "text-white/70" : "text-navy-800/70"}`}>
-          Your name is on the petition. Take the next step:
+          Your name is on the petition. Signing is the start — patrons fund the work.
         </p>
         <div className="mt-7 flex flex-col gap-3">
           <Link href="/donate" className="btn-primary w-full">
             Support the Cause <span className="font-serif">→</span>
           </Link>
-          <Link href="/member" className="btn-secondary w-full">
-            Join Europe First
-          </Link>
         </div>
-        <p className={`mt-6 text-center text-xs ${isDark ? "text-white/55" : "text-navy-800/65"}`}>
-          A confirmation email is on its way. You can share the petition with friends from your inbox.
+        <p
+          className={`mt-5 text-center font-mono text-[0.625rem] uppercase tracking-[0.24em] ${
+            isDark ? "text-white/60" : "text-navy-800/60"
+          }`}
+          aria-live="polite"
+        >
+          {seconds > 0
+            ? `Redirecting to donate in ${seconds}…`
+            : "Redirecting…"}
         </p>
       </div>
     )
