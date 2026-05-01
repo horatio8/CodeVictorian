@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import CookieConsent from "@/components/CookieConsent"
-import ChatWidget from "@/components/ChatWidget"
 
 // Routes that should render with no global nav / footer / overlays —
 // "clean landing pages" used for paid/social promotion.
@@ -26,7 +25,6 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       <main>{children}</main>
       <Footer />
       <CookieConsent />
-      <ChatWidget />
     </>
   )
 }
