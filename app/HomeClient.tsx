@@ -78,7 +78,6 @@ export default function Home({ cms }: { cms?: HomeCms } = {}) {
       {showStats && <StatsBar />}
       <IssuesSection />
       <PetitionCTA />
-      <NewsSection />
       <DonationSection />
       <FinalCTA />
     </>
