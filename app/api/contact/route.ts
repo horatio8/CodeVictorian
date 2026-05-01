@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { syncToManyChat } from "@/lib/manychat"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -73,6 +74,21 @@ export async function POST(req: Request) {
     })
 
     if (res.ok || (res.status >= 300 && res.status < 400)) {
+      try {
+        await syncToManyChat({
+          firstName: first_name,
+          lastName: last_name,
+          email,
+          source: "contact",
+          signupUrl: req.headers.get("referer") ?? undefined,
+          extraFields: [
+            ...(subject ? [{ name: "contact_subject", value: subject }] : []),
+            ...(message ? [{ name: "contact_message", value: message }] : []),
+          ],
+        })
+      } catch (err) {
+        console.error("[manychat] contact sync failed:", err)
+      }
       return NextResponse.json({ ok: true })
     }
     if (res.status === 409 || res.status === 422) {

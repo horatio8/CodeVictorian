@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { syncToManyChat } from "@/lib/manychat"
 
 export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
@@ -85,6 +86,24 @@ export async function POST(req: Request) {
     })
 
     if (res.ok || (res.status >= 300 && res.status < 400)) {
+      try {
+        await syncToManyChat({
+          firstName: first_name,
+          lastName: last_name,
+          email,
+          phone: phone || undefined,
+          country: country || undefined,
+          city: city || undefined,
+          source: "volunteer",
+          signupUrl: req.headers.get("referer") ?? undefined,
+          extraFields: [
+            ...(roles ? [{ name: "volunteer_roles", value: roles }] : []),
+            ...(bio ? [{ name: "volunteer_bio", value: bio }] : []),
+          ],
+        })
+      } catch (err) {
+        console.error("[manychat] volunteer sync failed:", err)
+      }
       return NextResponse.json({ ok: true })
     }
     if (res.status === 409 || res.status === 422) {
