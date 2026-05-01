@@ -447,14 +447,6 @@ function DonatePageInner({
                     ))}
                   </ul>
                 </div>
-
-                <div className="text-center text-sm text-navy-800/65">
-                  After donating, please consider{" "}
-                  <Link href="/member" className="text-gold-600 underline underline-offset-2">
-                    joining Europe First
-                  </Link>{" "}
-                  and sharing the cause.
-                </div>
               </div>
             </div>
           </div>
