@@ -331,6 +331,22 @@
     margin: 0 1.5rem;
   }
 
+  /* Below sm the full-width lines push ::after onto a second row,
+     making the visible run look off-center. Shrink the lines and tighten
+     the spacing so the whole ornament fits on one line at 360px. */
+  @media (max-width: 639px) {
+    .fleur {
+      font-size: 1.25rem;
+      letter-spacing: 0.35em;
+      text-indent: 0.35em;
+    }
+    .fleur::before,
+    .fleur::after {
+      width: 32px;
+      margin: 0 0.5rem;
+    }
+  }
+
   .ornament { position: relative; }
   .ornament::before,
   .ornament::after {
