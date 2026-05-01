@@ -14,15 +14,21 @@ function isNakedRoute(pathname: string | null): boolean {
   return NAKED_ROUTES.some((r) => pathname === r || pathname.startsWith(`${r}/`))
 }
 
+// `overflow-x:hidden` on <main> catches any horizontal overflow from page
+// content without affecting the mobile menu or footer (both siblings, not
+// descendants — so <main> doesn't become a containing block for the menu's
+// position:fixed).
+const mainClass = "overflow-x-hidden"
+
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   if (isNakedRoute(pathname)) {
-    return <main>{children}</main>
+    return <main className={mainClass}>{children}</main>
   }
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main className={mainClass}>{children}</main>
       <Footer />
       <CookieConsent />
     </>
