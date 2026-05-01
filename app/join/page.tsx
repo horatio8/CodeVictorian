@@ -7,45 +7,35 @@ export const metadata: Metadata = { title: "Join Us" }
 const FALLBACK_TIERS = [
   {
     roman: "I.",
-    name: "Supporter",
-    price: "€5",
-    period: "/month",
+    name: "CV Europe First Founder",
+    price: "€9.99",
+    priceWas: "€14.99",
+    period: "p/m",
+    ctaLabel: "Join the Revival",
     features: [
-      "Official membership card",
-      "Monthly newsletter",
-      "Access to member forums",
-      "Campaign updates and reports",
-      "Invitation to local events",
+      "Your entire contribution supports the Code Victorian Foundation",
+      "Full access to the Europe First Discord group chats",
+      "Connect with Matthias and other nationalist activists",
+      "Expand your network with like-minded people across the West",
+    ],
+    subsectionTitle: "Founder Privileges (First 1000 members only)",
+    subsectionItems: [
+      "Permanently reduced membership fee",
+      "Discounts on all future offerings by The Code Victorian Foundation",
+      "Direct influence on the course of action through voting",
+      "The weekly Europe First Livestream with Matthias",
     ],
   },
   {
     roman: "II.",
-    name: "Patriot",
-    price: "€15",
-    period: "/month",
-    popular: true,
+    name: "CV Europe First Founder Lifelong Access",
+    price: "€499.99",
+    priceWas: "€749.99",
+    period: "One-time",
+    ctaLabel: "Join the Revival",
     features: [
-      "Everything in Supporter",
-      "Early access to policy papers",
-      "Quarterly video briefings",
-      "Voting rights on campaign strategy",
-      "Exclusive member merchandise",
-      "Priority event registration",
-    ],
-  },
-  {
-    roman: "III.",
-    name: "Guardian",
-    price: "€50",
-    period: "/month",
-    features: [
-      "Everything in Patriot",
-      "Direct access to campaign leadership",
-      "Annual Heritage Summit invitation",
-      "Named recognition in annual report",
-      "Personalised campaign briefings",
-      "Private networking events",
-      "Legacy planning consultation",
+      "Everything included as a regular Founding Member for the rest of your life",
+      "A Private Video Conversation with Matthias to thank you and discuss anything of interest to you",
     ],
   },
 ]
@@ -90,11 +80,11 @@ export default async function JoinPage() {
             </h2>
           </div>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-2">
             {tiers.map((tier) => (
               <div
                 key={tier.name ?? tier.roman}
-                className={`relative p-10 ${
+                className={`relative flex flex-col p-10 ${
                   tier.popular
                     ? "ornament border border-gold-400 bg-gold-400/5"
                     : "border border-gold-400/25 bg-ivory"
@@ -110,8 +100,11 @@ export default async function JoinPage() {
                 </div>
                 <span className="eyebrow mt-6">Tier {(tier.roman ?? "").replace(".", "")}</span>
                 <h3 className="mt-4 font-serif text-3xl font-medium">{tier.name}</h3>
-                <div className="mt-3 flex items-baseline gap-2">
+                <div className="mt-3 flex flex-wrap items-baseline gap-2">
                   <span className="font-serif text-4xl italic font-normal text-gold-400">{tier.price}</span>
+                  {tier.priceWas && (
+                    <span className="font-serif text-2xl italic font-normal text-gold-400/40 line-through">{tier.priceWas}</span>
+                  )}
                   <span className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-navy-800/60">{tier.period}</span>
                 </div>
                 <ul className="mt-8 space-y-0 border-y border-gold-400/20">
@@ -122,8 +115,23 @@ export default async function JoinPage() {
                     </li>
                   ))}
                 </ul>
-                <button className={`mt-10 w-full ${tier.popular ? "btn-primary" : "btn-secondary"}`}>
-                  Join as {tier.name} <span className="font-serif">→</span>
+                {(tier.subsectionTitle || (tier.subsectionItems?.length ?? 0) > 0) && (
+                  <div className="mt-6 border border-gold-400/30 bg-gold-400/5 p-5">
+                    {tier.subsectionTitle && (
+                      <h4 className="font-serif text-lg italic text-gold-400">{tier.subsectionTitle}</h4>
+                    )}
+                    <ul className="mt-3 space-y-0">
+                      {(tier.subsectionItems ?? []).map((f) => (
+                        <li key={f} className="flex items-start gap-3 py-2 font-lede text-sm text-navy-800/75">
+                          <span className="text-gold-400">✦</span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <button className="btn-primary mt-10 w-full">
+                  {tier.ctaLabel ?? `Join as ${tier.name}`} <span className="font-serif">→</span>
                 </button>
               </div>
             ))}

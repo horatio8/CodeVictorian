@@ -132,9 +132,13 @@ export type JoinPage = {
     roman?: string
     name?: string
     price?: string
+    priceWas?: string
     period?: string
     popular?: boolean
     features?: string[]
+    subsectionTitle?: string
+    subsectionItems?: string[]
+    ctaLabel?: string
   }>
 }
 
