@@ -1,10 +1,12 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { getJoinPage } from "@/lib/cms"
+import { getJoinPage, type JoinPage } from "@/lib/cms"
 
 export const metadata: Metadata = { title: "Join Us" }
 
-const FALLBACK_TIERS = [
+type Tier = NonNullable<JoinPage["tiers"]>[number]
+
+const FALLBACK_TIERS: Tier[] = [
   {
     roman: "I.",
     name: "CV Europe First Founder",
