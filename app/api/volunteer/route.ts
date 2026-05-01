@@ -67,12 +67,10 @@ export async function POST(req: Request) {
   params.set("last_name", last_name)
   params.set("email", email)
   if (roles) params.set("Role", roles)
-  // Forward optional fields too — CN silently ignores unknown handles, so
-  // these populate automatically if/when those fields are added on CN.
   if (phone) params.set("phone", phone)
   if (country) params.set("country", country)
   if (city) params.set("city", city)
-  if (bio) params.set("bio", bio)
+  if (bio) params.set("aboutyou", bio)
 
   try {
     const res = await fetch(CN_RECEIVER_URL, {
