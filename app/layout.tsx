@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import SiteChrome from "@/components/SiteChrome"
 import ClarityTracking from "@/components/ClarityTracking"
+import ManyChat from "@/components/ManyChat"
 
 export const metadata: Metadata = {
   title: {
@@ -44,6 +45,7 @@ export default function RootLayout({
       >
         <SiteChrome>{children}</SiteChrome>
         <ClarityTracking />
+        <ManyChat />
       </body>
     </html>
   )
