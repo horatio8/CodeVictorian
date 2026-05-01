@@ -174,14 +174,9 @@ export default function Footer() {
       <div className="border-t border-gold-400/20">
         <div className="mx-auto max-w-7xl px-6 py-7">
           <div className="dbl-rule mb-6" />
-          <div className="flex flex-col items-center gap-4 text-center font-mono text-[0.6875rem] uppercase tracking-[0.14em] md:flex-row md:justify-between md:text-left">
+          <div className="text-center font-mono text-[0.6875rem] uppercase tracking-[0.14em]">
             <p className="text-white/50">
               © MMXXVI Code Victorian · All Rights Reserved
-            </p>
-            <p className="max-w-xl text-[0.625rem] leading-relaxed text-white/35">
-              Published by Code Victorian, a registered third-party campaigner.
-              Consult your national electoral authority for required disclaimer
-              format. Made with patience · Not advertising.
             </p>
           </div>
         </div>
