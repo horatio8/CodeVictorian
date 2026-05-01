@@ -63,10 +63,22 @@ export async function POST(req: Request) {
   params.set("last_name", last_name)
   params.set("email", email)
   if (phone) params.set("phone", phone)
-  if (citycountry) params.set("citycountry", citycountry)
-  // CN drops unknown handles; if a Note textarea is later added with handle
-  // `note`, it'll start populating automatically.
-  if (note) params.set("note", note)
+  // Send city/country under several plausible handles so the value lands
+  // wherever the CN form actually defines the field. Unknown handles are
+  // silently dropped by CN; matching ones store the value.
+  if (citycountry) {
+    params.set("citycountry", citycountry)
+    params.set("city_country", citycountry)
+    params.set("city", citycountry)
+    params.set("location", citycountry)
+  }
+  // Same defensive fan-out for the join-reason note.
+  if (note) {
+    params.set("note", note)
+    params.set("aboutyou", note)
+    params.set("message", note)
+    params.set("bio", note)
+  }
 
   try {
     const res = await fetch(CN_RECEIVER_URL, {
