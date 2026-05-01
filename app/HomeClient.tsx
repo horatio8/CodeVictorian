@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { ArrowRight, ChevronRight } from "lucide-react"
 import PetitionForm from "@/components/PetitionForm"
@@ -385,6 +386,15 @@ function NewsSection() {
 
 function DonationSection() {
   const amounts = [65, 135, 265, 600, 1500]
+  const [selected, setSelected] = useState<number | null>(135)
+  const [frequency, setFrequency] = useState<"once" | "monthly">("monthly")
+
+  const donateHref = (() => {
+    const params = new URLSearchParams()
+    if (selected !== null) params.set("amount", String(selected))
+    params.set("frequency", frequency)
+    return `/donate?${params.toString()}`
+  })()
 
   return (
     <section className="section-padding bg-cream border-y border-gold-400/20">
@@ -442,32 +452,67 @@ function DonationSection() {
               {amounts.map((a, i) => {
                 const col = i % 3
                 const row = Math.floor(i / 3)
+                const isSelected = selected === a
                 return (
                   <button
                     key={a}
-                    className={`py-5 text-center font-sans text-2xl font-semibold tracking-tight text-navy-800 transition-colors hover:bg-gold-400/10 ${
-                      col < 2 ? "border-r border-gold-400/25" : ""
-                    } ${row === 0 ? "border-b border-gold-400/25" : ""}`}
+                    type="button"
+                    onClick={() => setSelected(a)}
+                    aria-pressed={isSelected}
+                    className={`py-5 text-center font-sans text-2xl font-semibold tracking-tight transition-colors ${
+                      isSelected
+                        ? "bg-gold-400/15 text-navy-900"
+                        : "text-navy-800 hover:bg-gold-400/10"
+                    } ${col < 2 ? "border-r border-gold-400/25" : ""} ${
+                      row === 0 ? "border-b border-gold-400/25" : ""
+                    }`}
                   >
                     €{a.toLocaleString("en-GB")}
                   </button>
                 )
               })}
-              <button className="py-5 text-center font-mono text-xs uppercase tracking-[0.2em] text-navy-800 transition-colors hover:bg-gold-400/10">
+              <button
+                type="button"
+                onClick={() => setSelected(null)}
+                aria-pressed={selected === null}
+                className={`py-5 text-center font-mono text-xs uppercase tracking-[0.2em] transition-colors ${
+                  selected === null
+                    ? "bg-gold-400/15 text-navy-900"
+                    : "text-navy-800 hover:bg-gold-400/10"
+                }`}
+              >
                 Other
               </button>
             </div>
 
             <div className="mt-4 grid grid-cols-2 gap-0 border border-gold-400/25">
-              <button className="py-3 font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-navy-800/65 transition-colors hover:bg-gold-400/10 border-r border-gold-400/25">
+              <button
+                type="button"
+                onClick={() => setFrequency("once")}
+                aria-pressed={frequency === "once"}
+                className={`py-3 font-mono text-[0.6875rem] uppercase tracking-[0.24em] transition-colors border-r border-gold-400/25 ${
+                  frequency === "once"
+                    ? "bg-gold-400 font-medium text-navy-900"
+                    : "text-navy-800/65 hover:bg-gold-400/10"
+                }`}
+              >
                 One-time
               </button>
-              <button className="bg-gold-400 py-3 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-navy-900">
+              <button
+                type="button"
+                onClick={() => setFrequency("monthly")}
+                aria-pressed={frequency === "monthly"}
+                className={`py-3 font-mono text-[0.6875rem] uppercase tracking-[0.24em] transition-colors ${
+                  frequency === "monthly"
+                    ? "bg-gold-400 font-medium text-navy-900"
+                    : "text-navy-800/65 hover:bg-gold-400/10"
+                }`}
+              >
                 Monthly
               </button>
             </div>
 
-            <Link href="/donate" className="btn-primary mt-6 w-full">
+            <Link href={donateHref} className="btn-primary mt-6 w-full">
               Donate Now <span className="font-serif">→</span>
             </Link>
             <p className="mt-4 text-center font-mono text-[0.625rem] uppercase tracking-[0.18em] text-navy-800/50">

@@ -48,7 +48,17 @@ export default function DonatePage({ cms }: { cms?: DonateCms } = {}) {
   // useSearchParams must sit under a Suspense boundary so the page can
   // still prerender at build time.
   return (
-    <Suspense fallback={<DonatePageInner cms={cms} status={null} sessionId={null} />}>
+    <Suspense
+      fallback={
+        <DonatePageInner
+          cms={cms}
+          status={null}
+          sessionId={null}
+          initialAmount={null}
+          initialFrequency={null}
+        />
+      }
+    >
       <DonatePageWithParams cms={cms} />
     </Suspense>
   )
@@ -56,11 +66,22 @@ export default function DonatePage({ cms }: { cms?: DonateCms } = {}) {
 
 function DonatePageWithParams({ cms }: { cms?: DonateCms }) {
   const searchParams = useSearchParams()
+  const amountParam = searchParams.get("amount")
+  const parsedAmount = amountParam ? Number(amountParam) : NaN
+  const frequencyParam = searchParams.get("frequency")
   return (
     <DonatePageInner
       cms={cms}
       status={searchParams.get("status")}
       sessionId={searchParams.get("session_id")}
+      initialAmount={
+        Number.isFinite(parsedAmount) && parsedAmount > 0 ? parsedAmount : null
+      }
+      initialFrequency={
+        frequencyParam === "once" || frequencyParam === "monthly"
+          ? frequencyParam
+          : null
+      }
     />
   )
 }
@@ -69,10 +90,14 @@ function DonatePageInner({
   cms,
   status,
   sessionId,
+  initialAmount,
+  initialFrequency,
 }: {
   cms?: DonateCms
   status: string | null
   sessionId: string | null
+  initialAmount: number | null
+  initialFrequency: Frequency | null
 }) {
 
   const [banner, setBanner] = useState<StatusBanner>(() => {
@@ -126,9 +151,14 @@ function DonatePageInner({
   }, [status, sessionId])
 
   const [currency, setCurrency] = useState<Currency>("EUR")
-  const [frequency, setFrequency] = useState<Frequency>("monthly")
+  const [frequency, setFrequency] = useState<Frequency>(initialFrequency ?? "monthly")
   const presets = PRESET_AMOUNTS[currency]
-  const [selected, setSelected] = useState<number | null>(presets[1] ?? presets[0])
+  // If the home page passed ?amount=… use it; otherwise default to the
+  // second preset chip. ?amount=0 (Other) means "no preset" — we leave
+  // selected null so the custom-amount input is the focus.
+  const [selected, setSelected] = useState<number | null>(
+    initialAmount && initialAmount > 0 ? initialAmount : presets[1] ?? presets[0],
+  )
   const [customAmount, setCustomAmount] = useState<string>("")
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
