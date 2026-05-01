@@ -63,9 +63,6 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* clip rather than hidden — `hidden` creates a containing block for
-       position:fixed in iOS WebKit, which breaks the mobile menu overlay. */
-    overflow-x: clip;
   }
 
   body {
@@ -73,7 +70,6 @@
     color: var(--color-navy-800);
     background-color: var(--color-cream);
     letter-spacing: -0.005em;
-    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5, h6 {
