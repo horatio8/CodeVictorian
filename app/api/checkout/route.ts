@@ -93,6 +93,17 @@ export async function POST(req: Request) {
     Math.floor(Date.now() / 60_000),
   ].join("|")
 
+  // Metadata applied to every Stripe object this checkout creates
+  // (Session, PaymentIntent for one-time, Subscription for monthly).
+  // `campaign` is the filterable tag — search "CodeVictorian" in the
+  // Stripe Dashboard to surface every donation made through this site.
+  const sharedMetadata: Record<string, string> = {
+    campaign: "CodeVictorian",
+    source: "code-victorian-donate",
+    frequency,
+    ...(body.correlationId ? { correlation_id: body.correlationId } : {}),
+  }
+
   try {
     const session = await stripe.checkout.sessions.create(
       {
@@ -120,29 +131,23 @@ export async function POST(req: Request) {
             },
           },
         ],
-        // For one-time donations, ask Stripe to send a hosted receipt.
+        // For one-time donations, ask Stripe to send a hosted receipt and
+        // tag the underlying PaymentIntent so Dashboard filters work.
         // For subscriptions, Stripe sends an invoice + receipt anyway.
         ...(frequency === "once"
-          ? { payment_intent_data: { receipt_email: validEmail || undefined } }
+          ? {
+              payment_intent_data: {
+                receipt_email: validEmail || undefined,
+                metadata: sharedMetadata,
+              },
+            }
           : {}),
         success_url: `${origin}/donate?status=success&session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${origin}/donate?status=cancelled`,
         allow_promotion_codes: false,
-        // Tag the session so it's easy to filter in Stripe Dashboard.
-        metadata: {
-          source: "code-victorian-donate",
-          frequency,
-          ...(body.correlationId ? { correlation_id: body.correlationId } : {}),
-        },
+        metadata: sharedMetadata,
         ...(frequency === "monthly"
-          ? {
-              subscription_data: {
-                metadata: {
-                  source: "code-victorian-donate",
-                  ...(body.correlationId ? { correlation_id: body.correlationId } : {}),
-                },
-              },
-            }
+          ? { subscription_data: { metadata: sharedMetadata } }
           : {}),
       },
       { idempotencyKey },
