@@ -2,22 +2,17 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import PhoneField from "@/components/PhoneField"
-import { DEFAULT_CALLING_CODE, composePhone } from "@/lib/calling-codes"
 
-// Posts to /api/member which forwards to the Campaign Nucleus Europe First
-// receiver. CN form schema: first_name, last_name, email, phone, citycountry.
-// The optional "note" textarea is sent as `note`; CN drops unknown handles,
-// so it populates automatically if a Note field is added there later.
+// Posts to /api/contact which forwards to the Campaign Nucleus contact
+// receiver. Field handles match the CN form schema:
+// first_name, last_name, email, subject, message.
 
-export default function MemberApplyForm() {
+export default function ContactForm({ subjects }: { subjects: string[] }) {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState("")
-  const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
-  const [phone, setPhone] = useState("")
-  const [cityCountry, setCityCountry] = useState("")
-  const [note, setNote] = useState("")
+  const [subject, setSubject] = useState("")
+  const [message, setMessage] = useState("")
   const [website, setWebsite] = useState("") // honeypot — must stay empty
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -28,16 +23,15 @@ export default function MemberApplyForm() {
     setError(null)
     setSubmitting(true)
     try {
-      const res = await fetch("/api/member", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           first_name: firstName,
           last_name: lastName,
           email,
-          phone: composePhone(phoneCountry, phone),
-          citycountry: cityCountry,
-          note,
+          subject,
+          message,
           website,
         }),
       })
@@ -47,7 +41,7 @@ export default function MemberApplyForm() {
       }
       setSent(true)
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not submit. Please try again.")
+      setError(err instanceof Error ? err.message : "Could not send. Please try again.")
     } finally {
       setSubmitting(false)
     }
@@ -55,22 +49,22 @@ export default function MemberApplyForm() {
 
   if (sent) {
     return (
-      <div className="border border-gold-400/40 bg-ivory p-8">
-        <span className="eyebrow">Submitted</span>
+      <div className="border border-gold-400/40 bg-ivory p-10">
+        <span className="eyebrow">Sent</span>
         <h3 className="mt-4 font-serif text-2xl font-medium">
           Thank you, {firstName || "friend"}.
         </h3>
         <p className="mt-3 text-sm text-navy-800/70">
-          Your application has been received. A member of the Europe First team
-          will be in touch shortly.
+          Your message has been received. We typically respond within two
+          business days.
         </p>
       </div>
     )
   }
 
   return (
-    <form className="space-y-3" onSubmit={handleSubmit}>
-      <div className="grid grid-cols-2 gap-3">
+    <form className="mt-10 space-y-4" onSubmit={handleSubmit}>
+      <div className="grid grid-cols-2 gap-4">
         <input
           type="text"
           placeholder="First name"
@@ -94,7 +88,7 @@ export default function MemberApplyForm() {
       </div>
       <input
         type="email"
-        placeholder="your@email.eu"
+        placeholder="your name@correspondence.eu"
         className="form-input"
         autoComplete="email"
         required
@@ -102,30 +96,33 @@ export default function MemberApplyForm() {
         onChange={(e) => setEmail(e.target.value)}
         maxLength={250}
       />
-      <PhoneField
-        countryIso={phoneCountry}
-        onCountryIso={setPhoneCountry}
-        number={phone}
-        onNumber={setPhone}
-        placeholder="Mobile (optional)"
-      />
-      <input
-        type="text"
-        placeholder="City, Country"
+      <select
         className="form-input"
         required
-        value={cityCountry}
-        onChange={(e) => setCityCountry(e.target.value)}
-        maxLength={250}
-      />
+        value={subject}
+        onChange={(e) => setSubject(e.target.value)}
+      >
+        <option value="">Subject</option>
+        {subjects.map((s) => (
+          <option key={s}>{s}</option>
+        ))}
+      </select>
       <textarea
-        rows={4}
-        placeholder="A short note about why you'd like to join (optional but helpful)."
+        placeholder="Your message"
+        rows={6}
         className="form-input resize-none"
-        value={note}
-        onChange={(e) => setNote(e.target.value)}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
         maxLength={1000}
       />
+      <label className="flex items-start gap-2 font-lede text-xs text-navy-800/65">
+        <input type="checkbox" required className="mt-1 h-3.5 w-3.5 accent-gold-400" />
+        <span>
+          I agree to the{" "}
+          <Link href="/privacy" className="text-gold-600 underline underline-offset-2">privacy policy</Link>.
+          My data will only be used to respond to this enquiry.
+        </span>
+      </label>
       {/* Honeypot — visually hidden; bots fill it and we silently drop them. */}
       <input
         type="text"
@@ -155,21 +152,14 @@ export default function MemberApplyForm() {
       <button
         type="submit"
         disabled={submitting}
-        className="btn-primary w-full disabled:opacity-60 disabled:cursor-not-allowed"
+        className="btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        {submitting ? "Submitting…" : (
+        {submitting ? "Sending…" : (
           <>
-            Submit Application <span className="font-serif">→</span>
+            Send Message <span className="font-serif">→</span>
           </>
         )}
       </button>
-      <p className="text-center text-xs leading-relaxed text-navy-800/65">
-        By submitting, you agree to the{" "}
-        <Link href="/privacy" className="text-gold-600 underline underline-offset-2">
-          privacy policy
-        </Link>
-        {" "}and consent to receive correspondence about Europe First. Unsubscribe at any time.
-      </p>
     </form>
   )
 }

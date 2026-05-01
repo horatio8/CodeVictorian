@@ -1,69 +1,67 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { getJoinPage, type JoinPage } from "@/lib/cms"
 
 export const metadata: Metadata = { title: "Join Us" }
 
-const tiers = [
+type Tier = NonNullable<JoinPage["tiers"]>[number]
+
+const FALLBACK_TIERS: Tier[] = [
   {
     roman: "I.",
-    name: "Supporter",
-    price: "€5",
-    period: "/month",
+    name: "CV Europe First Founder",
+    price: "€9.99",
+    priceWas: "€14.99",
+    period: "p/m",
+    ctaLabel: "Join the Revival",
     features: [
-      "Official membership card",
-      "Monthly newsletter",
-      "Access to member forums",
-      "Campaign updates and reports",
-      "Invitation to local events",
+      "Your entire contribution supports the Code Victorian Foundation",
+      "Full access to the Europe First Discord group chats",
+      "Connect with Matthias and other nationalist activists",
+      "Expand your network with like-minded people across the West",
+    ],
+    subsectionTitle: "Founder Privileges (First 1000 members only)",
+    subsectionItems: [
+      "Permanently reduced membership fee",
+      "Discounts on all future offerings by The Code Victorian Foundation",
+      "Direct influence on the course of action through voting",
+      "The weekly Europe First Livestream with Matthias",
     ],
   },
   {
     roman: "II.",
-    name: "Patriot",
-    price: "€15",
-    period: "/month",
-    popular: true,
+    name: "CV Europe First Founder Lifelong Access",
+    price: "€499.99",
+    priceWas: "€749.99",
+    period: "One-time",
+    ctaLabel: "Join the Revival",
     features: [
-      "Everything in Supporter",
-      "Early access to policy papers",
-      "Quarterly video briefings",
-      "Voting rights on campaign strategy",
-      "Exclusive member merchandise",
-      "Priority event registration",
-    ],
-  },
-  {
-    roman: "III.",
-    name: "Guardian",
-    price: "€50",
-    period: "/month",
-    features: [
-      "Everything in Patriot",
-      "Direct access to campaign leadership",
-      "Annual Heritage Summit invitation",
-      "Named recognition in annual report",
-      "Personalised campaign briefings",
-      "Private networking events",
-      "Legacy planning consultation",
+      "Everything included as a regular Founding Member for the rest of your life",
+      "A Private Video Conversation with Matthias to thank you and discuss anything of interest to you",
     ],
   },
 ]
 
-export default function JoinPage() {
+export default async function JoinPage() {
+  const cms = await getJoinPage()
+  const heroEyebrow = cms?.heroEyebrow ?? "The Membership"
+  const heroHeadline = cms?.heroHeadline ?? "Join the"
+  const heroItalicWord = cms?.heroItalicWord ?? "Movement"
+  const heroLede =
+    cms?.heroLede ??
+    "Become part of Europe’s most determined civic movement. Your membership empowers our campaigns and gives you a voice in shaping our strategy."
+  const tiers = cms?.tiers && cms.tiers.length > 0 ? cms.tiers : FALLBACK_TIERS
   return (
     <>
       {/* Hero */}
       <section className="gradient-navy relative overflow-hidden pt-40 pb-24 lg:pt-48 lg:pb-32 on-dark">
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <span className="eyebrow eyebrow-both">The Membership</span>
+          <span className="eyebrow eyebrow-both">{heroEyebrow}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            Join the{" "}
-            <span className="italic font-normal text-gold-400">Movement</span>
+            {heroHeadline}{" "}
+            <span className="italic font-normal text-gold-400">{heroItalicWord}</span>
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            Become part of Europe&rsquo;s most determined civic movement. Your membership
-            empowers our campaigns and gives you a voice in shaping our strategy.
-          </p>
+          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
         </div>
       </section>
 
@@ -84,11 +82,11 @@ export default function JoinPage() {
             </h2>
           </div>
 
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto mt-16 grid max-w-5xl gap-6 sm:grid-cols-2">
             {tiers.map((tier) => (
               <div
-                key={tier.name}
-                className={`relative p-10 ${
+                key={tier.name ?? tier.roman}
+                className={`relative flex flex-col p-10 ${
                   tier.popular
                     ? "ornament border border-gold-400 bg-gold-400/5"
                     : "border border-gold-400/25 bg-ivory"
@@ -102,22 +100,40 @@ export default function JoinPage() {
                 <div className="font-serif text-4xl italic text-gold-400 leading-none">
                   {tier.roman}
                 </div>
-                <span className="eyebrow mt-6">Tier {tier.roman.replace(".", "")}</span>
+                <span className="eyebrow mt-6">Tier {(tier.roman ?? "").replace(".", "")}</span>
                 <h3 className="mt-4 font-serif text-3xl font-medium">{tier.name}</h3>
-                <div className="mt-3 flex items-baseline gap-2">
+                <div className="mt-3 flex flex-wrap items-baseline gap-2">
                   <span className="font-serif text-4xl italic font-normal text-gold-400">{tier.price}</span>
+                  {tier.priceWas && (
+                    <span className="font-serif text-2xl italic font-normal text-gold-400/40 line-through">{tier.priceWas}</span>
+                  )}
                   <span className="font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-navy-800/60">{tier.period}</span>
                 </div>
                 <ul className="mt-8 space-y-0 border-y border-gold-400/20">
-                  {tier.features.map((f) => (
+                  {(tier.features ?? []).map((f) => (
                     <li key={f} className="flex items-start gap-3 border-b border-gold-400/15 py-3 font-lede text-sm text-navy-800/75 last:border-b-0">
                       <span className="text-gold-400">✦</span>
                       {f}
                     </li>
                   ))}
                 </ul>
-                <button className={`mt-10 w-full ${tier.popular ? "btn-primary" : "btn-secondary"}`}>
-                  Join as {tier.name} <span className="font-serif">→</span>
+                {(tier.subsectionTitle || (tier.subsectionItems?.length ?? 0) > 0) && (
+                  <div className="mt-6 border border-gold-400/30 bg-gold-400/5 p-5">
+                    {tier.subsectionTitle && (
+                      <h4 className="font-serif text-lg italic text-gold-400">{tier.subsectionTitle}</h4>
+                    )}
+                    <ul className="mt-3 space-y-0">
+                      {(tier.subsectionItems ?? []).map((f) => (
+                        <li key={f} className="flex items-start gap-3 py-2 font-lede text-sm text-navy-800/75">
+                          <span className="text-gold-400">✦</span>
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                <button className="btn-primary mt-10 w-full">
+                  {tier.ctaLabel ?? `Join as ${tier.name}`} <span className="font-serif">→</span>
                 </button>
               </div>
             ))}

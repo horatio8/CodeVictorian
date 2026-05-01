@@ -63,6 +63,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
   }
 
   body {
@@ -70,6 +71,7 @@
     color: var(--color-navy-800);
     background-color: var(--color-cream);
     letter-spacing: -0.005em;
+    overflow-x: clip;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -313,6 +315,9 @@
     color: var(--color-gold-400);
     font-size: 1.75rem;
     letter-spacing: 0.6em;
+    /* letter-spacing adds trailing space after the last glyph too, which
+       shifts a centered run leftward. Compensate by indenting the same. */
+    text-indent: 0.6em;
     padding: 1.25rem 0;
   }
   .fleur::before,
@@ -324,6 +329,22 @@
     height: 1px;
     background: var(--hairline);
     margin: 0 1.5rem;
+  }
+
+  /* Below sm the full-width lines push ::after onto a second row,
+     making the visible run look off-center. Shrink the lines and tighten
+     the spacing so the whole ornament fits on one line at 360px. */
+  @media (max-width: 639px) {
+    .fleur {
+      font-size: 1.25rem;
+      letter-spacing: 0.35em;
+      text-indent: 0.35em;
+    }
+    .fleur::before,
+    .fleur::after {
+      width: 32px;
+      margin: 0 0.5rem;
+    }
   }
 
   .ornament { position: relative; }
