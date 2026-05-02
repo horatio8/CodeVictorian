@@ -12,13 +12,19 @@
 
 const BASE = "https://api.manychat.com"
 
+// Accept either MANYCHAT_API_TOKEN or MANYCHAT_API_KEY — different briefs
+// have used both names for the Public API key issued by ManyChat.
+function manychatToken(): string | undefined {
+  return process.env.MANYCHAT_API_TOKEN || process.env.MANYCHAT_API_KEY
+}
+
 export function isManyChatConfigured(): boolean {
-  return Boolean(process.env.MANYCHAT_API_KEY)
+  return Boolean(manychatToken())
 }
 
 function authHeaders() {
   return {
-    Authorization: `Bearer ${process.env.MANYCHAT_API_KEY}`,
+    Authorization: `Bearer ${manychatToken() ?? ""}`,
     "Content-Type": "application/json",
   }
 }
