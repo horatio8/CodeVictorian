@@ -14,6 +14,7 @@ const FALLBACK_TIERS: Tier[] = [
     priceWas: "€14.99",
     period: "p/m",
     ctaLabel: "Join the Revival",
+    ctaHref: "https://whop.com/joined/code-victorian-ffbd/products/europe-first-tier-1/",
     features: [
       "Your entire contribution supports the Code Victorian Foundation",
       "Full access to the Europe First Discord group chats",
@@ -35,6 +36,7 @@ const FALLBACK_TIERS: Tier[] = [
     priceWas: "€749.99",
     period: "One-time",
     ctaLabel: "Join the Revival",
+    ctaHref: "https://whop.com/joined/code-victorian-ffbd/products/europe-first-lifelong-access/",
     features: [
       "Everything included as a regular Founding Member for the rest of your life",
       "A Private Video Conversation with Matthias to thank you and discuss anything of interest to you",
@@ -132,9 +134,20 @@ export default async function JoinPage() {
                     </ul>
                   </div>
                 )}
-                <button className="btn-primary mt-10 w-full">
-                  {tier.ctaLabel ?? `Join as ${tier.name}`} <span className="font-serif">→</span>
-                </button>
+                {tier.ctaHref ? (
+                  <a
+                    href={tier.ctaHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary mt-10 w-full"
+                  >
+                    {tier.ctaLabel ?? `Join as ${tier.name}`} <span className="font-serif">→</span>
+                  </a>
+                ) : (
+                  <button className="btn-primary mt-10 w-full">
+                    {tier.ctaLabel ?? `Join as ${tier.name}`} <span className="font-serif">→</span>
+                  </button>
+                )}
               </div>
             ))}
           </div>
