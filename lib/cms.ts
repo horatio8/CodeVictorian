@@ -139,6 +139,7 @@ export type JoinPage = {
     subsectionTitle?: string
     subsectionItems?: string[]
     ctaLabel?: string
+    ctaHref?: string
   }>
 }
 

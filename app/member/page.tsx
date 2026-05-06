@@ -1,5 +1,4 @@
 import Link from "next/link"
-import MemberApplyForm from "./MemberApplyForm"
 import { getMemberPage } from "@/lib/cms"
 
 export const metadata = {
@@ -51,7 +50,7 @@ export default async function MemberPage() {
           </h1>
           <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link href="#join" className="btn-primary">
+            <Link href="/join" className="btn-primary">
               Join the Community <span className="font-serif">→</span>
             </Link>
             <Link href="/join" className="btn-secondary">
@@ -130,40 +129,6 @@ export default async function MemberPage() {
         </div>
       </section>
 
-      {/* Join form */}
-      <section id="join" className="section-padding bg-cream">
-        <div className="mx-auto max-w-2xl">
-          <div className="sec-num">
-            <span className="num">N<sup>o</sup>. II</span>
-            <span className="line" />
-            <span className="label">Join the Community</span>
-          </div>
-
-          <div className="text-center">
-            <span className="eyebrow eyebrow-both">Apply for Membership</span>
-            <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl">
-              Join{" "}
-              <span className="italic font-normal text-gold-400">Europe First</span>.
-            </h2>
-            <p className="lede mt-6">
-              Free to apply. Membership is approved by referral or after a short
-              correspondence.
-            </p>
-          </div>
-
-          <div className="mt-12 ornament border border-gold-400/40 bg-ivory p-8 sm:p-12">
-            <MemberApplyForm />
-          </div>
-
-          <p className="mt-10 text-center text-base text-navy-800/70">
-            Looking for paid patronage tiers?{" "}
-            <Link href="/join" className="text-gold-600 underline underline-offset-2">
-              See membership tiers
-            </Link>
-            .
-          </p>
-        </div>
-      </section>
     </>
   )
 }

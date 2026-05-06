@@ -263,6 +263,7 @@ export const SCHEMAS: DocumentSchema[] = [
           },
           subsectionItems: { type: "stringList", label: "Subsection bullets", itemLabel: "Bullet" },
           ctaLabel: { type: "text", label: "Button label (defaults to \"Join as <name>\")" },
+          ctaHref: { type: "text", label: "Button link (e.g. https://whop.com/…). Opens in new tab if external." },
         },
       },
     },
