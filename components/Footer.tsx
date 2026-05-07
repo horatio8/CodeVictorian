@@ -5,7 +5,6 @@ import {
   Facebook,
   Twitter,
   Instagram,
-  Youtube,
   MapPin,
 } from "lucide-react"
 
@@ -33,10 +32,9 @@ const footerLinks = {
 }
 
 const socialLinks = [
-  { href: "#", icon: Facebook, label: "Facebook" },
-  { href: "#", icon: Twitter, label: "X (Twitter)" },
-  { href: "#", icon: Instagram, label: "Instagram" },
-  { href: "#", icon: Youtube, label: "YouTube" },
+  { href: "https://www.facebook.com/profile.php?id=61586654893617", icon: Facebook, label: "Facebook" },
+  { href: "https://x.com/CodeVictorian", icon: Twitter, label: "X (Twitter)" },
+  { href: "https://www.instagram.com/codevictorian/", icon: Instagram, label: "Instagram" },
 ]
 
 export default function Footer() {
@@ -99,6 +97,8 @@ export default function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex h-9 w-9 items-center justify-center border border-gold-400/40 text-white/70 transition-colors duration-200 hover:bg-gold-400 hover:text-navy-900 hover:border-gold-400"
                 >
                   <Icon className="h-4 w-4" />
