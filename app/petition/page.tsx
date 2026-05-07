@@ -11,21 +11,21 @@ import { getPetitionPage } from "@/lib/cms"
 const FALLBACK_DEMANDS: { roman: string; title: string; body: string }[] = [
   {
     roman: "I",
-    title: "Enforce existing deportation orders",
+    title: "Officially acknowledge that European countries belong to their native European peoples.",
     body:
-      "Immediately execute the over 1.2 million pending deportation orders across the EU, ending the policy of de facto amnesty through non-enforcement.",
+      "Affirm the right of native European populations to remain the demographic and cultural majority in the nations their ancestors built and passed down throughout generations.",
   },
   {
     roman: "II",
-    title: "Reform the immigration system",
+    title: "Immediately terminate all non-Western, non-contributing immigration.",
     body:
-      "Enforce strict borders of the EU. Close loopholes that allow systematic abuse. Implement offshore processing centres for all new asylum seekers outside EU territory.",
+      "Mass immigration from incompatible cultures is accelerating the replacement of native Europeans, overwhelming public services, and creating deep social divisions. We must stop this now and focus on repairing the serious damage already caused.",
   },
   {
     roman: "III",
-    title: "Establish a remigration framework",
+    title: "Establish a comprehensive mass remigration program.",
     body:
-      "Develop and implement transparent remigration policies across all EU member states.",
+      "Even with net-zero immigration, native Europeans remain on track to become replaced. It is crucial to establish a framework for deporting criminal and illegal migrants by force, and incentivising immigrants to remigrate to their countries of origin.",
   },
 ]
 
