@@ -1,58 +1,58 @@
-// Simple username/password admin auth for /admin.
-// Credentials come from ADMIN_USERNAME / ADMIN_PASSWORD env vars; if unset,
-// the demo defaults below are used so the login flow works out of the box.
-//
-// CHANGE BOTH BEFORE GOING TO LIVE TRAFFIC. Set ADMIN_USERNAME and
-// ADMIN_PASSWORD on Vercel and redeploy — the env values override the
-// defaults here without any code change.
+// Helpers for /admin auth. Keep in one file so we never accidentally hit
+// the database from a route that should redirect to login first.
 
 import { cookies } from "next/headers"
+import { createServerClient } from "@supabase/ssr"
+import { adminClient, isSupabaseConfigured } from "./supabase"
 
-const DEFAULT_USERNAME = "admin"
-const DEFAULT_PASSWORD = "CodeVictorian2026"
-
-const SESSION_COOKIE = "cv_admin_session"
-const SESSION_VALUE = "ok"
-const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7 // 7 days
-
-function adminUsername(): string {
-  return process.env.ADMIN_USERNAME || DEFAULT_USERNAME
-}
-function adminPassword(): string {
-  return process.env.ADMIN_PASSWORD || DEFAULT_PASSWORD
-}
-
-export type AdminSession = {
-  username: string
-}
-
-export async function getAdminSession(): Promise<AdminSession | null> {
+export async function getAuthClient() {
+  if (!isSupabaseConfigured()) return null
   const cookieStore = await cookies()
-  const value = cookieStore.get(SESSION_COOKIE)?.value
-  if (value !== SESSION_VALUE) return null
-  return { username: adminUsername() }
-}
-
-export function checkCredentials(username: string, password: string): boolean {
-  // Constant-time compare not strictly needed for a demo gate, but cheap
-  // and consistent with handling secrets defensively.
-  const u = adminUsername()
-  const p = adminPassword()
-  return username === u && password === p
-}
-
-export async function setSessionCookie() {
-  const cookieStore = await cookies()
-  cookieStore.set(SESSION_COOKIE, SESSION_VALUE, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: SESSION_MAX_AGE_SECONDS,
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  return createServerClient(url, anonKey, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll()
+      },
+      setAll(toSet) {
+        try {
+          toSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options),
+          )
+        } catch {
+          // setAll fails when called from a Server Component render path.
+          // The middleware refresh keeps cookies fresh on subsequent requests.
+        }
+      },
+    },
   })
 }
 
-export async function clearSessionCookie() {
-  const cookieStore = await cookies()
-  cookieStore.delete(SESSION_COOKIE)
+export type AdminSession = {
+  email: string
+  userId: string
+}
+
+// Returns the signed-in admin's session, or null. Verifies both:
+//   1. The cookie carries a valid Supabase session, and
+//   2. The email is present in the cms_admins allowlist.
+export async function getAdminSession(): Promise<AdminSession | null> {
+  const supa = await getAuthClient()
+  if (!supa) return null
+  const {
+    data: { user },
+  } = await supa.auth.getUser()
+  if (!user?.email) return null
+
+  const admin = adminClient()
+  if (!admin) return null
+  const { data, error } = await admin
+    .from("cms_admins")
+    .select("email")
+    .eq("email", user.email.toLowerCase())
+    .maybeSingle()
+  if (error || !data) return null
+
+  return { email: user.email, userId: user.id }
 }
