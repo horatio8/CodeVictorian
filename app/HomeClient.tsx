@@ -177,7 +177,7 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-5 font-mono text-[0.625rem] uppercase tracking-[0.24em] text-white/50 sm:flex-row">
           <span>
             Instagram · 360K <span className="mx-3 inline-block h-1.5 w-1.5 rounded-none bg-gold-400 align-middle" />
-            Facebook · 52K
+            Facebook · 18K
             <span className="mx-3 inline-block h-1.5 w-1.5 rounded-none bg-gold-400 align-middle" />
             Members in XXIV Countries
           </span>
