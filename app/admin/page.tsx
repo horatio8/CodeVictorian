@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { getAdminSession, getAuthClient } from "@/lib/admin-auth"
+import { clearSessionCookie, getAdminSession } from "@/lib/admin-auth"
 import { adminClient } from "@/lib/supabase"
 import { SCHEMAS } from "@/lib/cms-schemas"
 
@@ -8,8 +8,7 @@ export const dynamic = "force-dynamic"
 
 async function signOut() {
   "use server"
-  const supa = await getAuthClient()
-  if (supa) await supa.auth.signOut()
+  await clearSessionCookie()
   redirect("/admin/login")
 }
 
@@ -40,7 +39,7 @@ export default async function AdminDashboard() {
             type="submit"
             className="font-mono text-[0.625rem] uppercase tracking-[0.24em] text-navy-800/60 hover:text-gold-600"
           >
-            Sign out · {session.email}
+            Sign out · {session.username}
           </button>
         </form>
       </div>
