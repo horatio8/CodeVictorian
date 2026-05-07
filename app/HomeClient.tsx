@@ -385,7 +385,7 @@ function NewsSection() {
 }
 
 function DonationSection() {
-  const amounts = [65, 135, 265, 600, 1500]
+  const amounts = [35, 65, 135, 600, 1500]
   const [selected, setSelected] = useState<number | null>(135)
   const [frequency, setFrequency] = useState<"once" | "monthly">("monthly")
 
@@ -422,9 +422,9 @@ function DonationSection() {
             </p>
             <ul className="mt-8 space-y-0 border-y border-gold-400/20">
               {[
+                "€35 prints 250 campaign leaflets for local distribution",
                 "€65 funds distribution of 500 campaign leaflets",
                 "€135 sponsors one local community event",
-                "€265 covers legal research for one policy paper",
                 "€600 supports a regional campaign office for one month",
               ].map((item) => (
                 <li
