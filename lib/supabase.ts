@@ -1,17 +1,14 @@
-// Supabase client factories.
+// Supabase client factories — used purely for the cms_documents data
+// store now. Auth is handled by lib/admin-auth.ts (env-var-backed
+// username/password), so the @supabase/ssr auth helpers were removed.
 //
 // `publicClient()` uses the anon key and is safe in any context — used by
-// page-side fetchers that read CMS documents from the database.
-//
+// page-side fetchers that read CMS documents.
 // `adminClient()` uses the service-role key and bypasses RLS. Only ever
-// imported from server actions or route handlers under /admin or /api/admin.
-// Never imported into a client component or shipped to the browser.
-//
-// `serverActionClient()` is for the auth-aware server-side helpers in /admin
-// pages — it carries the user's cookies so we can read the active session.
+// imported from server actions or route handlers under /admin. Never
+// imported into a client component or shipped to the browser.
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js"
-import { createServerClient, createBrowserClient, type CookieMethodsServer } from "@supabase/ssr"
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL ?? ""
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
@@ -39,16 +36,4 @@ export function adminClient(): SupabaseClient | null {
     auth: { persistSession: false, autoRefreshToken: false },
   })
   return _adminClient
-}
-
-export function browserAuthClient() {
-  if (!isSupabaseConfigured()) {
-    throw new Error("Supabase is not configured")
-  }
-  return createBrowserClient(url, anonKey)
-}
-
-export function serverAuthClient(cookies: CookieMethodsServer) {
-  if (!isSupabaseConfigured()) return null
-  return createServerClient(url, anonKey, { cookies })
 }
