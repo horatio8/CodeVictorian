@@ -32,7 +32,7 @@ async function saveDocument(slug: string, formData: FormData) {
       slug,
       content,
       updated_at: new Date().toISOString(),
-      updated_by: session.username,
+      updated_by: session.email,
     },
     { onConflict: "slug" },
   )
