@@ -502,7 +502,7 @@ function StatusBanner({ banner }: { banner: NonNullable<StatusBanner> }) {
       : null
   return (
     <div className="mb-10 ornament border border-gold-400 bg-gold-50 p-8 text-center">
-      <div className="fleur">✦ ❦ ✦</div>
+      <div className="fleur">✦ ⚜︎ ✦</div>
       <span className="eyebrow eyebrow-both mt-6">Thank you</span>
       <h3 className="mt-5 font-serif text-3xl font-medium">
         Your contribution is{" "}

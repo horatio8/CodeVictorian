@@ -97,7 +97,7 @@ export default async function MemberPage() {
       {/* Expectations + non-expectations */}
       <section className="section-padding bg-ivory border-y border-gold-400/20">
         <div className="mx-auto max-w-5xl">
-          <div className="fleur">✦ ❦ ✦</div>
+          <div className="fleur">✦ ⚜︎ ✦</div>
           <div className="mt-10 grid gap-12 sm:grid-cols-2">
             <div>
               <span className="eyebrow">Expected of a Member</span>

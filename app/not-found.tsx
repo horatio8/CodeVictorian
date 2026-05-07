@@ -28,7 +28,7 @@ export default function NotFound() {
             Sign the Petition
           </Link>
         </div>
-        <div className="fleur mt-16">✦ ❦ ✦</div>
+        <div className="fleur mt-16">✦ ⚜︎ ✦</div>
       </div>
     </section>
   )

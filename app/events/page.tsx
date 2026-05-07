@@ -93,7 +93,7 @@ export default function EventsPage() {
       {/* CTA */}
       <section className="gradient-navy py-24 text-center on-dark">
         <div className="mx-auto max-w-3xl px-6">
-          <div className="fleur">✦ ❦ ✦</div>
+          <div className="fleur">✦ ⚜︎ ✦</div>
           <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl">
             Want to host an{" "}
             <span className="italic font-normal text-gold-400">event</span>?
