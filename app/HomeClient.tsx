@@ -279,7 +279,7 @@ function PetitionCTA() {
   return (
     <section className="relative overflow-hidden bg-navy-900 py-24 lg:py-32 on-dark">
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        <div className="fleur">✦ ❦ ✦</div>
+        <div className="fleur">✦ ⚜︎ ✦</div>
         <span className="eyebrow eyebrow-both mt-6">Take Action</span>
         <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl lg:text-6xl">
           Your{" "}
@@ -529,7 +529,7 @@ function FinalCTA() {
   return (
     <section className="gradient-navy relative overflow-hidden py-24 lg:py-32 on-dark">
       <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-        <div className="fleur">✦ ❦ ✦</div>
+        <div className="fleur">✦ ⚜︎ ✦</div>
         <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl lg:text-6xl">
           The Future of Europe
           <br />

@@ -180,7 +180,7 @@ export default async function IssuesPage() {
       {/* CTA */}
       <section className="section-padding bg-cream text-center">
         <div className="mx-auto max-w-3xl px-6">
-          <div className="fleur">✦ ❦ ✦</div>
+          <div className="fleur">✦ ⚜︎ ✦</div>
           <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl">
             Stand up for these{" "}
             <span className="italic font-normal text-gold-400">issues</span>.

@@ -78,7 +78,7 @@ export default function StorePage() {
           </div>
 
           <div className="mt-16 border border-gold-400/40 bg-ivory p-10 text-center ornament">
-            <div className="fleur">✦ ❦ ✦</div>
+            <div className="fleur">✦ ⚜︎ ✦</div>
             <h3 className="mt-6 font-serif text-3xl font-medium">
               Bulk orders &amp; custom items.
             </h3>
