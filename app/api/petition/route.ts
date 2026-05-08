@@ -20,6 +20,10 @@ type PetitionBody = {
   postcode?: string
   /** ISO-3166-1 alpha-2 from the CALLING_CODES list, or empty */
   country?: string
+  /** ISO from the phone-calling-code dropdown — used as a fallback when
+   *  the residence-country field above is empty (e.g. user didn't touch
+   *  the country dropdown but did pick a phone calling code). */
+  phone_country?: string
   website?: string // honeypot — bots fill this; humans never see it
 }
 
@@ -55,7 +59,17 @@ export async function POST(req: Request) {
   const email = (body.email ?? "").trim().toLowerCase()
   const phone = (body.phone ?? "").trim()
   const postcode = (body.postcode ?? "").trim()
-  const countryIso = (body.country ?? "").trim().toUpperCase()
+  // Residence country (ISO). Falls back to the phone calling-code country
+  // when the user didn't pick one explicitly — better than dropping the
+  // signal entirely. Skip the "XX" Other-country sentinel.
+  const explicitIso = (body.country ?? "").trim().toUpperCase()
+  const phoneIso = (body.phone_country ?? "").trim().toUpperCase()
+  const countryIso =
+    explicitIso && explicitIso !== "XX"
+      ? explicitIso
+      : phoneIso && phoneIso !== "XX"
+        ? phoneIso
+        : ""
   const country = isoToCountryName(countryIso)
 
   if (!first_name) return badRequest("Please enter your first name.")
