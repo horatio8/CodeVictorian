@@ -41,7 +41,7 @@ export default async function PetitionPage() {
     cms?.demands && cms.demands.length > 0 ? cms.demands : FALLBACK_DEMANDS
   const preamble =
     cms?.preamble ??
-    "“We, the undersigned citizens of Europe, call upon the European Parliament, the European Commission, and all national governments of all European countries to:"
+    "“We, the undersigned, call upon the European Parliament, the European Commission, and all national governments of all European countries to:"
   const closing =
     cms?.closing ??
     "Signed by the citizens of Europe and friends of Europe across the free world.”"
