@@ -27,7 +27,7 @@ export default function PetitionForm({
   const [phone, setPhone] = useState("")
   const [phoneCountry, setPhoneCountry] = useState(DEFAULT_CALLING_CODE)
   const [postcode, setPostcode] = useState("")
-  const [countryIso, setCountryIso] = useState("") // optional; ISO from CALLING_CODES
+  const [countryIso, setCountryIso] = useState(DEFAULT_CALLING_CODE) // pre-filled to phone default; user can override
   // Soft-link the residence country to the phone calling code: when the
   // user picks a calling code, mirror it into the country selector below
   // — but only until they manually touch the country dropdown. After that
@@ -68,6 +68,7 @@ export default function PetitionForm({
           last_name: lastName,
           email,
           phone: composePhone(phoneCountry, phone),
+          phone_country: phoneCountry, // server fallback if `country` empty
           postcode,
           country: countryIso, // ISO code; server resolves to a readable name
           website,
