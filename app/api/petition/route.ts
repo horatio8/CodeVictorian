@@ -68,15 +68,24 @@ export async function POST(req: Request) {
   }
 
   // Campaign Nucleus receivers expect application/x-www-form-urlencoded.
-  // Unknown fields are silently ignored by CN; if/when they add a Country
-  // field to the form schema, this will start populating automatically.
+  // Send the country value under several plausible handles so it lands
+  // wherever the CN form actually defines the field. Unknown handles are
+  // silently dropped by CN; matching ones store the value.
   const params = new URLSearchParams()
   params.set("first_name", first_name)
   params.set("last_name", last_name)
   params.set("email", email)
   if (phone) params.set("phone", phone)
   if (postcode) params.set("postcode", postcode)
-  if (country) params.set("country", country)
+  if (country) {
+    params.set("country", country)        // "United Kingdom"
+    params.set("Country", country)        // case variant
+    params.set("country_name", country)
+  }
+  if (countryIso) {
+    params.set("country_iso", countryIso) // "GB"
+    params.set("country_code", countryIso)
+  }
 
   try {
     const res = await fetch(CN_RECEIVER_URL, {
