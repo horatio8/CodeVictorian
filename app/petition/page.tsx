@@ -44,7 +44,7 @@ export default async function PetitionPage() {
     "“We, the undersigned, call upon the European Parliament, the European Commission, and all national governments of all European countries to:"
   const closing =
     cms?.closing ??
-    "Signed by the citizens of Europe and friends of Europe across the free world.”"
+    "Signed by the citizens of Europe and friends of Europe across the Western world.”"
   const showCounter = showSignatureCounter()
   const goal = nextGoal(CURRENT_SIGNATURES)
   const progressPct = Math.min(100, Math.round((CURRENT_SIGNATURES / goal) * 100))
