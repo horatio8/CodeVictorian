@@ -127,6 +127,14 @@ export async function POST(req: Request) {
       cache: "no-store",
     })
 
+    // Log CN's response so we can see in Vercel logs whether the value
+    // actually reached CN (vs being rejected as a duplicate, etc).
+    const responseSnippet = await res.text().catch(() => "<no body>")
+    console.log("[petition←CN]", {
+      status: res.status,
+      bodySnippet: responseSnippet.slice(0, 400),
+    })
+
     // CN typically responds 200 / 204 / 302 on success. Treat any 2xx or 3xx as accepted.
     if (res.ok || (res.status >= 300 && res.status < 400)) {
       // Mirror the signup into ManyChat. Failures here must NOT block
