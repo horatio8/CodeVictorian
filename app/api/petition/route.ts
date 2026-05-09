@@ -101,6 +101,19 @@ export async function POST(req: Request) {
     params.set("country_code", countryIso)
   }
 
+  // Debug: emit what we're forwarding to CN so the operator can see the
+  // exact params in Vercel function logs after a test submission. Doesn't
+  // log PII like the email or phone — only the country fields, which is
+  // what the diagnosis is about.
+  console.log("[petition→CN]", {
+    receivedCountry: explicitIso,
+    receivedPhoneCountry: phoneIso,
+    resolvedIso: countryIso,
+    resolvedName: country,
+    paramsCountry: params.get("country"),
+    paramsCountryCap: params.get("Country"),
+  })
+
   try {
     const res = await fetch(CN_RECEIVER_URL, {
       method: "POST",
