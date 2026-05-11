@@ -199,7 +199,7 @@ export default async function JoinPage() {
           </p>
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link href="/petition" className="btn-primary">Sign the Petition</Link>
-            <Link href="/donate" className="btn-secondary">Make a Donation</Link>
+            <Link href="/donate#donate" className="btn-secondary">Make a Donation</Link>
           </div>
         </div>
       </section>

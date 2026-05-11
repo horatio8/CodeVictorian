@@ -149,7 +149,7 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
               <Link href="/petition" className="btn-primary w-full sm:w-auto">
                 Sign the Petition <span className="font-serif">→</span>
               </Link>
-              <Link href="/donate" className="btn-secondary w-full sm:w-auto">
+              <Link href="/donate#donate" className="btn-secondary w-full sm:w-auto">
                 Support the Cause
               </Link>
             </div>
@@ -393,7 +393,7 @@ function DonationSection() {
     const params = new URLSearchParams()
     if (selected !== null) params.set("amount", String(selected))
     params.set("frequency", frequency)
-    return `/donate?${params.toString()}`
+    return `/donate?${params.toString()}#donate`
   })()
 
   return (

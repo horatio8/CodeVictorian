@@ -190,7 +190,7 @@ export default async function IssuesPage() {
           </p>
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Link href="/petition" className="btn-primary">Sign the Petition</Link>
-            <Link href="/donate" className="btn-secondary">Donate to the Cause</Link>
+            <Link href="/donate#donate" className="btn-secondary">Donate to the Cause</Link>
           </div>
         </div>
       </section>

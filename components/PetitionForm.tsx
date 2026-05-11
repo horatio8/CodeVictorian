@@ -66,7 +66,7 @@ export default function PetitionForm({
       }
       // Keep submitting=true so the button stays disabled during the
       // brief moment between this push and the new page rendering.
-      router.push("/donate")
+      router.push("/donate#donate")
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not submit. Please try again.")
       setSubmitting(false)
