@@ -244,7 +244,7 @@ function DonatePageInner({
       </section>
 
       {/* Donation form */}
-      <section className="section-padding bg-cream">
+      <section id="donate" className="section-padding bg-cream scroll-mt-24">
         <div className="mx-auto max-w-7xl">
           <div className="sec-num">
             <span className="num">N<sup>o</sup>. I</span>

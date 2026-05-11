@@ -31,7 +31,7 @@ export default function MemberApplyForm() {
     if (!sent) return
     router.prefetch("/donate")
     const tick = setInterval(() => setRedirectIn((s) => s - 1), 1000)
-    const go = setTimeout(() => router.push("/donate"), REDIRECT_SECONDS * 1000)
+    const go = setTimeout(() => router.push("/donate#donate"), REDIRECT_SECONDS * 1000)
     return () => {
       clearInterval(tick)
       clearTimeout(go)
@@ -80,7 +80,7 @@ export default function MemberApplyForm() {
           Your application has been received. A member of the Europe First team
           will be in touch shortly.
         </p>
-        <Link href="/donate" className="btn-primary mt-7 w-full">
+        <Link href="/donate#donate" className="btn-primary mt-7 w-full">
           Support the Cause <span className="font-serif">→</span>
         </Link>
         <p

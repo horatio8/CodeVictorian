@@ -219,7 +219,7 @@ export default async function PetitionPage() {
             Signing is the start. Patrons fund the work, members carry it forward.
           </p>
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link href="/donate" className="btn-primary">Support the Cause</Link>
+            <Link href="/donate#donate" className="btn-primary">Support the Cause</Link>
             <Link href="/member" className="btn-secondary">Join Europe First</Link>
           </div>
         </div>
