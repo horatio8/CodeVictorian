@@ -424,8 +424,8 @@ function DonationSection() {
               {[
                 "€35 prints 250 campaign leaflets for local distribution",
                 "€65 funds distribution of 500 campaign leaflets",
-                "€135 sponsors one local community event",
-                "€600 supports a regional campaign office for one month",
+                "€135 supports a campaign post on social media",
+                "€600 supports attendance at a conference or summit",
               ].map((item) => (
                 <li
                   key={item}

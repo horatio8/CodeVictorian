@@ -16,16 +16,16 @@ const impact: Record<Currency, { amount: string; desc: string }[]> = {
   EUR: [
     { amount: "€35",     desc: "Prints 250 campaign leaflets for local distribution" },
     { amount: "€65",     desc: "Distributes 500 campaign leaflets across a city" },
-    { amount: "€135",    desc: "Sponsors one local community awareness event" },
-    { amount: "€600",    desc: "Supports a regional campaign office for one month" },
-    { amount: "€1,500",  desc: "Sponsors a full delegation to the European Heritage Summit" },
+    { amount: "€135",    desc: "Supports a campaign post on social media" },
+    { amount: "€600",    desc: "Supports attendance at a conference or summit" },
+    { amount: "€1,500",  desc: "Sponsors an entire content campaign trip to a European city" },
   ],
   USD: [
     { amount: "$40",     desc: "Prints 250 campaign leaflets for local distribution" },
     { amount: "$70",     desc: "Distributes 500 campaign leaflets across a city" },
-    { amount: "$145",    desc: "Sponsors one local community awareness event" },
-    { amount: "$650",    desc: "Supports a regional campaign office for one month" },
-    { amount: "$1,600",  desc: "Sponsors a full delegation to the European Heritage Summit" },
+    { amount: "$145",    desc: "Supports a campaign post on social media" },
+    { amount: "$650",    desc: "Supports attendance at a conference or summit" },
+    { amount: "$1,600",  desc: "Sponsors an entire content campaign trip to a European city" },
   ],
 }
 
