@@ -168,36 +168,41 @@ export default function Header() {
       onClick={() => setMobileOpen(false)}
       aria-hidden={!mobileOpen}
     >
-        <nav className="flex h-full flex-col items-center justify-center gap-1 px-6 pt-20">
+        <nav className="flex h-full flex-col items-center justify-start gap-3 overflow-y-auto px-6 pt-24 pb-10">
           {navLinks.map((link) =>
             link.children ? (
-              <div key={link.label} className="flex flex-col items-center">
-                <span className="mb-2 text-[0.625rem] font-medium uppercase tracking-[0.28em] text-gold-400">
+              <div
+                key={link.label}
+                className="my-2 w-full max-w-xs border border-gold-400/30 bg-navy-800/40 px-5 py-4"
+              >
+                <div className="mb-3 text-center font-mono text-[0.6875rem] font-medium uppercase tracking-[0.28em] text-gold-400">
                   {link.label}
-                </span>
-                {link.children.map((child) => (
-                  <Link
-                    key={child.href}
-                    href={child.href}
-                    className="py-1.5 font-lede text-lg text-white/80 transition-colors hover:text-gold-400"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {child.label}
-                  </Link>
-                ))}
+                </div>
+                <div className="flex flex-col divide-y divide-gold-400/15 border-y border-gold-400/15">
+                  {link.children.map((child) => (
+                    <Link
+                      key={child.href}
+                      href={child.href}
+                      className="py-3 text-center font-serif italic text-lg text-white/85 transition-colors hover:text-gold-400"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {child.label}
+                    </Link>
+                  ))}
+                </div>
               </div>
             ) : (
               <Link
                 key={link.href}
                 href={link.href!}
-                className="py-2 font-serif text-2xl text-white transition-colors hover:text-gold-400"
+                className="py-1 font-serif text-3xl text-white transition-colors hover:text-gold-400"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </Link>
             )
           )}
-          <div className="mt-8 flex flex-col items-center gap-3">
+          <div className="mt-6 flex flex-col items-center gap-3">
             <Link
               href="/petition"
               className="btn-primary"
