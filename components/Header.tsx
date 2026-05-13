@@ -21,13 +21,20 @@ const navLinks = [
       { href: "/join", label: "Membership Tiers" },
     ],
   },
-  { href: "/contact", label: "Contact" },
+  {
+    label: "Contact",
+    children: [
+      { href: "/contact", label: "Contact Us" },
+      { href: "/request-speaker", label: "Request a Speaker" },
+    ],
+  },
 ]
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+  // Keyed so multiple dropdowns can coexist; only one open at a time.
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -90,16 +97,16 @@ export default function Header() {
                 <div
                   key={link.label}
                   className="relative"
-                  onMouseEnter={() => setDropdownOpen(true)}
-                  onMouseLeave={() => setDropdownOpen(false)}
+                  onMouseEnter={() => setOpenDropdown(link.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
                   <button className="flex items-center gap-1 px-4 py-2 text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-gold-400">
                     {link.label}
-                    <ChevronDown className={`h-3 w-3 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown className={`h-3 w-3 transition-transform ${openDropdown === link.label ? "rotate-180" : ""}`} />
                   </button>
                   <div
                     className={`absolute left-0 top-full pt-2 transition-all duration-200 ${
-                      dropdownOpen
+                      openDropdown === link.label
                         ? "pointer-events-auto translate-y-0 opacity-100"
                         : "pointer-events-none -translate-y-1 opacity-0"
                     }`}
