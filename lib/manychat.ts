@@ -43,13 +43,14 @@ async function call(path: string, body: unknown): Promise<unknown> {
   return res.json()
 }
 
-export type ManyChatSource = "petition" | "volunteer" | "contact" | "member"
+export type ManyChatSource = "petition" | "volunteer" | "contact" | "member" | "speaker"
 
 const TAG_PER_SOURCE: Record<ManyChatSource, string> = {
   petition: "petition-signer",
   volunteer: "volunteer-applicant",
   contact: "contact-enquirer",
   member: "member-applicant",
+  speaker: "speaker-request",
 }
 
 const FLOW_NS_ENV: Record<ManyChatSource, string> = {
@@ -57,6 +58,7 @@ const FLOW_NS_ENV: Record<ManyChatSource, string> = {
   volunteer: "MANYCHAT_VOLUNTEER_FLOW_NS",
   contact: "MANYCHAT_CONTACT_FLOW_NS",
   member: "MANYCHAT_MEMBER_FLOW_NS",
+  speaker: "MANYCHAT_SPEAKER_FLOW_NS",
 }
 
 export type ManyChatInput = {
