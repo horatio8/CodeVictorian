@@ -106,6 +106,15 @@ function DonatePageInner({
     return null
   })
 
+  // Always scroll the donation block into view on mount — every visitor
+  // lands directly on the form, whether they arrived via flow redirect,
+  // nav, or footer link. Instant scroll keeps the page feeling like it
+  // loaded centered on the form rather than animating from the hero.
+  useEffect(() => {
+    const el = document.getElementById("donate")
+    if (el) el.scrollIntoView({ behavior: "instant" as ScrollBehavior, block: "start" })
+  }, [])
+
   // After Stripe redirects with ?status=success&session_id=…, verify the
   // session was actually paid before showing the thank-you state.
   useEffect(() => {
