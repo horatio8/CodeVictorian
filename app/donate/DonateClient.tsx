@@ -3,7 +3,6 @@
 import { useState, useMemo, useEffect, Suspense } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { CheckCircle } from "lucide-react"
 import {
   PRESET_AMOUNTS,
   SUPPORTED_CURRENCIES,
@@ -433,25 +432,6 @@ function DonatePageInner({
                           {item.amount}
                         </span>
                         <span className="text-sm leading-relaxed text-navy-800/75">{item.desc}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="border border-gold-400/30 bg-ivory p-8">
-                  <span className="eyebrow">Transparency Promise</span>
-                  <ul className="mt-6 space-y-4">
-                    {(cms?.transparencyPromise && cms.transparencyPromise.length > 0
-                      ? cms.transparencyPromise
-                      : [
-                          "Annual audited financial reports published online",
-                          "Donor funds ring-fenced for campaign activities",
-                          "Full compliance with EU electoral finance regulations",
-                          "Tax-deductible where applicable under national law",
-                        ]).map((item) => (
-                      <li key={item} className="flex items-start gap-3 text-sm text-navy-800/75">
-                        <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" />
-                        {item}
                       </li>
                     ))}
                   </ul>
