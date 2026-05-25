@@ -1,8 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import PhoneField from "@/components/PhoneField"
 import { DEFAULT_CALLING_CODE, composePhone } from "@/lib/calling-codes"
 
@@ -27,20 +26,6 @@ export default function VolunteerForm({ roles }: { roles: Role[] }) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [sent, setSent] = useState(false)
-
-  const router = useRouter()
-  const REDIRECT_SECONDS = 4
-  const [redirectIn, setRedirectIn] = useState(REDIRECT_SECONDS)
-  useEffect(() => {
-    if (!sent) return
-    router.prefetch("/donate")
-    const tick = setInterval(() => setRedirectIn((s) => s - 1), 1000)
-    const go = setTimeout(() => router.push("/donate#donate"), REDIRECT_SECONDS * 1000)
-    return () => {
-      clearInterval(tick)
-      clearTimeout(go)
-    }
-  }, [sent, router])
 
   function toggleRole(title: string) {
     setSelectedRoles((prev) =>
@@ -81,26 +66,24 @@ export default function VolunteerForm({ roles }: { roles: Role[] }) {
   }
 
   if (sent) {
-    const seconds = Math.max(0, redirectIn)
     return (
-      <div className="mt-14 border border-gold-400/40 bg-ivory p-10">
-        <span className="eyebrow">Submitted</span>
+      <div className="mt-14 border border-gold-400/40 bg-ivory p-10 text-center">
+        <span className="eyebrow">Application Received</span>
         <h3 className="mt-4 font-serif text-2xl font-medium">
           Thank you, {firstName || "friend"}.
         </h3>
         <p className="mt-3 text-sm text-navy-800/70">
-          Your application has been received. A volunteer coordinator will be
-          in touch within a few days.
+          Your volunteer application has been received. A coordinator will be
+          in touch within a few days to discuss your interests and availability.
         </p>
-        <Link href="/donate#donate" className="btn-primary mt-7 w-full">
-          Support the Cause <span className="font-serif">→</span>
-        </Link>
-        <p
-          className="mt-5 text-center font-mono text-[0.625rem] uppercase tracking-[0.24em] text-navy-800/60"
-          aria-live="polite"
-        >
-          {seconds > 0 ? `Redirecting to donate in ${seconds}…` : "Redirecting…"}
-        </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <Link href="/petition" className="btn-primary">
+            Sign the Petition <span className="font-serif">→</span>
+          </Link>
+          <Link href="/donate#donate" className="btn-secondary">
+            Support the Cause <span className="font-serif">→</span>
+          </Link>
+        </div>
       </div>
     )
   }
