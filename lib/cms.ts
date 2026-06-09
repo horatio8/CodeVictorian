@@ -1,36 +1,12 @@
-// Server-side helpers that fetch each CMS singleton from Supabase.
-// Every helper falls back to `null` when Supabase isn't configured or
-// returns nothing, so pages can use `cms ?? FALLBACK` and never throw.
+// Stub CMS layer.
+//
+// Public pages call `await getHomePage()` etc. and use the result via
+// `cms?.field ?? "fallback"`, so a null return is harmless and the
+// hard-coded fallback copy renders. This file exists only to preserve
+// that import surface — there's no backing store. Reintroduce real
+// fetching here if/when a CMS gets added back.
 
-import { unstable_cache, revalidateTag } from "next/cache"
-import { publicClient } from "./supabase"
-
-async function fetchDocument<T>(slug: string): Promise<T | null> {
-  const supa = publicClient()
-  if (!supa) return null
-  const { data, error } = await supa
-    .from("cms_documents")
-    .select("content")
-    .eq("slug", slug)
-    .maybeSingle()
-  if (error || !data) return null
-  return (data.content ?? null) as T | null
-}
-
-// Cache each document for 60 seconds, tagged so server actions can punch
-// the cache the moment an editor publishes a change.
-function cachedDocument<T>(slug: string) {
-  return unstable_cache(
-    async () => fetchDocument<T>(slug),
-    [`cms:${slug}`],
-    { tags: [`cms:${slug}`], revalidate: 60 },
-  )
-}
-
-// Helper used by the admin save action.
-export function invalidateDocument(slug: string) {
-  revalidateTag(`cms:${slug}`)
-}
+const nullPage = <T>(): Promise<T | null> => Promise.resolve(null)
 
 export type SiteSettings = {
   brandName?: string
@@ -44,16 +20,14 @@ export type SiteSettings = {
   footerCopyright?: string
   footerDisclaimer?: string
 }
-
-export const getSiteSettings = cachedDocument<SiteSettings>("siteSettings")
+export const getSiteSettings = () => nullPage<SiteSettings>()
 
 export type HomePage = {
   heroEyebrow?: string
   heroHeadlineLines?: Array<{ text?: string; italic?: boolean }>
   heroLede?: string
 }
-
-export const getHomePage = cachedDocument<HomePage>("homePage")
+export const getHomePage = () => nullPage<HomePage>()
 
 export type PetitionPage = {
   heroEyebrow?: string
@@ -63,8 +37,7 @@ export type PetitionPage = {
   preamble?: string
   closing?: string
 }
-
-export const getPetitionPage = cachedDocument<PetitionPage>("petitionPage")
+export const getPetitionPage = () => nullPage<PetitionPage>()
 
 export type IssuesPage = {
   heroEyebrow?: string
@@ -80,8 +53,7 @@ export type IssuesPage = {
   }>
   additionalPriorities?: Array<{ roman?: string; title?: string; desc?: string }>
 }
-
-export const getIssuesPage = cachedDocument<IssuesPage>("issuesPage")
+export const getIssuesPage = () => nullPage<IssuesPage>()
 
 export type AboutPage = {
   heroEyebrow?: string
@@ -97,8 +69,7 @@ export type AboutPage = {
   values?: Array<{ roman?: string; title?: string; text?: string }>
   timeline?: Array<{ date?: string; short?: string; title?: string; desc?: string }>
 }
-
-export const getAboutPage = cachedDocument<AboutPage>("aboutPage")
+export const getAboutPage = () => nullPage<AboutPage>()
 
 export type DonatePage = {
   heroEyebrow?: string
@@ -108,8 +79,7 @@ export type DonatePage = {
   transparencyPromise?: string[]
   stripeProductDescription?: string
 }
-
-export const getDonatePage = cachedDocument<DonatePage>("donatePage")
+export const getDonatePage = () => nullPage<DonatePage>()
 
 export type MemberPage = {
   heroEyebrow?: string
@@ -120,8 +90,7 @@ export type MemberPage = {
   expectations?: string[]
   notExpected?: string
 }
-
-export const getMemberPage = cachedDocument<MemberPage>("memberPage")
+export const getMemberPage = () => nullPage<MemberPage>()
 
 export type JoinPage = {
   heroEyebrow?: string
@@ -142,8 +111,7 @@ export type JoinPage = {
     ctaHref?: string
   }>
 }
-
-export const getJoinPage = cachedDocument<JoinPage>("joinPage")
+export const getJoinPage = () => nullPage<JoinPage>()
 
 export type VolunteerPage = {
   heroEyebrow?: string
@@ -152,8 +120,7 @@ export type VolunteerPage = {
   heroLede?: string
   roles?: Array<{ roman?: string; title?: string; desc?: string; commitment?: string }>
 }
-
-export const getVolunteerPage = cachedDocument<VolunteerPage>("volunteerPage")
+export const getVolunteerPage = () => nullPage<VolunteerPage>()
 
 export type ContactPage = {
   heroEyebrow?: string
@@ -164,8 +131,7 @@ export type ContactPage = {
   subjectOptions?: string[]
   quickLinks?: Array<{ label?: string; href?: string }>
 }
-
-export const getContactPage = cachedDocument<ContactPage>("contactPage")
+export const getContactPage = () => nullPage<ContactPage>()
 
 export type PrivacyPage = {
   heroEyebrow?: string
@@ -182,5 +148,4 @@ export type PrivacyPage = {
   calloutHeadline?: string
   calloutBody?: string
 }
-
-export const getPrivacyPage = cachedDocument<PrivacyPage>("privacyPage")
+export const getPrivacyPage = () => nullPage<PrivacyPage>()

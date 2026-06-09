@@ -7,7 +7,7 @@ import CookieConsent from "@/components/CookieConsent"
 
 // Routes that should render with no global nav / footer / overlays —
 // "clean landing pages" used for paid/social promotion.
-const NAKED_ROUTES = ["/remigration", "/admin"] as const
+const NAKED_ROUTES = ["/remigration"] as const
 
 function isNakedRoute(pathname: string | null): boolean {
   if (!pathname) return false
