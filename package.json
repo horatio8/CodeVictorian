@@ -10,8 +10,6 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.164",
-    "@supabase/ssr": "^0.10.2",
-    "@supabase/supabase-js": "^2.105.1",
     "ai": "^6.0.162",
     "lucide-react": "^0.468.0",
     "motion": "^12.38.0",
