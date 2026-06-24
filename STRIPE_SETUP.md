@@ -153,7 +153,7 @@ Any future expiry date, any CVC, any postcode/ZIP.
 ## What's logged by the webhook today
 
 Right now `/api/stripe-webhook` only **logs** events — there's no
-database write or downstream sync (no Supabase, no Campaign Nucleus
-donor receiver). The Stripe dashboard remains the system of record.
-The handler has clear hooks (search the file for "Hook for future …
-sync goes here") for adding a CN POST or a Supabase insert when ready.
+database write or downstream sync (no Campaign Nucleus donor
+receiver). The Stripe dashboard remains the system of record. The
+handler has a clear hook (search the file for "Hook for future …
+sync goes here") for adding a CN POST when ready.
