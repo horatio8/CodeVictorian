@@ -78,7 +78,7 @@ export async function POST(req: Request) {
           payment_status: session.payment_status,
           metadata: session.metadata,
         })
-        // Hook for future Campaign Nucleus / Supabase sync goes here.
+        // Hook for future Campaign Nucleus sync goes here.
         // For now we just log — Stripe Dashboard remains the system of record.
         break
       }
