@@ -24,7 +24,7 @@ const FALLBACK_TIERS: Tier[] = [
   },
   {
     roman: "II.",
-    name: "CV Europe First Founder Lifelong Access",
+    name: "CV Europe First Lifelong Access",
     price: "€499.99",
     priceWas: "€749.99",
     period: "One-time",
