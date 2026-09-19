@@ -9,7 +9,7 @@ type Tier = NonNullable<JoinPage["tiers"]>[number]
 const FALLBACK_TIERS: Tier[] = [
   {
     roman: "I.",
-    name: "CV Europe First Founder",
+    name: "CV Europe First",
     price: "€9.99",
     priceWas: "€14.99",
     period: "p/m",
@@ -20,13 +20,6 @@ const FALLBACK_TIERS: Tier[] = [
       "Full access to the Europe First Discord group chats",
       "Connect with Matthias and other nationalist activists",
       "Expand your network with like-minded people across the West",
-    ],
-    subsectionTitle: "Founder Privileges (First 1000 members only)",
-    subsectionItems: [
-      "Permanently reduced membership fee",
-      "Discounts on all future offerings by The Code Victorian Foundation",
-      "Direct influence on the course of action through voting",
-      "The weekly Europe First Livestream with Matthias",
     ],
   },
   {
