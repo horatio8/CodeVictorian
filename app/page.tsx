@@ -1,15 +1,10 @@
-import HomeClient from "./HomeClient"
-import { getHomePage } from "@/lib/cms"
-
-export default async function HomePage() {
-  const cms = await getHomePage()
+// Temporary placeholder homepage. The full homepage lives in ./HomeClient —
+// restore it by rendering <HomeClient cms={...} /> here again (see git history)
+// and removing "/" from NAKED_EXACT_ROUTES in components/SiteChrome.tsx.
+export default function HomePage() {
   return (
-    <HomeClient
-      cms={{
-        heroEyebrow: cms?.heroEyebrow,
-        heroHeadlineLines: cms?.heroHeadlineLines,
-        heroLede: cms?.heroLede,
-      }}
-    />
+    <div className="flex min-h-screen items-center justify-center px-6 text-center">
+      <p className="font-serif text-3xl font-medium sm:text-4xl">New homepage coming soon</p>
+    </div>
   )
 }
