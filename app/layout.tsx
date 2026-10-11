@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     template: "%s | Code Victorian",
   },
   description:
-    "A movement dedicated to preserving European heritage, culture, and identity. Sign our petition and join the cause.",
+    "A movement dedicated to preserving European heritage, culture, and identity. Support the foundation and join Europe First.",
   metadataBase: new URL("https://codevictorian.com"),
   openGraph: {
     type: "website",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { EUROPE_FIRST_URL } from "@/lib/site"
 import Link from "next/link"
 import { getAboutPage } from "@/lib/cms"
 
@@ -94,8 +95,8 @@ export default async function AboutPage() {
           ))}
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <Link href="/petition" className="btn-primary">Sign Our Petition</Link>
-            <Link href="/member" className="btn-secondary">Join Europe First</Link>
+            <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Join Europe First</a>
+            <Link href="/donate#donate" className="btn-secondary">Support the Foundation</Link>
           </div>
         </div>
       </section>
@@ -209,11 +210,11 @@ export default async function AboutPage() {
             <span className="italic font-normal text-gold-400">cause</span>?
           </h2>
           <p className="lede mx-auto mt-5 max-w-xl">
-            Sign the petition, support the work, then join Europe First.
+            Support the foundation, then join Europe First.
           </p>
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link href="/petition" className="btn-primary">Sign the Petition</Link>
-            <Link href="/member" className="btn-secondary">Join Europe First</Link>
+            <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Join Europe First</a>
+            <Link href="/donate#donate" className="btn-secondary">Support the Foundation</Link>
           </div>
         </div>
       </section>

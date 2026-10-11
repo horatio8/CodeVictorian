@@ -25,7 +25,6 @@ const FALLBACK_SUBJECTS = [
 const FALLBACK_QUICK_LINKS = [
   { href: "/volunteer", label: "Volunteer with us" },
   { href: "/donate", label: "Make a donation" },
-  { href: "/petition", label: "Sign the petition" },
   { href: "/privacy#rights", label: "Data subject rights (GDPR)" },
 ]
 

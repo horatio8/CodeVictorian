@@ -77,10 +77,7 @@ export default function VolunteerForm({ roles }: { roles: Role[] }) {
           in touch within a few days to discuss your interests and availability.
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <Link href="/petition" className="btn-primary">
-            Sign the Petition <span className="font-serif">→</span>
-          </Link>
-          <Link href="/donate#donate" className="btn-secondary">
+          <Link href="/donate#donate" className="btn-primary">
             Support the Cause <span className="font-serif">→</span>
           </Link>
         </div>
