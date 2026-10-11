@@ -1,6 +1,6 @@
 // ManyChat Public API helper.
 //
-// Used by the petition / volunteer / contact form handlers to push signups
+// Used by the newsletter / volunteer / contact form handlers to push signups
 // into the Matthias Victorian ManyChat account so the campaign can DM,
 // segment, and broadcast to them via Email + Instagram + Messenger.
 //
@@ -43,22 +43,18 @@ async function call(path: string, body: unknown): Promise<unknown> {
   return res.json()
 }
 
-export type ManyChatSource = "petition" | "volunteer" | "contact" | "member" | "speaker"
+export type ManyChatSource = "newsletter" | "volunteer" | "contact"
 
 const TAG_PER_SOURCE: Record<ManyChatSource, string> = {
-  petition: "petition-signer",
+  newsletter: "newsletter-subscriber",
   volunteer: "volunteer-applicant",
   contact: "contact-enquirer",
-  member: "member-applicant",
-  speaker: "speaker-request",
 }
 
 const FLOW_NS_ENV: Record<ManyChatSource, string> = {
-  petition: "MANYCHAT_PETITION_FLOW_NS",
+  newsletter: "MANYCHAT_NEWSLETTER_FLOW_NS",
   volunteer: "MANYCHAT_VOLUNTEER_FLOW_NS",
   contact: "MANYCHAT_CONTACT_FLOW_NS",
-  member: "MANYCHAT_MEMBER_FLOW_NS",
-  speaker: "MANYCHAT_SPEAKER_FLOW_NS",
 }
 
 export type ManyChatInput = {

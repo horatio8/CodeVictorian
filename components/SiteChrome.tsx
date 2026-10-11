@@ -7,7 +7,7 @@ import CookieConsent from "@/components/CookieConsent"
 
 // Routes that should render with no global nav / footer / overlays —
 // "clean landing pages" used for paid/social promotion.
-const NAKED_ROUTES = ["/remigration"] as const
+const NAKED_ROUTES: readonly string[] = []
 // Exact-match only (no sub-paths) — "/" is the temporary placeholder homepage.
 const NAKED_EXACT_ROUTES = ["/"] as const
 

@@ -3,31 +3,23 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
+import { EUROPE_FIRST_URL } from "@/lib/site"
 
 // Per the Apr 23 client brief: hide Events / Media / Store from nav for now.
 // Apr 28: also hide Updates until the monthly newsletter archive is ready.
 // "News" was renamed to "Updates" and points at the new /updates route
 // when re-enabled. The membership entry now points at /member.
-const navLinks = [
+type NavLink = {
+  href?: string
+  label: string
+  children?: { href: string; label: string }[]
+}
+
+const navLinks: NavLink[] = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/issues", label: "Issues" },
-  {
-    label: "Get Involved",
-    children: [
-      { href: "/petition", label: "Sign the Petition" },
-      { href: "/volunteer", label: "Volunteer" },
-      { href: "/member", label: "Europe First" },
-      { href: "/join", label: "Membership Tiers" },
-    ],
-  },
-  {
-    label: "Contact",
-    children: [
-      { href: "/contact", label: "Contact Us" },
-      { href: "/request-speaker", label: "Request a Speaker" },
-    ],
-  },
+  { href: "/volunteer", label: "Volunteer" },
+  { href: "/contact", label: "Contact" },
 ]
 
 export default function Header() {
@@ -138,6 +130,15 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden items-center gap-3 lg:flex">
+            <a
+              href={EUROPE_FIRST_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary"
+              style={{ padding: "10px 20px", fontSize: "10px", fontWeight: 700 }}
+            >
+              Join Europe First
+            </a>
             <Link
               href="/donate"
               className="btn-primary"
@@ -210,13 +211,15 @@ export default function Header() {
             )
           )}
           <div className="mt-6 flex flex-col items-center gap-3">
-            <Link
-              href="/petition"
+            <a
+              href={EUROPE_FIRST_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary"
               onClick={() => setMobileOpen(false)}
             >
-              Sign the Petition
-            </Link>
+              Join Europe First
+            </a>
             <Link
               href="/donate"
               className="btn-secondary"

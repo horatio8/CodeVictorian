@@ -115,11 +115,10 @@ export default async function VolunteerPage() {
             <span className="italic font-normal text-gold-400">help</span>?
           </h2>
           <p className="lede mx-auto mt-5 max-w-xl">
-            Every contribution matters, whether it&rsquo;s your signature, your donation, or your time.
+            Every contribution matters, whether it&rsquo;s your donation or your time.
           </p>
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <Link href="/petition" className="btn-primary">Sign the Petition</Link>
-            <Link href="/donate#donate" className="btn-secondary">Donate</Link>
+            <Link href="/donate#donate" className="btn-primary">Donate</Link>
           </div>
         </div>
       </section>

@@ -29,32 +29,6 @@ export type HomePage = {
 }
 export const getHomePage = () => nullPage<HomePage>()
 
-export type PetitionPage = {
-  heroEyebrow?: string
-  heroHeadline?: string
-  heroLede?: string
-  demands?: Array<{ roman?: string; title?: string; body?: string }>
-  preamble?: string
-  closing?: string
-}
-export const getPetitionPage = () => nullPage<PetitionPage>()
-
-export type IssuesPage = {
-  heroEyebrow?: string
-  heroHeadline?: string
-  heroItalicWord?: string
-  heroLede?: string
-  mainIssues?: Array<{
-    id?: string
-    title?: string
-    subtitle?: string
-    paragraphs?: string[]
-    stats?: Array<{ value?: string; label?: string }>
-  }>
-  additionalPriorities?: Array<{ roman?: string; title?: string; desc?: string }>
-}
-export const getIssuesPage = () => nullPage<IssuesPage>()
-
 export type AboutPage = {
   heroEyebrow?: string
   heroHeadline?: string
@@ -80,38 +54,6 @@ export type DonatePage = {
   stripeProductDescription?: string
 }
 export const getDonatePage = () => nullPage<DonatePage>()
-
-export type MemberPage = {
-  heroEyebrow?: string
-  heroHeadline?: string
-  heroItalicWord?: string
-  heroLede?: string
-  principles?: Array<{ roman?: string; title?: string; desc?: string }>
-  expectations?: string[]
-  notExpected?: string
-}
-export const getMemberPage = () => nullPage<MemberPage>()
-
-export type JoinPage = {
-  heroEyebrow?: string
-  heroHeadline?: string
-  heroItalicWord?: string
-  heroLede?: string
-  tiers?: Array<{
-    roman?: string
-    name?: string
-    price?: string
-    priceWas?: string
-    period?: string
-    popular?: boolean
-    features?: string[]
-    subsectionTitle?: string
-    subsectionItems?: string[]
-    ctaLabel?: string
-    ctaHref?: string
-  }>
-}
-export const getJoinPage = () => nullPage<JoinPage>()
 
 export type VolunteerPage = {
   heroEyebrow?: string

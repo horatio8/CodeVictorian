@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useEffect, Suspense } from "react"
+import { EUROPE_FIRST_URL } from "@/lib/site"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import {
@@ -510,9 +511,9 @@ function StatusBanner({ banner }: { banner: NonNullable<StatusBanner> }) {
         </p>
       )}
       <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-        <Link href="/member" className="btn-primary">
+        <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">
           Join Europe First <span className="font-serif">→</span>
-        </Link>
+        </a>
         <Link href="/" className="btn-secondary">
           Back to Home
         </Link>

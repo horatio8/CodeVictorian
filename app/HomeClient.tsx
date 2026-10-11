@@ -2,68 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowRight, ChevronRight } from "lucide-react"
-import PetitionForm from "@/components/PetitionForm"
-import {
-  CURRENT_SIGNATURES,
-  showSignatureCounter,
-} from "@/lib/petition-stats"
-
-// PLACEHOLDER stats — currently hidden behind showSignatureCounter().
-// Replace these with real figures (and remove the threshold gate in
-// app/page.tsx Home() / petition-stats.ts) once Code Victorian has
-// numbers it's comfortable showing publicly.
-const stats = [
-  { value: "—", label: "Petition Signatures" },
-  { value: "—", label: "Countries Represented" },
-  { value: "—", label: "Raised This Year" },
-  { value: "—", label: "Active Members" },
-]
-
-const issues = [
-  {
-    roman: "I.",
-    title: "Start Remigration",
-    desc: "Implement humane but firm remigration policies to restore the demographic balance that has sustained European civilisation for centuries.",
-    href: "/issues#remigration",
-  },
-  {
-    roman: "II.",
-    title: "Stop Harmful Immigration",
-    desc: "End the unchecked flow of migration that brings crime and cultural values fundamentally at odds with European society.",
-    href: "/issues#immigration",
-  },
-  {
-    roman: "III.",
-    title: "Preserve Our Culture",
-    desc: "Safeguard Europe\u2019s rich heritage — its languages, traditions, architecture, and values — for future generations.",
-    href: "/issues#culture",
-  },
-]
-
-const news = [
-  {
-    date: "12 April MMXXVI",
-    title: "European Heritage Summit Draws Record Attendance",
-    excerpt: "Over 5,000 delegates from 22 nations gathered in Vienna to discuss strategies for cultural preservation across the continent.",
-    category: "Events",
-    label: "events · vienna",
-  },
-  {
-    date: "8 April MMXXVI",
-    title: "Petition Reaches 125,000 Signatures Milestone",
-    excerpt: "Our flagship petition continues to gain momentum as citizens from every EU member state add their voices to the cause.",
-    category: "Campaign",
-    label: "campaign · petition",
-  },
-  {
-    date: "3 April MMXXVI",
-    title: "New Policy Paper: Remigration Framework for the EU",
-    excerpt: "Code Victorian releases comprehensive policy paper outlining a legal and humane framework for remigration across member states.",
-    category: "Policy",
-    label: "policy · paper",
-  },
-]
+import NewsletterForm from "@/components/NewsletterForm"
+import { EUROPE_FIRST_URL } from "@/lib/site"
 
 export type HomeCms = {
   heroEyebrow?: string
@@ -72,21 +12,13 @@ export type HomeCms = {
 }
 
 export default function Home({ cms }: { cms?: HomeCms } = {}) {
-  const showStats = showSignatureCounter()
   return (
     <>
       <HeroSection cms={cms} />
-      {showStats && <StatsBar />}
-      <IssuesSection />
-      <PetitionCTA />
       <DonationSection />
       <FinalCTA />
     </>
   )
-
-  // (cms is fetched in app/page.tsx and passed in; HeroSection reads it
-  // via a closure so the headline lines, eyebrow, and lede are editable
-  // in /studio without re-deploys.)
 }
 
 function HeroSection({ cms }: { cms?: HomeCms }) {
@@ -112,7 +44,7 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
           {/* Left content */}
           <div className="animate-fade-in-up text-center lg:text-left">
             <span className="eyebrow" style={{ justifyContent: "flex-start" }}>
-              {cms?.heroEyebrow ?? "A Cultural Society · Since MMXXVI"}
+              {cms?.heroEyebrow ?? "A Cultural Force · Since MMXXVI"}
             </span>
 
             <h1 className="mt-7 font-serif text-[2.75rem] font-medium leading-[1.04] text-white sm:text-5xl lg:text-7xl xl:text-[7.5rem]">
@@ -131,11 +63,11 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
                 ))
               ) : (
                 <>
-                  Europe for
+                  <span className="italic font-normal text-gold-400">Europe</span>
                   <br />
-                  <span className="italic font-normal text-gold-400">Native</span>
+                  to remain
                   <br />
-                  Europeans.
+                  <span className="italic font-normal text-gold-400">European.</span>
                 </>
               )}
             </h1>
@@ -146,26 +78,23 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
             </p>
 
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
-              <Link href="/petition" className="btn-primary w-full sm:w-auto">
-                Sign the Petition <span className="font-serif">→</span>
-              </Link>
+              <a
+                href={EUROPE_FIRST_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary w-full sm:w-auto"
+              >
+                Join Europe First <span className="font-serif">→</span>
+              </a>
               <Link href="/donate#donate" className="btn-secondary w-full sm:w-auto">
                 Support the Cause
               </Link>
             </div>
-
-            {/* Social-proof line is hidden until we have a credible signature count. */}
-            {showSignatureCounter() && (
-              <p className="mt-5 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-white/40">
-                Join {CURRENT_SIGNATURES.toLocaleString("en-GB")} Europeans who have already signed
-              </p>
-            )}
           </div>
 
-          {/* Right — shared PetitionForm in dark variant; same component used on
-              /petition and /remigration so all three feed into /api/petition. */}
+          {/* Right — newsletter sign-up card */}
           <div className="animate-fade-in-delay-2 mx-auto w-full max-w-md lg:mx-0 lg:ml-auto">
-            <PetitionForm variant="dark" />
+            <NewsletterForm />
           </div>
         </div>
       </div>
@@ -190,200 +119,6 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
   )
 }
 
-function StatsBar() {
-  return (
-    <section className="relative bg-navy-800 border-y border-gold-400/20 on-dark">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 md:grid-cols-4">
-        {stats.map((s, i) => (
-          <div
-            key={s.label}
-            className={`px-4 py-10 text-center md:py-12 ${
-              i < stats.length - 1 ? "md:border-r md:border-gold-400/15" : ""
-            } ${i === 1 ? "md:border-r" : ""} ${
-              i < 2 ? "border-b border-gold-400/15 md:border-b-0" : ""
-            }`}
-          >
-            <div className="font-serif text-4xl font-medium text-gold-400 md:text-5xl">
-              {s.value}
-            </div>
-            <div className="mt-2 font-mono text-[0.625rem] font-medium uppercase tracking-[0.28em] text-white/55">
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-function IssuesSection() {
-  return (
-    <section className="section-padding bg-cream">
-      <div className="mx-auto max-w-7xl">
-        <div className="sec-num">
-          <span className="num">
-            N<sup>o</sup>. II
-          </span>
-          <span className="line" />
-          <span className="label">The Platform</span>
-        </div>
-
-        <div className="text-center">
-          <span className="eyebrow eyebrow-both">Our Platform</span>
-          <h2 className="mt-6 font-serif text-4xl font-medium sm:text-5xl lg:text-6xl">
-            The Issues That{" "}
-            <span className="italic font-normal text-gold-400">Matter</span>
-          </h2>
-          <p className="lede mx-auto mt-8 max-w-2xl">
-            Europe faces existential challenges that demand courage and clarity.
-            We address the issues that mainstream politicians are too afraid to
-            confront.
-          </p>
-        </div>
-
-        <div className="mt-16 grid gap-0 border-y border-gold-400/25 sm:grid-cols-2 lg:grid-cols-3">
-          {issues.map((issue, i) => (
-            <Link
-              key={issue.title}
-              href={issue.href}
-              className={`group block p-10 transition-colors hover:bg-cream-dark/60 ${
-                i < issues.length - 1 ? "lg:border-r lg:border-gold-400/20" : ""
-              } ${
-                i === 0 ? "sm:border-r sm:border-gold-400/20" : ""
-              } ${
-                i < 2 ? "border-b border-gold-400/20 lg:border-b-0" : ""
-              }`}
-            >
-              <div className="font-serif text-4xl italic text-gold-400">
-                {issue.roman}
-              </div>
-              <h3 className="mt-6 font-serif text-2xl font-medium leading-tight">
-                {issue.title}
-              </h3>
-              <p className="mt-4 font-lede text-base leading-relaxed text-navy-800/70">
-                {issue.desc}
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-gold-600 transition-colors group-hover:text-gold-500">
-                Read more
-                <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-              </span>
-            </Link>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function PetitionCTA() {
-  return (
-    <section className="relative overflow-hidden bg-navy-900 py-24 lg:py-32 on-dark">
-      <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        <div className="fleur">✦ ⚜︎ ✦</div>
-        <span className="eyebrow eyebrow-both mt-6">Take Action</span>
-        <h2 className="mt-6 font-serif text-4xl font-medium text-white sm:text-5xl lg:text-6xl">
-          Your{" "}
-          <span className="italic font-normal text-gold-400">Signature</span>{" "}
-          Matters
-        </h2>
-        <p className="lede mx-auto mt-6 max-w-xl">
-          Every signature brings us closer to making our voices heard at the EU
-          level. Add yours.
-        </p>
-
-        {/* Progress bar — gated until we cross the credibility threshold. */}
-        {showSignatureCounter() && (
-          <div className="mx-auto mt-10 max-w-lg">
-            <div className="mb-3 flex justify-between font-mono text-[0.6875rem] uppercase tracking-[0.2em] text-white/60">
-              <span>{CURRENT_SIGNATURES.toLocaleString("en-GB")} signed</span>
-              <span>next milestone</span>
-            </div>
-            <div className="h-px w-full bg-gold-400/25" />
-            <div className="mt-1 h-1 w-full bg-white/5" />
-          </div>
-        )}
-
-        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <Link href="/petition" className="btn-primary">
-            Sign the Petition <span className="font-serif">→</span>
-          </Link>
-          <Link href="/issues" className="btn-secondary">
-            Learn Why It Matters
-          </Link>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function NewsSection() {
-  return (
-    <section className="section-padding bg-ivory">
-      <div className="mx-auto max-w-7xl">
-        <div className="sec-num">
-          <span className="num">
-            N<sup>o</sup>. III
-          </span>
-          <span className="line" />
-          <span className="label">From the Dispatches</span>
-        </div>
-
-        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-          <div>
-            <span className="eyebrow">Latest Updates</span>
-            <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
-              News &amp;{" "}
-              <span className="italic font-normal text-gold-400">Updates</span>
-            </h2>
-          </div>
-          <Link
-            href="/updates"
-            className="inline-flex items-center gap-2 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-gold-600 transition-colors hover:text-gold-500"
-          >
-            View all news
-            <ChevronRight className="h-3.5 w-3.5" />
-          </Link>
-        </div>
-
-        <div className="mt-12 grid gap-0 border-t border-gold-400/25 sm:grid-cols-2 lg:grid-cols-3">
-          {news.map((item, i) => (
-            <article
-              key={item.title}
-              className={`group ${
-                i < 2 ? "border-b border-gold-400/20 lg:border-b-0" : ""
-              } ${
-                i < news.length - 1 ? "lg:border-r lg:border-gold-400/20" : ""
-              } ${
-                i === 0 ? "sm:border-r sm:border-gold-400/20" : ""
-              }`}
-            >
-              <div className="plate aspect-[16/9]" data-label={item.label} />
-              <div className="p-7">
-                <div className="flex items-center gap-4 font-mono text-[0.625rem] uppercase tracking-[0.18em]">
-                  <span className="font-serif italic normal-case tracking-[0.08em] text-gold-400">
-                    {item.category}
-                  </span>
-                  <span className="text-navy-800/45">{item.date}</span>
-                </div>
-                <h3 className="mt-4 font-serif text-xl font-medium leading-snug transition-colors group-hover:text-gold-600">
-                  {item.title}
-                </h3>
-                <p className="mt-3 font-lede text-[0.9375rem] leading-relaxed text-navy-800/70 line-clamp-3">
-                  {item.excerpt}
-                </p>
-                <span className="mt-5 inline-flex items-center gap-2 font-mono text-[0.6875rem] font-medium uppercase tracking-[0.24em] text-gold-600 transition-colors group-hover:text-gold-500">
-                  Read essay
-                  <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-                </span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function DonationSection() {
   const amounts = [35, 65, 135, 600, 1500]
   const [selected, setSelected] = useState<number | null>(135)
@@ -401,7 +136,7 @@ function DonationSection() {
       <div className="mx-auto max-w-7xl">
         <div className="sec-num">
           <span className="num">
-            N<sup>o</sup>. IV
+            N<sup>o</sup>. II
           </span>
           <span className="line" />
           <span className="label">Patronage</span>
@@ -542,11 +277,16 @@ function FinalCTA() {
           Europe&rsquo;s heritage is eroded. Together, we can make a difference.
         </p>
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <Link href="/petition" className="btn-primary">
-            Sign the Petition <span className="font-serif">→</span>
-          </Link>
-          <Link href="/member" className="btn-secondary">
-            Join Europe First
+          <a
+            href={EUROPE_FIRST_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+          >
+            Join Europe First <span className="font-serif">→</span>
+          </a>
+          <Link href="/donate#donate" className="btn-secondary">
+            Support the Foundation
           </Link>
         </div>
       </div>
