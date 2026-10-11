@@ -14,18 +14,18 @@ import {
 
 const impact: Record<Currency, { amount: string; desc: string }[]> = {
   EUR: [
-    { amount: "€35",     desc: "Prints 250 campaign leaflets for local distribution" },
-    { amount: "€65",     desc: "Distributes 500 campaign leaflets across a city" },
-    { amount: "€135",    desc: "Supports a campaign post on social media" },
-    { amount: "€600",    desc: "Supports attendance at a conference or summit" },
-    { amount: "€1,500",  desc: "Sponsors an entire content campaign trip to a European city" },
+    { amount: "€35",     desc: "Helps cover the cost of producing a new video" },
+    { amount: "€65",     desc: "Supports research and scripting for upcoming content" },
+    { amount: "€135",    desc: "Funds editing and production of a short-form video" },
+    { amount: "€600",    desc: "Supports filming on location across Europe" },
+    { amount: "€1,500",  desc: "Sponsors an entire content trip to a European city" },
   ],
   USD: [
-    { amount: "$40",     desc: "Prints 250 campaign leaflets for local distribution" },
-    { amount: "$70",     desc: "Distributes 500 campaign leaflets across a city" },
-    { amount: "$145",    desc: "Supports a campaign post on social media" },
-    { amount: "$650",    desc: "Supports attendance at a conference or summit" },
-    { amount: "$1,600",  desc: "Sponsors an entire content campaign trip to a European city" },
+    { amount: "$40",     desc: "Helps cover the cost of producing a new video" },
+    { amount: "$70",     desc: "Supports research and scripting for upcoming content" },
+    { amount: "$145",    desc: "Funds editing and production of a short-form video" },
+    { amount: "$650",    desc: "Supports filming on location across Europe" },
+    { amount: "$1,600",  desc: "Sponsors an entire content trip to a European city" },
   ],
 }
 
@@ -234,20 +234,14 @@ function DonatePageInner({
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <span className="eyebrow eyebrow-both">{cms?.heroEyebrow ?? "Patronage · Tax-Deductible"}</span>
           <h1 className="mt-6 font-serif text-5xl font-medium text-white sm:text-6xl lg:text-7xl">
-            {cms?.heroHeadline ?? "Fund the"}{" "}
+            {cms?.heroHeadline ?? "Support the"}{" "}
             <span className="italic font-normal text-gold-400">
-              {cms?.heroItalicWord ?? "Fight"}
+              {cms?.heroItalicWord ?? "Foundation"}
             </span>
-            {!cms?.heroHeadline && (
-              <>
-                <br />
-                for Europe
-              </>
-            )}
           </h1>
           <p className="lede mx-auto mt-8 max-w-2xl">
             {cms?.heroLede ??
-              "Every euro directly supports our campaigns, policy research, legal challenges, and grassroots organising across the continent. Your generosity makes change possible."}
+              "Your donation supports the Code Victorian Foundation and the content we create to celebrate and preserve Europe’s heritage, culture, and traditions. Every euro makes a difference."}
           </p>
         </div>
       </section>
