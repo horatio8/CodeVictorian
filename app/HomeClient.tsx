@@ -146,21 +146,20 @@ function DonationSection() {
           <div>
             <span className="eyebrow">Support Our Mission</span>
             <h2 className="mt-5 font-serif text-4xl font-medium sm:text-5xl">
-              Fund the{" "}
-              <span className="italic font-normal text-gold-400">fight</span>{" "}
-              for Europe
+              Support the{" "}
+              <span className="italic font-normal text-gold-400">Foundation</span>
             </h2>
             <p className="lede mt-8">
-              Your donation directly funds our campaigns, legal challenges,
-              policy research, and grassroots organising across the continent.
-              Every euro makes a difference.
+              Your donation supports the Code Victorian Foundation and the
+              content we create to celebrate and preserve Europe&rsquo;s
+              heritage, culture, and traditions. Every euro makes a difference.
             </p>
             <ul className="mt-8 space-y-0 border-y border-gold-400/20">
               {[
-                "€35 prints 250 campaign leaflets for local distribution",
-                "€65 funds distribution of 500 campaign leaflets",
-                "€135 supports a campaign post on social media",
-                "€600 supports attendance at a conference or summit",
+                "€35 helps cover the cost of producing a new video",
+                "€65 supports research and scripting for upcoming content",
+                "€135 funds editing and production of a short-form video",
+                "€600 supports filming on location across Europe",
               ].map((item) => (
                 <li
                   key={item}

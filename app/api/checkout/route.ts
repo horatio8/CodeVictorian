@@ -125,7 +125,7 @@ export async function POST(req: Request) {
                   frequency === "monthly"
                     ? "Code Victorian — Monthly Patronage"
                     : "Code Victorian — One-time Donation",
-                description: "Supports the fight to keep Europe for native Europeans.",
+                description: "Supports the Code Victorian Foundation and its content.",
               },
               ...(frequency === "monthly" ? { recurring: { interval: "month" as const } } : {}),
             },
