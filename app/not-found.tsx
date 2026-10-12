@@ -24,8 +24,8 @@ export default function NotFound() {
           <Link href="/" className="btn-primary">
             Return Home <span className="font-serif">→</span>
           </Link>
-          <Link href="/donate#donate" className="btn-secondary">
-            Donate
+          <Link href="/#membership" className="btn-secondary">
+            Membership
           </Link>
         </div>
         <div className="fleur mt-16">✦ ⚜︎ ✦</div>

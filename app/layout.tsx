@@ -1,21 +1,19 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import SiteChrome from "@/components/SiteChrome"
-import ClarityTracking from "@/components/ClarityTracking"
-import ManyChat from "@/components/ManyChat"
 
 export const metadata: Metadata = {
   title: {
-    default: "Code Victorian — Europe for Europeans",
-    template: "%s | Code Victorian",
+    default: "Europe First — The Community",
+    template: "%s | Europe First",
   },
   description:
-    "A movement dedicated to preserving European heritage, culture, and identity. Support the foundation and join Europe First.",
-  metadataBase: new URL("https://codevictorian.com"),
+    "Europe First is a community of Europeans at home and abroad, organising in person and online. Members in twenty-four countries.",
+  metadataBase: new URL("https://europefirst.vercel.app"),
   openGraph: {
     type: "website",
     locale: "en_GB",
-    siteName: "Code Victorian",
+    siteName: "Europe First",
   },
 }
 
@@ -44,8 +42,6 @@ export default function RootLayout({
         data-display="playfair"
       >
         <SiteChrome>{children}</SiteChrome>
-        <ClarityTracking />
-        <ManyChat />
       </body>
     </html>
   )

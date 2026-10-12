@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
-import { EUROPE_FIRST_URL } from "@/lib/site"
 
 // Per the Apr 23 client brief: hide Events / Media / Store from nav for now.
 // Apr 28: also hide Updates until the monthly newsletter archive is ready.
@@ -17,8 +16,8 @@ type NavLink = {
 
 const navLinks: NavLink[] = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/volunteer", label: "Volunteer" },
+  { href: "/#principles", label: "Principles" },
+  { href: "/#membership", label: "Membership" },
   { href: "/contact", label: "Contact" },
 ]
 
@@ -74,10 +73,10 @@ export default function Header() {
             />
             <div className="flex flex-col leading-none">
               <span className="font-serif text-xl font-medium tracking-wide text-white transition-colors group-hover:text-gold-400">
-                Code Victorian
+                Europe First
               </span>
               <span className="hidden mt-1 font-mono text-[0.625rem] font-normal uppercase tracking-[0.32em] text-gold-400 sm:block">
-                Est. MMXXVI
+                The Community
               </span>
             </div>
           </Link>
@@ -130,21 +129,12 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden items-center gap-3 lg:flex">
-            <a
-              href={EUROPE_FIRST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary"
-              style={{ padding: "10px 20px", fontSize: "10px", fontWeight: 700 }}
-            >
-              Join Europe First
-            </a>
             <Link
-              href="/donate"
+              href="/#membership"
               className="btn-primary"
               style={{ padding: "10px 20px", fontSize: "10px", fontWeight: 700 }}
             >
-              Donate <span className="font-serif">→</span>
+              Join <span className="font-serif">→</span>
             </Link>
           </div>
 
@@ -211,21 +201,12 @@ export default function Header() {
             )
           )}
           <div className="mt-6 flex flex-col items-center gap-3">
-            <a
-              href={EUROPE_FIRST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/#membership"
               className="btn-primary"
               onClick={() => setMobileOpen(false)}
             >
               Join Europe First
-            </a>
-            <Link
-              href="/donate"
-              className="btn-secondary"
-              onClick={() => setMobileOpen(false)}
-            >
-              Donate Now
             </Link>
           </div>
         </nav>

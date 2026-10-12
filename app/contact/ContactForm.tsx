@@ -1,8 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 // Posts to /api/contact which forwards to the Campaign Nucleus contact
 // receiver. Field handles match the CN form schema:
@@ -18,20 +17,6 @@ export default function ContactForm({ subjects }: { subjects: string[] }) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [sent, setSent] = useState(false)
-
-  const router = useRouter()
-  const REDIRECT_SECONDS = 4
-  const [redirectIn, setRedirectIn] = useState(REDIRECT_SECONDS)
-  useEffect(() => {
-    if (!sent) return
-    router.prefetch("/donate")
-    const tick = setInterval(() => setRedirectIn((s) => s - 1), 1000)
-    const go = setTimeout(() => router.push("/donate#donate"), REDIRECT_SECONDS * 1000)
-    return () => {
-      clearInterval(tick)
-      clearTimeout(go)
-    }
-  }, [sent, router])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -63,7 +48,6 @@ export default function ContactForm({ subjects }: { subjects: string[] }) {
   }
 
   if (sent) {
-    const seconds = Math.max(0, redirectIn)
     return (
       <div className="border border-gold-400/40 bg-ivory p-10">
         <span className="eyebrow">Sent</span>
@@ -74,15 +58,9 @@ export default function ContactForm({ subjects }: { subjects: string[] }) {
           Your message has been received. We typically respond within two
           business days.
         </p>
-        <Link href="/donate#donate" className="btn-primary mt-7 w-full">
-          Support the Cause <span className="font-serif">→</span>
+        <Link href="/#membership" className="btn-primary mt-7 w-full">
+          See Membership <span className="font-serif">→</span>
         </Link>
-        <p
-          className="mt-5 text-center font-mono text-[0.625rem] uppercase tracking-[0.24em] text-navy-800/60"
-          aria-live="polite"
-        >
-          {seconds > 0 ? `Redirecting to donate in ${seconds}…` : "Redirecting…"}
-        </p>
       </div>
     )
   }

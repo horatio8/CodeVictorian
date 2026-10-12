@@ -18,19 +18,12 @@ const nextConfig = {
   async redirects() {
     if (isStaticExport) return [] // static export can't issue redirects
     return [
-      // /news was renamed to /updates per the Apr 23 brief.
-      { source: "/news", destination: "/updates", permanent: true },
-      { source: "/news/:path*", destination: "/updates/:path*", permanent: true },
-      // Oct 2026: the site now only points people to Europe First and takes
-      // donations for the foundation. Retired sections go to the homepage.
-      // Temporary (307) so they can be repointed once Europe First's new
-      // site is live.
-      ...["/petition", "/issues", "/remigration", "/request-speaker", "/member", "/join"].flatMap(
-        (source) => [
-          { source, destination: "/", permanent: false },
-          { source: `${source}/:path*`, destination: "/", permanent: false },
-        ],
-      ),
+      // Europe First is a single page; old Code Victorian paths land on it.
+      ...["/member", "/join", "/tiers", "/membership"].map((source) => ({
+        source,
+        destination: "/",
+        permanent: false,
+      })),
     ]
   },
 }

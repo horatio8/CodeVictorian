@@ -15,16 +15,14 @@ const FALLBACK_CONTACTS = [
 
 const FALLBACK_SUBJECTS = [
   "General Enquiry",
-  "Volunteer Enquiry",
-  "Donation Query",
+  "Membership Enquiry",
   "Partnership / Collaboration",
   "Data Subject Request (GDPR)",
   "Other",
 ]
 
 const FALLBACK_QUICK_LINKS = [
-  { href: "/volunteer", label: "Volunteer with us" },
-  { href: "/donate", label: "Make a donation" },
+  { href: "/#membership", label: "Membership tiers" },
   { href: "/privacy#rights", label: "Data subject rights (GDPR)" },
 ]
 
