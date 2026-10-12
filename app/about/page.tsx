@@ -8,8 +8,8 @@ export const metadata: Metadata = { title: "About Us" }
 const FALLBACK_VALUES = [
   { roman: "I.",   title: "Clarity of Purpose",  text: "We are direct and unapologetic about our mission to preserve European civilisation." },
   { roman: "II.",  title: "Good Governance",     text: "We operate openly with transparency and strong governance." },
-  { roman: "III.", title: "Cultural Pride",      text: "We celebrate the extraordinary achievements and heritage of European peoples without reservation." },
-  { roman: "IV.",  title: "Pro-Native European", text: "We unite people around the world of European descent under a common cause, building alliances from New York to Paris, from Sydney to Athens." },
+  { roman: "III.", title: "Cultural Pride",      text: "We celebrate the extraordinary achievements and heritage of Europe without reservation." },
+  { roman: "IV.",  title: "Pro-European", text: "We unite people around the world of European descent under a common cause, building alliances from New York to Paris, from Sydney to Athens." },
 ]
 
 const FALLBACK_TIMELINE = [
