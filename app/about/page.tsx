@@ -26,9 +26,7 @@ export default async function AboutPage() {
   const heroEyebrow = cms?.heroEyebrow ?? "Our Story"
   const heroHeadline = cms?.heroHeadline ?? "About"
   const heroItalicWord = cms?.heroItalicWord ?? "Code Victorian"
-  const heroLede =
-    cms?.heroLede ??
-    "We are a supranational third-party campaigning organisation dedicated to the preservation of European culture, identity, and heritage through democratic action and civic engagement."
+  const heroLede = cms?.heroLede
   const missionHeadline = cms?.mission?.headline ?? "Defending Europe’s"
   const missionItalic = cms?.mission?.italicWord ?? "future"
   const missionQuote =
@@ -62,7 +60,7 @@ export default async function AboutPage() {
             {heroHeadline}{" "}
             <span className="italic font-normal text-gold-400">{heroItalicWord}</span>
           </h1>
-          <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>
+          {heroLede && <p className="lede mx-auto mt-8 max-w-2xl">{heroLede}</p>}
         </div>
       </section>
 
@@ -98,29 +96,6 @@ export default async function AboutPage() {
             <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Join Europe First</a>
             <Link href="/donate#donate" className="btn-secondary">Support the Foundation</Link>
           </div>
-        </div>
-      </section>
-
-      {/* Mission video — drop a file at public/mission.mp4 (the existing
-          one-sentence mission statement video). The <video> falls back
-          gracefully to a striped plate if the file is missing. */}
-      <section className="bg-ivory pb-12">
-        <div className="mx-auto max-w-4xl px-6">
-          <div className="border border-gold-400/30">
-            <video
-              className="block w-full"
-              src="/mission.mp4"
-              controls
-              preload="metadata"
-              poster="/mission-poster.jpg"
-              playsInline
-            >
-              <track kind="captions" />
-            </video>
-          </div>
-          <p className="mt-3 text-center font-mono text-[0.625rem] uppercase tracking-[0.2em] text-navy-800/50">
-            The mission · in one sentence
-          </p>
         </div>
       </section>
 
