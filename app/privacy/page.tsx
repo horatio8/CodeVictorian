@@ -30,7 +30,6 @@ const FALLBACK: Required<Omit<PrivacyPage, "sections">> & {
         "Identity data: name, country of residence, nationality",
         "Contact data: email address, phone number, postal address",
         "Financial data: payment details (processed securely via third-party payment processors; we do not store card details)",
-        "Petition data: name, country, and signature status (displayed publicly with your consent)",
         "Technical data: IP address, browser type, device information, cookies (see Cookie Policy below)",
         "Communication data: messages sent via our contact forms or email",
         "Membership data: membership tier, payment history, event attendance",
@@ -41,7 +40,7 @@ const FALLBACK: Required<Omit<PrivacyPage, "sections">> & {
       title: "Legal Basis for Processing",
       body: "We process your data on the following legal bases under GDPR Article 6:",
       bullets: [
-        "Consent (Art. 6(1)(a)): petition signatures, newsletter subscriptions, marketing communications, non-essential cookies",
+        "Consent (Art. 6(1)(a)): newsletter subscriptions, marketing communications, non-essential cookies",
         "Contract (Art. 6(1)(b)): membership services, donation processing, store purchases",
         "Legitimate interest (Art. 6(1)(f)): website analytics (anonymised), fraud prevention, internal administration",
         "Legal obligation (Art. 6(1)(c)): financial record-keeping, electoral compliance reporting",
@@ -51,19 +50,19 @@ const FALLBACK: Required<Omit<PrivacyPage, "sections">> & {
       roman: "IV.",
       title: "How We Use Your Data",
       body:
-        "Your data is used to: process petition signatures; manage membership accounts; process donations and purchases; send campaign updates (with your consent); organise events; respond to enquiries; comply with legal obligations; and improve our website and services.",
+        "Your data is used to: process donations; send newsletter updates (with your consent); organise events; respond to enquiries; comply with legal obligations; and improve our website and services.",
     },
     {
       roman: "V.",
       title: "Data Sharing & Transfers",
       body:
-        "We do not sell your data. We may share data with: trusted service providers (email: Mailerlite; payments: secure payment processor; analytics: Google Analytics with IP anonymisation); legal authorities when required by law; and EU institutions when submitting petition signatures. Where data is transferred outside the EU/EEA, we ensure adequate safeguards under GDPR Chapter V.",
+        "We do not sell your data. We may share data with: trusted service providers (email: Mailerlite; payments: secure payment processor; analytics: Google Analytics with IP anonymisation); and legal authorities when required by law. Where data is transferred outside the EU/EEA, we ensure adequate safeguards under GDPR Chapter V.",
     },
     {
       roman: "VI.",
       title: "Data Retention",
       body:
-        "We retain personal data only as long as necessary for the purposes collected: petition signatures for the duration of the campaign plus 12 months; membership data for the duration of membership plus 24 months; financial records for 7 years (legal requirement); contact form messages for 12 months; website analytics data (anonymised) for 26 months.",
+        "We retain personal data only as long as necessary for the purposes collected: newsletter data until you unsubscribe; membership data for the duration of membership plus 24 months; financial records for 7 years (legal requirement); contact form messages for 12 months; website analytics data (anonymised) for 26 months.",
     },
     {
       roman: "VII.",

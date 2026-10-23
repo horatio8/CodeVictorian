@@ -13,12 +13,11 @@ const FALLBACK_VALUES = [
 ]
 
 const FALLBACK_TIMELINE = [
-  { date: "February MMXXV",   short: "II · XXV",  title: "Code Victorian Founded",         desc: "The movement is established by a small circle of correspondents." },
-  { date: "June MMXXV",       short: "VI · XXV",  title: "Pan-European Tour",               desc: "An on-the-road tour through France, Germany, Italy, and Hungary — meeting allies in person." },
-  { date: "July MMXXV",       short: "VII · XXV", title: "&ldquo;Dare to Dream&rdquo; Goes Viral", desc: "The flagship campaign reaches six million people across Europe and the diaspora." },
+  { date: "February MMXXV",   short: "II · XXV",  title: "Code Victorian Founded",         desc: "The society is established by a small circle of correspondents." },
+  { date: "June MMXXV",       short: "VI · XXV",  title: "Pan-European Tour",               desc: "An on-the-road tour through France, Germany, Italy, and Hungary — meeting friends in person." },
+  { date: "July MMXXV",       short: "VII · XXV", title: "&ldquo;Dare to Dream&rdquo; Goes Viral", desc: "Our flagship video reaches six million people across Europe and the diaspora." },
   { date: "August MMXXV",     short: "VIII · XXV",title: "100,000 Followers",                desc: "The audience crosses six figures and continues to compound monthly." },
-  { date: "February MMXXVI",  short: "II · XXVI", title: "Europe First Launches",            desc: "The community arm of the movement opens for applications." },
-  { date: "April MMXXVI",     short: "IV · XXVI", title: "Real-World Political Organising",  desc: "The transition from publishing to political action begins in earnest." },
+  { date: "February MMXXVI",  short: "II · XXVI", title: "Europe First Launches",            desc: "The Code Victorian community opens for members." },
 ]
 
 export default async function AboutPage() {
@@ -31,7 +30,7 @@ export default async function AboutPage() {
   const missionItalic = cms?.mission?.italicWord ?? "future"
   const missionQuote =
     cms?.mission?.quote ??
-    "“Europe’s native peoples have the right — and the duty — to preserve their cultures, communities, and way of life.”"
+    "“Europeans have the right — and the duty — to preserve their cultures, communities, and way of life.”"
   // Hidden pending client approval (Oct 2026) — flip to true to restore.
   const SHOW_MISSION_PARAGRAPHS = false
   const missionParagraphs = !SHOW_MISSION_PARAGRAPHS

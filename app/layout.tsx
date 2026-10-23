@@ -6,11 +6,11 @@ import ManyChat from "@/components/ManyChat"
 
 export const metadata: Metadata = {
   title: {
-    default: "Code Victorian — Europe for Europeans",
+    default: "Code Victorian — Europe to remain European",
     template: "%s | Code Victorian",
   },
   description:
-    "A movement dedicated to preserving European heritage, culture, and identity. Support the foundation and join Europe First.",
+    "A cultural society dedicated to preserving European heritage, culture, and identity. Support the foundation and join Europe First.",
   metadataBase: new URL("https://codevictorian.com"),
   openGraph: {
     type: "website",
