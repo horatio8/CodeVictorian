@@ -32,8 +32,11 @@ export default async function AboutPage() {
   const missionQuote =
     cms?.mission?.quote ??
     "“Europe’s native peoples have the right — and the duty — to preserve their cultures, communities, and way of life.”"
-  const missionParagraphs =
-    cms?.mission?.paragraphs && cms.mission.paragraphs.length > 0
+  // Hidden pending client approval (Oct 2026) — flip to true to restore.
+  const SHOW_MISSION_PARAGRAPHS = false
+  const missionParagraphs = !SHOW_MISSION_PARAGRAPHS
+    ? []
+    : cms?.mission?.paragraphs && cms.mission.paragraphs.length > 0
       ? cms.mission.paragraphs
       : [
           "Code Victorian was born from a simple conviction: in an era of unprecedented demographic change, the millions of Europeans who feel unrepresented by mainstream politics deserve a voice that speaks plainly.",

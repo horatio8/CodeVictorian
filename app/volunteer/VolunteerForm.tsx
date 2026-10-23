@@ -148,6 +148,7 @@ export default function VolunteerForm({ roles }: { roles: Role[] }) {
           onChange={(e) => setCity(e.target.value)}
         />
       </div>
+      {roles.length > 0 && (
       <div>
         <label className="block mb-3 font-mono text-[0.625rem] font-medium uppercase tracking-[0.28em] text-gold-600">
           Which roles interest you? (select all that apply)
@@ -178,6 +179,7 @@ export default function VolunteerForm({ roles }: { roles: Role[] }) {
           })}
         </div>
       </div>
+      )}
       <textarea
         placeholder="Tell us about yourself and why you want to volunteer (optional)"
         rows={4}
