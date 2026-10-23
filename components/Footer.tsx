@@ -66,12 +66,12 @@ export default function Footer() {
                 Code Victorian
               </span>
               <span className="mt-2 font-mono text-[0.625rem] font-normal uppercase tracking-[0.32em] text-gold-400">
-                A Cultural Society · Est. MMXXVI
+                A Cultural Force · Est. MMXXVI
               </span>
             </Link>
             <p className="mt-6 max-w-xs font-lede text-base leading-relaxed text-white/60">
-              A movement dedicated to preserving European heritage, culture, and
-              identity for future generations. Together, we stand for a Europe
+              A cultural society dedicated to preserving European heritage,
+              culture, and identity for future generations. Together, we stand for a Europe
               that honours its people and traditions.
             </p>
             <div className="mt-6 flex gap-3">
@@ -93,7 +93,7 @@ export default function Footer() {
           {/* Link columns */}
           <div>
             <h4 className="text-[0.6875rem] font-medium uppercase tracking-[0.28em] text-gold-400">
-              Campaign
+              Society
             </h4>
             <ul className="mt-5 space-y-2.5">
               {footerLinks.campaign.map(({ href, label }) => (
