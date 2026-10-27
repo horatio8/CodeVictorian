@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { EUROPE_FIRST_URL } from "@/lib/site"
+import { EUROPE_FIRST_URL, SHOW_DONATE, SHOW_EUROPE_FIRST } from "@/lib/site"
 import Link from "next/link"
 import { getAboutPage } from "@/lib/cms"
 
@@ -95,8 +95,8 @@ export default async function AboutPage() {
           ))}
 
           <div className="mt-10 flex flex-wrap gap-4">
-            <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Join Europe First</a>
-            <Link href="/donate#donate" className="btn-secondary">Support the Foundation</Link>
+            {SHOW_EUROPE_FIRST && <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Join Europe First</a>}
+            {SHOW_DONATE && <Link href="/donate#donate" className="btn-secondary">Support the Foundation</Link>}
           </div>
         </div>
       </section>
@@ -179,6 +179,7 @@ export default async function AboutPage() {
       </section>
 
       {/* CTA */}
+      {(SHOW_DONATE || SHOW_EUROPE_FIRST) && (
       <section className="gradient-navy py-24 text-center on-dark">
         <div className="mx-auto max-w-3xl px-6">
           <div className="fleur">✦ ⚜︎ ✦</div>
@@ -190,11 +191,12 @@ export default async function AboutPage() {
             Support the foundation, then join Europe First.
           </p>
           <div className="mt-9 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Join Europe First</a>
-            <Link href="/donate#donate" className="btn-secondary">Support the Foundation</Link>
+            {SHOW_EUROPE_FIRST && <a href={EUROPE_FIRST_URL} target="_blank" rel="noopener noreferrer" className="btn-primary">Join Europe First</a>}
+            {SHOW_DONATE && <Link href="/donate#donate" className="btn-secondary">Support the Foundation</Link>}
           </div>
         </div>
       </section>
+      )}
     </>
   )
 }

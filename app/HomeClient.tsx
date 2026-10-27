@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import NewsletterForm from "@/components/NewsletterForm"
-import { EUROPE_FIRST_URL } from "@/lib/site"
+import { EUROPE_FIRST_URL, SHOW_DONATE, SHOW_EUROPE_FIRST } from "@/lib/site"
 
 export type HomeCms = {
   heroEyebrow?: string
@@ -15,7 +15,7 @@ export default function Home({ cms }: { cms?: HomeCms } = {}) {
   return (
     <>
       <HeroSection cms={cms} />
-      <DonationSection />
+      {SHOW_DONATE && <DonationSection />}
       <FinalCTA />
     </>
   )
@@ -78,6 +78,7 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
             </p>
 
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+              {SHOW_EUROPE_FIRST && (
               <a
                 href={EUROPE_FIRST_URL}
                 target="_blank"
@@ -86,9 +87,12 @@ function HeroSection({ cms }: { cms?: HomeCms }) {
               >
                 Join Europe First <span className="font-serif">→</span>
               </a>
+              )}
+              {SHOW_DONATE && (
               <Link href="/donate#donate" className="btn-secondary w-full sm:w-auto">
                 Support the Cause
               </Link>
+              )}
             </div>
           </div>
 
@@ -276,6 +280,7 @@ function FinalCTA() {
           Europe&rsquo;s heritage is eroded. Together, we can make a difference.
         </p>
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          {SHOW_EUROPE_FIRST && (
           <a
             href={EUROPE_FIRST_URL}
             target="_blank"
@@ -284,9 +289,12 @@ function FinalCTA() {
           >
             Join Europe First <span className="font-serif">→</span>
           </a>
+          )}
+          {SHOW_DONATE && (
           <Link href="/donate#donate" className="btn-secondary">
             Support the Foundation
           </Link>
+          )}
         </div>
       </div>
     </section>

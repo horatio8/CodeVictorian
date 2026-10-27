@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SHOW_DONATE } from "@/lib/site"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 
@@ -23,7 +24,7 @@ export default function ContactForm({ subjects }: { subjects: string[] }) {
   const REDIRECT_SECONDS = 4
   const [redirectIn, setRedirectIn] = useState(REDIRECT_SECONDS)
   useEffect(() => {
-    if (!sent) return
+    if (!sent || !SHOW_DONATE) return
     router.prefetch("/donate")
     const tick = setInterval(() => setRedirectIn((s) => s - 1), 1000)
     const go = setTimeout(() => router.push("/donate#donate"), REDIRECT_SECONDS * 1000)
@@ -74,15 +75,19 @@ export default function ContactForm({ subjects }: { subjects: string[] }) {
           Your message has been received. We typically respond within two
           business days.
         </p>
-        <Link href="/donate#donate" className="btn-primary mt-7 w-full">
-          Support the Cause <span className="font-serif">→</span>
-        </Link>
-        <p
-          className="mt-5 text-center font-mono text-[0.625rem] uppercase tracking-[0.24em] text-navy-800/60"
-          aria-live="polite"
-        >
-          {seconds > 0 ? `Redirecting to donate in ${seconds}…` : "Redirecting…"}
-        </p>
+        {SHOW_DONATE && (
+          <>
+            <Link href="/donate#donate" className="btn-primary mt-7 w-full">
+              Support the Cause <span className="font-serif">→</span>
+            </Link>
+            <p
+              className="mt-5 text-center font-mono text-[0.625rem] uppercase tracking-[0.24em] text-navy-800/60"
+              aria-live="polite"
+            >
+              {seconds > 0 ? `Redirecting to donate in ${seconds}…` : "Redirecting…"}
+            </p>
+          </>
+        )}
       </div>
     )
   }

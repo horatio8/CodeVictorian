@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import NewsletterForm from "@/components/NewsletterForm"
-import { EUROPE_FIRST_URL } from "@/lib/site"
+import { EUROPE_FIRST_URL, SHOW_DONATE, SHOW_EUROPE_FIRST } from "@/lib/site"
 import {
   Facebook,
   Twitter,
@@ -19,8 +19,8 @@ const footerLinks = {
     { href: "/about", label: "About Us" },
   ],
   involved: [
-    { href: "/donate", label: "Donate" },
-    { href: EUROPE_FIRST_URL, label: "Join Europe First" },
+    ...(SHOW_DONATE ? [{ href: "/donate", label: "Donate" }] : []),
+    ...(SHOW_EUROPE_FIRST ? [{ href: EUROPE_FIRST_URL, label: "Join Europe First" }] : []),
     { href: "/volunteer", label: "Volunteer" },
   ],
   legal: [

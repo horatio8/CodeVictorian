@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { SHOW_DONATE } from "@/lib/site"
 import VolunteerForm from "./VolunteerForm"
 import { getVolunteerPage } from "@/lib/cms"
 
@@ -117,6 +118,7 @@ export default async function VolunteerPage() {
       </section>
 
       {/* CTA */}
+      {SHOW_DONATE && (
       <section className="gradient-navy py-24 text-center on-dark">
         <div className="mx-auto max-w-3xl px-6">
           <div className="fleur">✦ ⚜︎ ✦</div>
@@ -132,6 +134,7 @@ export default async function VolunteerPage() {
           </div>
         </div>
       </section>
+      )}
     </>
   )
 }

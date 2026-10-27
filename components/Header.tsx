@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Menu, X, ChevronDown } from "lucide-react"
-import { EUROPE_FIRST_URL } from "@/lib/site"
+import { EUROPE_FIRST_URL, SHOW_DONATE, SHOW_EUROPE_FIRST } from "@/lib/site"
 
 // Per the Apr 23 client brief: hide Events / Media / Store from nav for now.
 // Apr 28: also hide Updates until the monthly newsletter archive is ready.
@@ -130,6 +130,7 @@ export default function Header() {
 
           {/* Desktop CTA */}
           <div className="hidden items-center gap-3 lg:flex">
+            {SHOW_EUROPE_FIRST && (
             <a
               href={EUROPE_FIRST_URL}
               target="_blank"
@@ -139,6 +140,8 @@ export default function Header() {
             >
               Join Europe First
             </a>
+            )}
+            {SHOW_DONATE && (
             <Link
               href="/donate"
               className="btn-primary"
@@ -146,6 +149,7 @@ export default function Header() {
             >
               Donate <span className="font-serif">→</span>
             </Link>
+            )}
           </div>
 
           {/* Mobile hamburger — z-50 keeps the close (X) above the open menu. */}
@@ -211,6 +215,7 @@ export default function Header() {
             )
           )}
           <div className="mt-6 flex flex-col items-center gap-3">
+            {SHOW_EUROPE_FIRST && (
             <a
               href={EUROPE_FIRST_URL}
               target="_blank"
@@ -220,6 +225,8 @@ export default function Header() {
             >
               Join Europe First
             </a>
+            )}
+            {SHOW_DONATE && (
             <Link
               href="/donate"
               className="btn-secondary"
@@ -227,6 +234,7 @@ export default function Header() {
             >
               Donate Now
             </Link>
+            )}
           </div>
         </nav>
       </div>
