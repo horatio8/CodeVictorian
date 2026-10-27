@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { SHOW_DONATE } from "@/lib/site"
 import { MapPin, Clock, Mail, MessageSquare, Phone } from "lucide-react"
 import { getContactPage } from "@/lib/cms"
 import ContactForm from "./ContactForm"
@@ -24,7 +25,7 @@ const FALLBACK_SUBJECTS = [
 
 const FALLBACK_QUICK_LINKS = [
   { href: "/volunteer", label: "Volunteer with us" },
-  { href: "/donate", label: "Make a donation" },
+  ...(SHOW_DONATE ? [{ href: "/donate", label: "Make a donation" }] : []),
   { href: "/privacy#rights", label: "Data subject rights (GDPR)" },
 ]
 

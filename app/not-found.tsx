@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { SHOW_DONATE } from "@/lib/site"
 
 export default function NotFound() {
   return (
@@ -24,9 +25,11 @@ export default function NotFound() {
           <Link href="/" className="btn-primary">
             Return Home <span className="font-serif">→</span>
           </Link>
+          {SHOW_DONATE && (
           <Link href="/donate#donate" className="btn-secondary">
             Donate
           </Link>
+          )}
         </div>
         <div className="fleur mt-16">✦ ⚜︎ ✦</div>
       </div>

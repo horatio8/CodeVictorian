@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SHOW_DONATE } from "@/lib/site"
 import { useState } from "react"
 import PhoneField from "@/components/PhoneField"
 import { DEFAULT_CALLING_CODE, composePhone } from "@/lib/calling-codes"
@@ -76,11 +77,13 @@ export default function VolunteerForm({ roles }: { roles: Role[] }) {
           Your volunteer application has been received. A coordinator will be
           in touch within a few days to discuss your interests and availability.
         </p>
+        {SHOW_DONATE && (
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link href="/donate#donate" className="btn-primary">
             Support the Cause <span className="font-serif">→</span>
           </Link>
         </div>
+        )}
       </div>
     )
   }

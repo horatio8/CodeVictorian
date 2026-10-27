@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { SHOW_DONATE } from "@/lib/site"
 import { useState } from "react"
 
 // Newsletter sign-up. Posts to /api/newsletter, which forwards to the
@@ -106,9 +107,11 @@ export default function NewsletterForm({
           <p className="mt-2 text-sm text-white/65">
             You&rsquo;re on the list. Look out for our next dispatch in your inbox.
           </p>
+          {SHOW_DONATE && (
           <Link href="/donate#donate" className="btn-primary mt-7 w-full">
             Support the Foundation <span className="font-serif">→</span>
           </Link>
+          )}
         </>
       ) : (
         <>
