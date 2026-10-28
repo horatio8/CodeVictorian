@@ -80,11 +80,11 @@ export default function EuropeFirstHome() {
                 countries. New York to Paris, Sydney to Athens.
               </p>
               <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
-                <a href="#newsletter" className="btn-primary w-full sm:w-auto">
-                  Join the Newsletter <span className="font-serif">→</span>
+                <a href="#membership" className="btn-primary w-full sm:w-auto">
+                  Join the Community <span className="font-serif">→</span>
                 </a>
-                <a href="#membership" className="btn-secondary w-full sm:w-auto">
-                  Membership Tiers
+                <a href="#newsletter" className="btn-secondary w-full sm:w-auto">
+                  Join the Newsletter
                 </a>
               </div>
             </div>
@@ -218,14 +218,14 @@ export default function EuropeFirstHome() {
             Take your <span className="italic font-normal text-gold-400">place</span>.
           </h2>
           <p className="lede mx-auto mt-6 max-w-xl">
-            Sign up for the newsletter, or become a member today.
+            Become a member today, or sign up for the newsletter.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a href="#newsletter" className="btn-primary">
-              Join the Newsletter <span className="font-serif">→</span>
+            <a href="#membership" className="btn-primary">
+              Join the Community <span className="font-serif">→</span>
             </a>
-            <a href="#membership" className="btn-secondary">
-              Membership Tiers
+            <a href="#newsletter" className="btn-secondary">
+              Join the Newsletter
             </a>
           </div>
         </div>
