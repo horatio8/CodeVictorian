@@ -18,16 +18,8 @@ const nextConfig = {
   async redirects() {
     if (isStaticExport) return [] // static export can't issue redirects
     return [
-      // Launch (Oct 2026): codevictorian.com points everything at
-      // europefirst.net. Only fires on the codevictorian.com hostnames (so a
-      // build of this branch served on europefirst.net can never loop), and
-      // skips /api/* so the Stripe webhook keeps working. Temporary (307).
-      {
-        source: "/:path((?!api/).*)",
-        has: [{ type: "host", value: "(www\\.)?codevictorian\\.com" }],
-        destination: "https://europefirst.net/",
-        permanent: false,
-      },
+      // /confi held the homepage while "/" was a placeholder.
+      { source: "/confi", destination: "/", permanent: false },
       // /news was renamed to /updates per the Apr 23 brief.
       { source: "/news", destination: "/updates", permanent: true },
       { source: "/news/:path*", destination: "/updates/:path*", permanent: true },
