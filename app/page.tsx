@@ -1,7 +1,8 @@
-// Europe First — single-page community site. Content carried over from the
-// former Code Victorian /member and /join pages.
+import NewsletterForm from "@/components/NewsletterForm"
 
-const CODE_VICTORIAN_DONATE_URL = "https://codevictorian.com/donate"
+// Europe First — single-page community site. Newsletter sign-up leads;
+// membership tiers follow. Content carried over from the former Code
+// Victorian /member and /join pages.
 
 const PRINCIPLES = [
   { roman: "I.", title: "Native Europeans, Worldwide", desc: "We unite people of European descent across continents — from Lisbon to Boston to Sydney — under a common cause." },
@@ -66,23 +67,30 @@ export default function EuropeFirstHome() {
           preload="metadata"
           aria-hidden="true"
         />
-        <div className="relative z-10 mx-auto w-full max-w-5xl px-6 pt-36 pb-28 text-center lg:py-40">
-          <span className="eyebrow eyebrow-both">The Community · Est. MMXXVI</span>
-          <h1 className="mt-7 font-serif text-[3rem] font-medium leading-[1.04] text-white sm:text-6xl lg:text-8xl">
-            <span className="italic font-normal text-gold-400">Europe</span> First.
-          </h1>
-          <p className="lede mx-auto mt-9 max-w-2xl">
-            A community of native Europeans — at home and abroad — organising for
-            the preservation of European civilisation. Members in twenty-four
-            countries. New York to Paris, Sydney to Athens.
-          </p>
-          <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a href="#membership" className="btn-primary w-full sm:w-auto">
-              Join Europe First <span className="font-serif">→</span>
-            </a>
-            <a href="#principles" className="btn-secondary w-full sm:w-auto">
-              Our Principles
-            </a>
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-24 sm:pt-32 lg:py-40">
+          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="text-center lg:text-left">
+              <span className="eyebrow" style={{ justifyContent: "flex-start" }}>The Community · Est. MMXXVI</span>
+              <h1 className="mt-7 font-serif text-[3rem] font-medium leading-[1.04] text-white sm:text-6xl lg:text-8xl">
+                <span className="italic font-normal text-gold-400">Europe</span> First.
+              </h1>
+              <p className="lede mx-auto mt-9 max-w-xl lg:mx-0">
+                A community of native Europeans — at home and abroad — organising for
+                the preservation of European civilisation. Members in twenty-four
+                countries. New York to Paris, Sydney to Athens.
+              </p>
+              <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+                <a href="#newsletter" className="btn-primary w-full sm:w-auto">
+                  Join the Newsletter <span className="font-serif">→</span>
+                </a>
+                <a href="#membership" className="btn-secondary w-full sm:w-auto">
+                  Membership Tiers
+                </a>
+              </div>
+            </div>
+            <div id="newsletter" className="mx-auto w-full max-w-md scroll-mt-24 lg:mx-0 lg:ml-auto">
+              <NewsletterForm />
+            </div>
           </div>
         </div>
         <div className="absolute inset-x-0 bottom-0 z-10 hidden border-t border-gold-400/20 bg-navy-950/40 lg:block">
@@ -210,14 +218,14 @@ export default function EuropeFirstHome() {
             Take your <span className="italic font-normal text-gold-400">place</span>.
           </h2>
           <p className="lede mx-auto mt-6 max-w-xl">
-            Join Europe First, or support the Code Victorian Foundation directly.
+            Sign up for the newsletter, or become a member today.
           </p>
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a href="#membership" className="btn-primary">
-              Join Europe First <span className="font-serif">→</span>
+            <a href="#newsletter" className="btn-primary">
+              Join the Newsletter <span className="font-serif">→</span>
             </a>
-            <a href={CODE_VICTORIAN_DONATE_URL} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              Support the Foundation
+            <a href="#membership" className="btn-secondary">
+              Membership Tiers
             </a>
           </div>
         </div>

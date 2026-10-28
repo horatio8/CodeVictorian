@@ -5,14 +5,8 @@ const columns = [
     title: "The Community",
     links: [
       { href: "/#principles", label: "Principles" },
+      { href: "/#newsletter", label: "Newsletter" },
       { href: "/#membership", label: "Membership Tiers" },
-    ],
-  },
-  {
-    title: "Code Victorian",
-    links: [
-      { href: "https://codevictorian.com/donate", label: "Support the Foundation", external: true },
-      { href: "https://codevictorian.com", label: "codevictorian.com", external: true },
     ],
   },
   {
@@ -31,7 +25,7 @@ export default function Footer() {
   return (
     <footer className="bg-navy-900 text-white border-t border-gold-400/25 on-dark">
       <div className="mx-auto max-w-7xl px-6 py-14 lg:py-20">
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="inline-flex flex-col leading-tight">
               <span className="font-serif text-2xl font-medium text-white">Europe First</span>
